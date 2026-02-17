@@ -9,12 +9,12 @@ const HeroSection = ({ recruiterMode }) => {
   const [currentLine, setCurrentLine] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const lines = [
+  const lines = React.useMemo(() => [
     'sourav@thiru-labs:~$ whoami',
     `Name: ${profileData.name}`,
     `Role: ${profileData.role}`,
     'System initialized. Security protocols active.'
-  ];
+  ], []);
 
   useEffect(() => {
     if (recruiterMode || currentLine >= lines.length) return;
