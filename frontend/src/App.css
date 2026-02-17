@@ -1,34 +1,71 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.3);
+    border-radius: 4px;
 }
 
-.App-link {
-    color: #61dafb;
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.5);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Recruiter Mode Styles */
+.recruiter-mode {
+    animation: none !important;
+}
+
+.recruiter-mode * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Progress Bar Custom Styling */
+.progress-bar-fill {
+    background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+}
+
+/* Terminal Cursor Animation */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor {
+    animation: blink 1s infinite;
+}
+
+/* Card Hover Glow Effect */
+.card-glow {
+    position: relative;
+}
+
+.card-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.5), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card-glow:hover::before {
+    opacity: 1;
 }
