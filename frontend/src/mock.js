@@ -9,7 +9,7 @@ export const profileData = {
   email: "sourav@example.com",
   linkedin: "https://linkedin.com/in/souravramakrishna",
   github: "https://github.com/souravramakrishna",
-  bio: "Infrastructure enthusiast with a passion for security operations and home lab architecture. Specializing in threat detection, network hardening, and 24/7 infrastructure management."
+  bio: "Based in Melbourne, I am a Jr. SOC Analyst at ThIRU (Threat Incident and Response Unit). I specialize in bridging the gap between proactive infrastructure management and reactive threat defense. When I'm not monitoring live incident logs or hardening client environments, I'm architecting my own private cloud infrastructure. My approach to security is grounded in the philosophy that you can't defend what you don't understand—which is why I spend my time breaking and building systems in my Proxmox-based home lab."
 };
 
 export const securityStatus = {
