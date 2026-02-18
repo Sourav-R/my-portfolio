@@ -39,7 +39,9 @@ const ProjectsSection = ({ recruiterMode }) => {
           {projects.map((project, index) => (
             <Card
               key={project.id}
-              className={`relative bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-8 overflow-hidden group ${\n                recruiterMode ? '' : 'hover:scale-[1.01]'\n              } transition-all duration-300 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-500/10`}
+              className={`relative bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-8 overflow-hidden group ${
+                recruiterMode ? '' : 'hover:scale-[1.01]'
+              } transition-all duration-300 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-500/10`}
               onMouseEnter={() => !recruiterMode && setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
               style={{
