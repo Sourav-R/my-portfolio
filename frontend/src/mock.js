@@ -85,65 +85,31 @@ export const homeLabServices = [
 export const projects = [
   {
     id: 1,
-    title: "Automated Threat Detection System",
-    description: "Built an automated threat detection pipeline using Python and machine learning to identify anomalous network traffic patterns.",
-    tactics: ["Threat Detection", "Machine Learning", "Network Analysis"],
-    stack: ["Python", "Scikit-learn", "Suricata", "ELK Stack"],
-    securityFeatures: [
-      "Real-time threat analysis",
-      "Encrypted data transmission",
-      "Role-based access control",
-      "Audit logging"
-    ],
-    github: "https://github.com/sourav/threat-detection",
+    title: "Brief 01: T-Pot \"Fakebank\" Honeypot & ELK Integration",
+    mission: "Deployed a custom T-Pot environment disguised as a banking portal to capture and visualize live credential harvesting attempts.",
+    stack: ["T-Pot", "Elastic Stack (ELK)", "Docker", "Debian"],
+    threatMitigated: "Identified and blacklisted over 50+ unique malicious IPs within 48 hours, neutralizing automated brute-force scripts before they could pivot to production-adjacent targets.",
+    github: "https://github.com/sourav/tpot-honeypot",
+    demo: null,
+    status: "active"
+  },
+  {
+    id: 2,
+    title: "Brief 02: Automated Infrastructure Hardening (SaltStack)",
+    mission: "Built a scalable configuration management system using Python and SaltStack to automate server hardening based on CIS Benchmarks.",
+    stack: ["SaltStack", "Python", "Linux (Ubuntu/RHEL)"],
+    threatMitigated: "Prevented 'Configuration Drift'—an automated audit-and-revert cycle ensures that unauthorized changes to critical system files are neutralized and restored to a secure state within 60 seconds.",
+    github: "https://github.com/sourav/saltstack-hardening",
     demo: null,
     status: "production"
   },
   {
-    id: 2,
-    title: "Home Lab Security Dashboard",
-    description: "Comprehensive security monitoring dashboard for home lab infrastructure with real-time alerts and incident tracking.",
-    tactics: ["Security Monitoring", "Incident Response", "Log Analysis"],
-    stack: ["React", "TypeScript", "Grafana API", "WebSocket"],
-    securityFeatures: [
-      "Multi-factor authentication",
-      "End-to-end encryption",
-      "Intrusion detection alerts",
-      "Security event correlation"
-    ],
-    github: "https://github.com/sourav/homelab-dashboard",
-    demo: "https://demo.homelab.local",
-    status: "active"
-  },
-  {
     id: 3,
-    title: "Network Hardening Toolkit",
-    description: "Automated toolkit for network hardening and compliance checking across enterprise environments.",
-    tactics: ["Network Hardening", "Compliance", "Vulnerability Assessment"],
-    stack: ["Python", "Ansible", "Nmap", "OpenVAS"],
-    securityFeatures: [
-      "CIS benchmark compliance",
-      "Automated vulnerability scanning",
-      "Configuration management",
-      "Compliance reporting"
-    ],
-    github: "https://github.com/sourav/network-hardening",
-    demo: null,
-    status: "beta"
-  },
-  {
-    id: 4,
-    title: "Incident Response Automation",
-    description: "Automated incident response workflows with integration to SIEM and ticketing systems for faster threat mitigation.",
-    tactics: ["Incident Response", "Automation", "SOAR Integration"],
-    stack: ["Python", "REST API", "Wazuh", "TheHive"],
-    securityFeatures: [
-      "Automated playbook execution",
-      "Chain of custody tracking",
-      "Forensic data collection",
-      "Integration with MITRE ATT&CK"
-    ],
-    github: "https://github.com/sourav/ir-automation",
+    title: "Brief 03: The \"Ringwood\" Private Cloud (Home Lab)",
+    mission: "Architecture of a high-availability virtualization environment for malware analysis and network traffic monitoring.",
+    stack: ["Proxmox VE", "Docker", "pfSense", "Pi-hole"],
+    threatMitigated: "Lateral Movement Risk—Implemented strict VLAN segmentation to ensure that even if a lab environment is compromised during a malware analysis session, the host network and primary data remain logically isolated and unreachable.",
+    github: "https://github.com/sourav/ringwood-homelab",
     demo: null,
     status: "active"
   }
