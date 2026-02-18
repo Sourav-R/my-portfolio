@@ -56,7 +56,7 @@ const ProjectsSection = ({ recruiterMode }) => {
                 <div className="flex items-start justify-between mb-6">
                   <h3 className="text-2xl font-bold text-white pr-4 font-mono leading-tight">{project.title}</h3>
                   <Badge className={`${getStatusColor(project.status)} border text-xs uppercase whitespace-nowrap`}>
-                    {status === 'production' ? 'PROD' : status.toUpperCase()}
+                    {project.status === 'production' ? 'PROD' : project.status.toUpperCase()}
                   </Badge>
                 </div>
 
