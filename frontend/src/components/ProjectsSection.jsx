@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Github, ExternalLink, Shield, CheckCircle } from 'lucide-react';
+import { Github, Shield, AlertTriangle } from 'lucide-react';
 import { projects } from '../mock';
 
 const ProjectsSection = ({ recruiterMode }) => {
@@ -30,18 +30,16 @@ const ProjectsSection = ({ recruiterMode }) => {
             <span className="text-emerald-500">&gt;</span> Security Briefs
           </h2>
           <p className="text-gray-400 max-w-2xl">
-            Recent security projects and infrastructure implementations. Each project includes threat modeling, security audits, and production-ready deployment strategies.
+            Recent security projects and infrastructure implementations. Each brief includes threat modeling, security audits, and production-ready deployment strategies.
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-6">
           {projects.map((project, index) => (
             <Card
               key={project.id}
-              className={`relative bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-6 overflow-hidden group ${
-                recruiterMode ? '' : 'hover:scale-[1.02]'
-              } transition-all duration-300 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-500/10`}
+              className={`relative bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-8 overflow-hidden group ${\n                recruiterMode ? '' : 'hover:scale-[1.01]'\n              } transition-all duration-300 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-500/10`}
               onMouseEnter={() => !recruiterMode && setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
               style={{
@@ -55,88 +53,57 @@ const ProjectsSection = ({ recruiterMode }) => {
 
               <div className="relative z-10">
                 {/* Project Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-bold text-white pr-4 font-mono">{project.title}</h3>
-                  <Badge className={`${getStatusColor(project.status)} border text-xs uppercase`}>
-                    {project.status}
+                <div className="flex items-start justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-white pr-4 font-mono leading-tight">{project.title}</h3>
+                  <Badge className={`${getStatusColor(project.status)} border text-xs uppercase whitespace-nowrap`}>
+                    {status === 'production' ? 'PROD' : status.toUpperCase()}
                   </Badge>
                 </div>
 
-                {/* Description */}
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">{project.description}</p>
+                {/* The Mission */}
+                <div className="mb-6 pb-6 border-b border-emerald-500/10">
+                  <p className="text-xs text-emerald-500 uppercase tracking-wider mb-2 font-mono flex items-center gap-2">
+                    <Shield className="h-3 w-3" />
+                    The Mission
+                  </p>
+                  <p className="text-gray-300 text-base leading-relaxed">{project.mission}</p>
+                </div>
 
-                {/* Technical Metadata Overlay */}
-                <div className={`space-y-4 transition-all duration-300 ${
-                  hoveredProject === project.id && !recruiterMode ? 'opacity-100' : 'opacity-100'
-                }`}>
-                  {/* Tactics */}
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-2">
-                      <Shield className="h-3 w-3" />
-                      Tactics
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tactics.map((tactic, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs border-blue-500/50 text-blue-400 bg-blue-500/5">
-                          {tactic}
-                        </Badge>
-                      ))}
-                    </div>
+                {/* Technical Stack */}
+                <div className="mb-6">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 font-mono">Technical Stack</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.map((tech, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs border-emerald-500/50 text-emerald-400 bg-emerald-500/5 font-mono">
+                        {tech}
+                      </Badge>
+                    ))}
                   </div>
+                </div>
 
-                  {/* Stack */}
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Stack</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((tech, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs border-emerald-500/50 text-emerald-400 bg-emerald-500/5">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Security Audit */}
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-2">
-                      <CheckCircle className="h-3 w-3" />
-                      Security Audit
-                    </p>
-                    <ul className="space-y-1">
-                      {project.securityFeatures.slice(0, 3).map((feature, idx) => (
-                        <li key={idx} className="text-xs text-gray-400 flex items-start gap-2">
-                          <span className="text-emerald-500 mt-0.5">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Threat Mitigated */}
+                <div className="mb-6">
+                  <p className="text-xs text-red-400 uppercase tracking-wider mb-3 font-mono flex items-center gap-2">
+                    <AlertTriangle className="h-3 w-3" />
+                    Threat Mitigated
+                  </p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{project.threatMitigated}</p>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 mt-6 pt-6 border-t border-emerald-500/10">
-                  {project.github && (
+                {project.github && (
+                  <div className="flex gap-3 pt-6 border-t border-emerald-500/10">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-emerald-500/50 text-emerald-500 hover:bg-emerald-500/10"
+                      className="border-emerald-500/50 text-emerald-500 hover:bg-emerald-500/10 font-mono"
                       onClick={() => window.open(project.github, '_blank')}
                     >
                       <Github className="h-3 w-3 mr-2" />
-                      View Code
+                      View Repository
                     </Button>
-                  )}
-                  {project.demo && (
-                    <Button
-                      size="sm"
-                      className="bg-blue-500 hover:bg-blue-600 text-white"
-                      onClick={() => window.open(project.demo, '_blank')}
-                    >
-                      <ExternalLink className="h-3 w-3 mr-2" />
-                      Live Demo
-                    </Button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </Card>
           ))}
