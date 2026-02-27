@@ -45,6 +45,7 @@ const BootSequence = ({ onComplete }) => {
       clearTimeout(logoTimer);
       clearInterval(terminalInterval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
