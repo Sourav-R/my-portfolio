@@ -17,7 +17,9 @@ const TerminalSandbox = ({ recruiterMode }) => {
   const terminalEndRef = useRef(null);
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (terminalEndRef.current) {
+      terminalEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }, [history]);
 
   const handleCommand = (cmd) => {
