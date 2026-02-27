@@ -297,11 +297,11 @@
 .code-strings span {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: #10b981;
+  color: #00d9ff;
   opacity: 0.4;
   letter-spacing: 0.2em;
   animation: flicker 0.3s infinite;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
 }
 
 .code-strings span:nth-child(1) { animation-delay: 0s; transform: translateX(-80px) translateY(-40px); }
