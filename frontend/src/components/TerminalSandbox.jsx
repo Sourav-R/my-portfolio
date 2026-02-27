@@ -66,8 +66,13 @@ const TerminalSandbox = ({ recruiterMode }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      e.stopPropagation();
       handleCommand(input);
       setInput('');
+      // Keep focus on input
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length > 0) {
