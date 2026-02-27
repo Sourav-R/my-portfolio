@@ -6,6 +6,7 @@ import ProjectsSection from '../components/ProjectsSection';
 import TerminalSandbox from '../components/TerminalSandbox';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
+import BootSequence from '../components/BootSequence';
 import { Button } from '../components/ui/button';
 import { Switch } from '../components/ui/switch';
 import { Moon, Sun } from 'lucide-react';
@@ -13,6 +14,7 @@ import { Moon, Sun } from 'lucide-react';
 const Portfolio = () => {
   const [recruiterMode, setRecruiterMode] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [bootComplete, setBootComplete] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -21,6 +23,15 @@ const Portfolio = () => {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
+
+  const handleBootComplete = () => {
+    setBootComplete(true);
+  };
+
+  // Show boot sequence on first load
+  if (!bootComplete) {
+    return <BootSequence onComplete={handleBootComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200">
