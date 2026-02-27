@@ -1,0 +1,360 @@
+/* Boot Sequence Container */
+.boot-sequence {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #050505;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.boot-sequence.fade-out {
+  animation: fadeOut 0.8s ease-out forwards;
+}
+
+/* Background Texture */
+.boot-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(10, 10, 10, 0.5) 0px,
+      rgba(10, 10, 10, 0.5) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  opacity: 0.6;
+}
+
+/* CRT Scanline Effect */
+.crt-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 3px
+  );
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
+
+/* Main Content Container */
+.boot-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+/* Logo Container */
+.logo-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cyber Parrot Logo */
+.cyber-parrot-logo {
+  width: 200px;
+  height: 200px;
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+  position: relative;
+  z-index: 3;
+}
+
+.logo-container.animate .logo-part {
+  animation: drawPath 1.5s ease-out forwards;
+}
+
+.logo-container.animate .logo-part.body {
+  animation-delay: 0.2s;
+}
+
+.logo-container.animate .logo-part.head {
+  animation-delay: 0.5s;
+}
+
+.logo-container.animate .logo-part.beak {
+  animation-delay: 0.8s;
+}
+
+.logo-container.animate .logo-part.wing {
+  animation-delay: 1s;
+}
+
+.logo-container.animate .logo-part.tail {
+  animation-delay: 1.2s;
+}
+
+.logo-container.animate .logo-part.eye {
+  animation: fadeIn 0.3s ease-out 1.5s forwards;
+}
+
+.logo-container.animate .logo-part.circuit {
+  animation: drawPath 0.8s ease-out 1.6s forwards;
+}
+
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Particles Effect */
+.particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  background: #10b981;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 2s ease-out var(--delay, 0s) forwards;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x, 0), var(--y, 0)) scale(1.5);
+  }
+}
+
+/* Scanning Light Effect */
+.scan-light {
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 120%;
+  height: 30px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(16, 185, 129, 0.3),
+    transparent
+  );
+  animation: scanSweep 3s ease-in-out 0.8s forwards;
+  opacity: 0;
+  filter: blur(5px);
+}
+
+@keyframes scanSweep {
+  0% {
+    opacity: 0;
+    top: -50%;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 150%;
+  }
+}
+
+/* Code Strings */
+.code-strings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 0.5s forwards, fadeOut 0.5s ease-out 2s forwards;
+  z-index: 1;
+}
+
+.code-strings span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+  opacity: 0.4;
+  letter-spacing: 0.2em;
+  animation: flicker 0.3s infinite;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.code-strings span:nth-child(1) { animation-delay: 0s; transform: translateX(-80px) translateY(-40px); }
+.code-strings span:nth-child(2) { animation-delay: 0.1s; transform: translateX(80px) translateY(-20px); }
+.code-strings span:nth-child(3) { animation-delay: 0.2s; transform: translateX(-70px) translateY(30px); }
+.code-strings span:nth-child(4) { animation-delay: 0.3s; transform: translateX(90px) translateY(40px); }
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Logo Glow */
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(16, 185, 129, 0.3) 0%,
+    rgba(16, 185, 129, 0.1) 30%,
+    transparent 70%
+  );
+  animation: pulse 2s ease-in-out infinite;
+  filter: blur(30px);
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Terminal Output */
+.terminal-output {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: #10b981;
+  text-align: left;
+  z-index: 6;
+}
+
+.terminal-line {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  opacity: 0;
+  animation: terminalLineAppear 0.3s ease-out forwards;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+@keyframes terminalLineAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.terminal-prompt {
+  color: #059669;
+  font-weight: bold;
+}
+
+.terminal-text {
+  color: #10b981;
+  letter-spacing: 0.05em;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #10b981;
+  margin-left: 0.5rem;
+  animation: blink 1s infinite;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Fade Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cyber-parrot-logo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .terminal-output {
+    font-size: 0.75rem;
+    bottom: 2rem;
+  }
+
+  .code-strings span {
+    font-size: 0.65rem;
+  }
+}
