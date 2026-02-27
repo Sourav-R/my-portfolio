@@ -224,11 +224,11 @@
   left: 50%;
   width: 3px;
   height: 3px;
-  background: #10b981;
+  background: #00d9ff;
   border-radius: 50%;
   opacity: 0;
   animation: particleFloat 2s ease-out var(--delay, 0s) forwards;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  box-shadow: 0 0 6px rgba(0, 217, 255, 0.8);
 }
 
 @keyframes particleFloat {
