@@ -354,7 +354,7 @@
   max-width: 800px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
-  color: #10b981;
+  color: #00d9ff;
   text-align: left;
   z-index: 6;
 }
@@ -365,7 +365,7 @@
   margin-bottom: 0.25rem;
   opacity: 0;
   animation: terminalLineAppear 0.3s ease-out forwards;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
 }
 
 @keyframes terminalLineAppear {
@@ -380,12 +380,12 @@
 }
 
 .terminal-prompt {
-  color: #059669;
+  color: #00a8cc;
   font-weight: bold;
 }
 
 .terminal-text {
-  color: #10b981;
+  color: #00d9ff;
   letter-spacing: 0.05em;
 }
 
@@ -393,10 +393,10 @@
   display: inline-block;
   width: 8px;
   height: 1em;
-  background: #10b981;
+  background: #00d9ff;
   margin-left: 0.5rem;
   animation: blink 1s infinite;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  box-shadow: 0 0 8px rgba(0, 217, 255, 0.8);
 }
 
 @keyframes blink {
