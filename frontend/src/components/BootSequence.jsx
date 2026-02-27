@@ -33,11 +33,11 @@ const BootSequence = ({ onComplete }) => {
         currentLine++;
       } else {
         clearInterval(terminalInterval);
-        // Complete boot sequence after last line
+        // Complete boot sequence after last line (wait 1 extra second)
         setTimeout(() => {
           setStage(2);
           setTimeout(onComplete, 800);
-        }, 1000);
+        }, 2000);
       }
     }, 300);
 
