@@ -75,98 +75,178 @@ const BootSequence = ({ onComplete }) => {
             ))}
           </div>
 
-          {/* Cyber Parrot Logo */}
+          {/* Parrot OS HUD Logo */}
           <svg
             className="cyber-parrot-logo"
-            viewBox="0 0 200 200"
+            viewBox="0 0 300 300"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Parrot Body - Main shape */}
-            <path
-              className="logo-part body"
-              d="M100,50 Q120,60 130,80 Q135,100 130,120 Q120,140 100,145 Q80,140 70,120 Q65,100 70,80 Q80,60 100,50 Z"
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeDasharray="300"
-              strokeDashoffset="300"
-            />
-            
-            {/* Parrot Head */}
+            {/* Outermost Ring - Dashed with segments */}
             <circle
-              className="logo-part head"
-              cx="100"
-              cy="55"
-              r="18"
+              className="logo-ring outer-ring"
+              cx="150"
+              cy="150"
+              r="140"
               fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeDasharray="120"
-              strokeDashoffset="120"
+              stroke="#00d9ff"
+              strokeWidth="1.5"
+              strokeDasharray="8 4"
+              opacity="0.6"
             />
             
-            {/* Beak */}
+            {/* Outer segmented arcs */}
             <path
-              className="logo-part beak"
-              d="M110,55 L125,50 L115,60 Z"
+              className="logo-arc arc-1"
+              d="M 150,10 A 140,140 0 0,1 270,90"
               fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeDasharray="50"
-              strokeDashoffset="50"
+              stroke="#00d9ff"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
-            
-            {/* Wing */}
             <path
-              className="logo-part wing"
-              d="M85,90 Q70,85 60,95 Q55,100 65,105 Q75,100 85,100"
+              className="logo-arc arc-2"
+              d="M 280,150 A 140,140 0 0,1 230,270"
               fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeDasharray="100"
-              strokeDashoffset="100"
+              stroke="#00d9ff"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
-            
-            {/* Tail Feathers */}
             <path
-              className="logo-part tail"
-              d="M100,145 L95,165 M100,145 L100,170 M100,145 L105,165"
+              className="logo-arc arc-3"
+              d="M 150,290 A 140,140 0 0,1 30,210"
               fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeDasharray="80"
-              strokeDashoffset="80"
+              stroke="#00d9ff"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
-            
-            {/* Eye */}
-            <circle
-              className="logo-part eye"
-              cx="105"
-              cy="52"
-              r="3"
-              fill="#10b981"
-              opacity="0"
+            <path
+              className="logo-arc arc-4"
+              d="M 20,150 A 140,140 0 0,1 70,30"
+              fill="none"
+              stroke="#00d9ff"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
 
-            {/* Circuit patterns */}
+            {/* Middle Ring - Segmented white/cyan */}
+            <circle
+              className="logo-ring middle-ring"
+              cx="150"
+              cy="150"
+              r="100"
+              fill="none"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2"
+            />
+            
+            {/* Middle segmented arcs - White highlights */}
             <path
-              className="logo-part circuit"
-              d="M130,100 L145,100 M140,95 L140,105"
-              stroke="#10b981"
-              strokeWidth="1"
-              strokeDasharray="30"
-              strokeDashoffset="30"
-              opacity="0.6"
+              className="logo-arc middle-arc-1"
+              d="M 150,50 A 100,100 0 0,1 235,115"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="4"
+              strokeDasharray="20 10"
+              strokeLinecap="round"
             />
             <path
-              className="logo-part circuit"
-              d="M70,100 L55,100 M60,95 L60,105"
-              stroke="#10b981"
-              strokeWidth="1"
-              strokeDasharray="30"
-              strokeDashoffset="30"
-              opacity="0.6"
+              className="logo-arc middle-arc-2"
+              d="M 235,185 A 100,100 0 0,1 150,250"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="4"
+              strokeDasharray="20 10"
+              strokeLinecap="round"
             />
+            <path
+              className="logo-arc middle-arc-3"
+              d="M 65,185 A 100,100 0 0,1 50,150"
+              fill="none"
+              stroke="#00d9ff"
+              strokeWidth="4"
+              strokeDasharray="15 8"
+              strokeLinecap="round"
+            />
+
+            {/* Inner Ring - Dashed */}
+            <circle
+              className="logo-ring inner-ring"
+              cx="150"
+              cy="150"
+              r="70"
+              fill="none"
+              stroke="#00d9ff"
+              strokeWidth="1"
+              strokeDasharray="4 3"
+              opacity="0.7"
+            />
+
+            {/* Central Circle - Solid background for parrot */}
+            <circle
+              className="logo-center"
+              cx="150"
+              cy="150"
+              r="45"
+              fill="rgba(0, 217, 255, 0.1)"
+              stroke="#00d9ff"
+              strokeWidth="1.5"
+            />
+
+            {/* Parrot Silhouette - Simplified iconic shape */}
+            <g className="parrot-icon" transform="translate(150, 150)">
+              {/* Parrot body */}
+              <path
+                className="logo-part parrot-body"
+                d="M -5,-15 Q -8,-5 -8,5 Q -8,12 -3,18 L 0,22 L 3,18 Q 8,12 8,5 Q 8,-5 5,-15 Z"
+                fill="#00d9ff"
+                opacity="0"
+              />
+              
+              {/* Parrot head */}
+              <ellipse
+                className="logo-part parrot-head"
+                cx="0"
+                cy="-18"
+                rx="10"
+                ry="12"
+                fill="#00d9ff"
+                opacity="0"
+              />
+              
+              {/* Beak */}
+              <path
+                className="logo-part parrot-beak"
+                d="M 8,-18 L 18,-16 L 10,-14 Z"
+                fill="#00d9ff"
+                opacity="0"
+              />
+              
+              {/* Wing */}
+              <path
+                className="logo-part parrot-wing"
+                d="M -8,0 Q -18,-2 -22,5 Q -20,10 -12,8"
+                fill="none"
+                stroke="#00d9ff"
+                strokeWidth="2.5"
+                opacity="0"
+              />
+              
+              {/* Tail */}
+              <path
+                className="logo-part parrot-tail"
+                d="M 0,22 L -4,32 M 0,22 L 0,35 M 0,22 L 4,32"
+                stroke="#00d9ff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                opacity="0"
+              />
+            </g>
+
+            {/* Tech detail elements */}
+            <rect className="tech-detail detail-1" x="145" y="5" width="10" height="3" fill="#00d9ff" opacity="0" />
+            <rect className="tech-detail detail-2" x="290" y="145" width="5" height="10" fill="#00d9ff" opacity="0" />
+            <rect className="tech-detail detail-3" x="145" y="292" width="10" height="3" fill="#00d9ff" opacity="0" />
+            <rect className="tech-detail detail-4" x="5" y="145" width="5" height="10" fill="#00d9ff" opacity="0" />
           </svg>
 
           {/* Scanning Light Effect */}
