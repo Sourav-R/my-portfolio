@@ -84,50 +84,128 @@
 
 /* Cyber Parrot Logo */
 .cyber-parrot-logo {
-  width: 200px;
-  height: 200px;
-  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+  width: 300px;
+  height: 300px;
+  filter: drop-shadow(0 0 30px rgba(0, 217, 255, 0.6));
   position: relative;
   z-index: 3;
 }
 
-.logo-container.animate .logo-part {
-  animation: drawPath 1.5s ease-out forwards;
+/* Rotating Rings */
+.logo-ring.outer-ring {
+  animation: rotateClockwise 8s linear infinite;
+  transform-origin: 150px 150px;
 }
 
-.logo-container.animate .logo-part.body {
-  animation-delay: 0.2s;
+.logo-ring.middle-ring {
+  animation: rotateCounterClockwise 6s linear infinite;
+  transform-origin: 150px 150px;
 }
 
-.logo-container.animate .logo-part.head {
-  animation-delay: 0.5s;
+.logo-ring.inner-ring {
+  animation: rotateClockwise 4s linear infinite;
+  transform-origin: 150px 150px;
 }
 
-.logo-container.animate .logo-part.beak {
+@keyframes rotateClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Segmented Arcs - Rotating */
+.logo-arc.arc-1,
+.logo-arc.arc-2,
+.logo-arc.arc-3,
+.logo-arc.arc-4 {
+  transform-origin: 150px 150px;
+  animation: rotateClockwise 10s linear infinite;
+  stroke-dasharray: 80 20;
+}
+
+.logo-arc.arc-1 { animation-delay: 0s; }
+.logo-arc.arc-2 { animation-delay: -2.5s; }
+.logo-arc.arc-3 { animation-delay: -5s; }
+.logo-arc.arc-4 { animation-delay: -7.5s; }
+
+/* Middle Arcs */
+.logo-arc.middle-arc-1,
+.logo-arc.middle-arc-2,
+.logo-arc.middle-arc-3 {
+  transform-origin: 150px 150px;
+  animation: rotateCounterClockwise 7s linear infinite;
+}
+
+.logo-arc.middle-arc-1 { animation-delay: 0s; }
+.logo-arc.middle-arc-2 { animation-delay: -2.3s; }
+.logo-arc.middle-arc-3 { animation-delay: -4.6s; }
+
+/* Central Circle Pulse */
+.logo-center {
+  animation: centerPulse 2s ease-in-out infinite;
+  transform-origin: 150px 150px;
+}
+
+@keyframes centerPulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Parrot Icon Assembly */
+.logo-container.animate .parrot-icon .logo-part {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+.logo-container.animate .parrot-body {
   animation-delay: 0.8s;
 }
 
-.logo-container.animate .logo-part.wing {
+.logo-container.animate .parrot-head {
   animation-delay: 1s;
 }
 
-.logo-container.animate .logo-part.tail {
+.logo-container.animate .parrot-beak {
   animation-delay: 1.2s;
 }
 
-.logo-container.animate .logo-part.eye {
-  animation: fadeIn 0.3s ease-out 1.5s forwards;
+.logo-container.animate .parrot-wing {
+  animation-delay: 1.4s;
 }
 
-.logo-container.animate .logo-part.circuit {
-  animation: drawPath 0.8s ease-out 1.6s forwards;
+.logo-container.animate .parrot-tail {
+  animation-delay: 1.6s;
 }
 
-@keyframes drawPath {
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: scale(1);
   }
 }
+
+/* Tech Details */
+.logo-container.animate .tech-detail {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.logo-container.animate .detail-1 { animation-delay: 1.8s; }
+.logo-container.animate .detail-2 { animation-delay: 1.9s; }
+.logo-container.animate .detail-3 { animation-delay: 2s; }
+.logo-container.animate .detail-4 { animation-delay: 2.1s; }
 
 /* Particles Effect */
 .particles {
