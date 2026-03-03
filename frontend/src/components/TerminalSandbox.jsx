@@ -3,6 +3,7 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { RotateCcw } from 'lucide-react';
 import { terminalCommands } from '../mock';
+import { commandCheatsheet } from '../labExperience';
 
 const TerminalSandbox = ({ recruiterMode }) => {
   const [input, setInput] = useState('');
@@ -48,6 +49,29 @@ const TerminalSandbox = ({ recruiterMode }) => {
       return;
     }
 
+    // Check for cheat sheet commands
+    if (commandCheatsheet[trimmedCmd]) {
+      const cheat = commandCheatsheet[trimmedCmd];
+      let output = `\n${cheat.description}\n`;
+      output += `\n${'='.repeat(60)}\n\n`;
+      output += 'COMMON COMMANDS:\n';
+      cheat.commands.forEach((c, i) => {
+        output += `\n  ${i + 1}. ${c.cmd}\n     → ${c.desc}\n`;
+      });
+      output += `\n${'='.repeat(60)}\n\n`;
+      output += 'USE CASES:\n';
+      cheat.useCases.forEach((useCase, i) => {
+        output += `  • ${useCase}\n`;
+      });
+      
+      setHistory(prev => [
+        ...prev,
+        { type: 'output', content: output },
+        { type: 'prompt', content: '' }
+      ]);
+      return;
+    }
+
     const commandResponse = terminalCommands[trimmedCmd];
     
     if (commandResponse) {
@@ -59,7 +83,7 @@ const TerminalSandbox = ({ recruiterMode }) => {
     } else {
       setHistory(prev => [
         ...prev,
-        { type: 'error', content: `Command not found: ${trimmedCmd}\nType "help" for available commands.` },
+        { type: 'error', content: `Command not found: ${trimmedCmd}\nType "help" for available commands or try: wireshark, nmap, splunk, yara, snort, metasploit` },
         { type: 'prompt', content: '' }
       ]);
     }
@@ -114,7 +138,8 @@ const TerminalSandbox = ({ recruiterMode }) => {
                 <span className="text-emerald-500">&gt;</span> Secure Sandbox
               </h2>
               <p className="text-gray-400 max-w-2xl">
-                Interactive terminal interface. Try commands like <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">help</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">skills</code>, or <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">secret</code>.
+                Interactive terminal interface. Try commands like <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">help</code>, <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">skills</code>, or <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">secret</code>.<br />
+                <span className="text-emerald-500 text-sm">NEW:</span> Type tool names for cheat sheets: <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">wireshark</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">nmap</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">splunk</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">yara</code>
               </p>
             </div>
             <Button
