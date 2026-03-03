@@ -18,38 +18,44 @@ export const threatCategories = [
 ];
 
 export const toolsProficiency = {
-  'Network Analysis': [
-    { name: 'Wireshark', level: 95, commands: ['tshark', 'tcpdump'] },
-    { name: 'Nmap', level: 90, commands: ['nmap -sP', 'nmap -sS', 'nmap -p-'] },
-    { name: 'Tcpdump', level: 85, commands: ['tcpdump -nnvvXSs', 'tcpdump -i eth0'] },
-    { name: 'Netstat', level: 88, commands: ['netstat -ano', 'netstat -tunapl'] }
+  'SOC & Threat Detection': [
+    { name: 'SIEM (ELK Stack)', level: 92, commands: ['elasticsearch', 'logstash', 'kibana'] },
+    { name: 'Alert Investigation', level: 90, commands: ['splunk search', 'log analysis'] },
+    { name: 'Incident Triage', level: 88, commands: ['incident response', 'escalation'] },
+    { name: 'Threat Analysis', level: 85, commands: ['MITRE ATT&CK', 'threat hunting'] },
+    { name: 'Phishing Analysis', level: 87, commands: ['email analysis', 'domain reputation'] }
   ],
-  'SIEM & Log Analysis': [
-    { name: 'Splunk', level: 92, commands: ['splunk search', 'splunk query'] },
-    { name: 'ELK Stack', level: 85, commands: ['elasticsearch', 'logstash'] },
-    { name: 'Wazuh', level: 80, commands: ['wazuh-control'] }
+  'Penetration Testing': [
+    { name: 'Kali Linux', level: 85, commands: ['kali-linux', 'pentest tools'] },
+    { name: 'Burp Suite', level: 88, commands: ['burpsuite', 'web app testing'] },
+    { name: 'OWASP ZAP', level: 82, commands: ['zap', 'vulnerability scanning'] },
+    { name: 'Metasploit', level: 75, commands: ['msfconsole', 'exploit framework'] },
+    { name: 'Nmap', level: 90, commands: ['nmap -sP', 'nmap -sS', 'nmap -A'] }
   ],
-  'Malware Analysis': [
-    { name: 'YARA', level: 88, commands: ['yara', 'yara -m'] },
-    { name: 'Strings', level: 90, commands: ['strings', 'strings -n'] },
-    { name: 'Volatility', level: 75, commands: ['volatility -f'] },
-    { name: 'VirusTotal', level: 85, commands: ['virustotal --file'] }
+  'IDS/IPS & Network Security': [
+    { name: 'Snort', level: 87, commands: ['snort -r', 'snort -c snort.conf'] },
+    { name: 'Suricata', level: 82, commands: ['suricata -c', 'suricata -i eth0'] },
+    { name: 'Network Anomaly Detection', level: 85, commands: ['wireshark', 'tcpdump'] },
+    { name: 'Wireshark', level: 95, commands: ['tshark -r', 'tshark -Y'] },
+    { name: 'Log Analysis', level: 88, commands: ['grep', 'awk', 'sed'] }
   ],
-  'Intrusion Detection': [
-    { name: 'Snort', level: 87, commands: ['snort -r', 'snort -v'] },
-    { name: 'Suricata', level: 82, commands: ['suricata -c'] },
-    { name: 'Zeek (Bro)', level: 78, commands: ['zeek -i'] }
+  'Programming & Automation': [
+    { name: 'Python', level: 88, commands: ['python script.py', 'automation scripts'] },
+    { name: 'Bash Scripting', level: 85, commands: ['bash script.sh', 'shell scripts'] },
+    { name: 'C Programming', level: 70, commands: ['gcc', 'compile'] },
+    { name: 'SaltStack', level: 80, commands: ['salt', 'salt-call', 'infrastructure as code'] }
   ],
-  'Forensics & IR': [
-    { name: 'Memory Forensics', level: 80, commands: ['volatility', 'strings'] },
-    { name: 'Packet Analysis', level: 93, commands: ['tshark', 'wireshark'] },
-    { name: 'EDR Tools', level: 85, commands: ['Get-MpThreatList'] },
-    { name: 'Threat Hunting', level: 88, commands: ['powershell', 'Get-Process'] }
+  'Cloud & Infrastructure': [
+    { name: 'AWS', level: 78, commands: ['aws cli', 'cloud security'] },
+    { name: 'Oracle Cloud', level: 72, commands: ['oci cli', 'cloud infrastructure'] },
+    { name: 'Linux Administration', level: 90, commands: ['systemctl', 'chmod', 'iptables'] },
+    { name: 'Network Protocols', level: 88, commands: ['TCP/IP', 'DNS', 'VPN'] }
   ],
-  'Exploitation & Testing': [
-    { name: 'Metasploit', level: 75, commands: ['msfconsole', 'use exploit'] },
-    { name: 'Hydra', level: 70, commands: ['hydra -l'] },
-    { name: 'Fail2ban', level: 82, commands: ['fail2ban-client'] }
+  'Security Tools & Honeypots': [
+    { name: 'T-Pot Honeypot', level: 85, commands: ['t-pot', 'honeypot management'] },
+    { name: 'Cryptography (AES/RSA)', level: 80, commands: ['openssl', 'encryption'] },
+    { name: 'SSL/TLS', level: 85, commands: ['openssl s_client', 'certificate management'] },
+    { name: 'IPSec/VPN', level: 82, commands: ['ipsec', 'vpn configuration'] }
   ]
 };
 
@@ -226,17 +232,116 @@ export const commandCheatsheet = {
 
 export const certifications = [
   {
+    name: 'Microsoft Certified: Security Operations Analyst',
+    organization: 'Microsoft',
+    status: 'In Progress',
+    year: '2024-2025',
+    description: 'SC-200 certification focusing on threat detection, investigation, and response using Microsoft security solutions',
+    skills: ['Threat Detection', 'Incident Response', 'Microsoft Sentinel', 'Microsoft Defender']
+  },
+  {
+    name: 'Cisco CCNA',
+    organization: 'Cisco',
+    status: 'In Progress',
+    year: '2024-2025',
+    description: 'Network fundamentals, IP connectivity, security fundamentals, and automation',
+    skills: ['Network Security', 'Routing & Switching', 'Network Automation']
+  },
+  {
+    name: 'Azure for Architects - Networking Strategy',
+    organization: 'LinkedIn Learning',
+    status: 'Completed',
+    year: '2024',
+    description: 'Advanced Azure networking architecture and strategy',
+    skills: ['Cloud Architecture', 'Azure Networking', 'Security Design']
+  },
+  {
+    name: 'Ethical Hacking & Cybersecurity Fundamentals',
+    organization: 'Professional Training',
+    status: 'Completed',
+    year: '2023',
+    description: 'Comprehensive ethical hacking and cybersecurity fundamentals training',
+    skills: ['Penetration Testing', 'Vulnerability Assessment', 'Security Testing']
+  },
+  {
     name: 'n8n University Security Audit',
     organization: 'Academic',
     year: '2023-2024',
+    status: 'Completed',
     description: '200+ hands-on cybersecurity labs covering threat detection, incident response, and security operations',
     skills: ['Threat Analysis', 'Network Security', 'Malware Analysis', 'SIEM', 'Forensics']
   },
   {
     name: 'Cybersecurity Specialization',
     organization: 'Monash University',
-    year: '2023-2024',
+    year: '2023-2025',
+    status: 'In Progress',
     courses: ['FIT5057', 'FIT5129', 'FIT9137', 'FIT5163', 'FIT9136', 'FIT5225'],
     description: 'Comprehensive graduate coursework in security operations, threat hunting, and infrastructure hardening'
+  }
+];
+
+export const workExperience = [
+  {
+    id: 1,
+    company: 'THIRU (Threat Incident and Response Unit)',
+    role: 'Jr. SOC Analyst',
+    period: 'Nov 2024 – Present',
+    location: 'Melbourne, Australia',
+    current: true,
+    responsibilities: [
+      'Monitored and analysed SIEM events across endpoint, network and cloud sources to identify intrusion attempts, anomalous behaviour, and emerging threats within a SOC environment',
+      'Built and operated a high-interaction T-Pot honeypot, ingesting telemetry into the ELK Stack (Elasticsearch, Logstash, Kibana) to support threat analysis, detection tuning and SOC visibility',
+      'Supported incident response activities, assisting with triage, investigation, escalation, and documentation in line with SOC playbooks and SLAs',
+      'Analysed phishing emails, suspicious domains, and IP addresses to rapidly identify real risks and support containment decisions',
+      'Used SaltStack to automate configuration management and Infrastructure as Code, improving SOC operational efficiency and reducing configuration drift',
+      'Contributed to alert tuning, rule refinement and continuous improvement, aligning detections with MITRE ATT&CK techniques and SOC best practices'
+    ],
+    technologies: ['SIEM', 'ELK Stack', 'T-Pot Honeypot', 'SaltStack', 'MITRE ATT&CK', 'Threat Analysis'],
+    achievements: [
+      'Built production T-Pot honeypot with ELK integration',
+      'Improved SOC detection tuning with MITRE ATT&CK alignment',
+      'Automated configuration management with SaltStack'
+    ]
+  },
+  {
+    id: 2,
+    company: 'Internshala',
+    role: 'Ethical Hacking Intern',
+    period: 'Nov 2022 – Jan 2023',
+    location: 'Remote',
+    current: false,
+    responsibilities: [
+      'Detected and remediated critical vulnerabilities in live business websites, improving security posture by 30%',
+      'Conducted manual and automated testing with Burp Suite/OWASP ZAP, discovering flaws such as SQLi/XSS',
+      'Developed Python scripts to automate security scanning and reporting',
+      'Communicated remediation plans to dev teams via email/Slack, strengthening client relationships'
+    ],
+    technologies: ['Burp Suite', 'OWASP ZAP', 'Python', 'SQL Injection', 'XSS', 'Vulnerability Assessment'],
+    achievements: [
+      '30% improvement in security posture',
+      'Discovered 6 critical vulnerabilities',
+      'Automated scanning with Python scripts'
+    ]
+  },
+  {
+    id: 3,
+    company: 'Verzeo & MVARO',
+    role: 'Cybersecurity Intern',
+    period: 'Aug 2022 – Nov 2022',
+    location: 'Remote',
+    current: false,
+    responsibilities: [
+      'Implemented vulnerability assessments for web and network systems; identified and tracked 15 weaknesses, reducing reportable threats by 25%',
+      'Utilized IDS/IPS and SIEM tools for threat detection and event management',
+      'Presented professional-grade technical documentation and client-facing reports',
+      'Updated firewall rules and collaborated on network security protocol deployment'
+    ],
+    technologies: ['IDS/IPS', 'SIEM', 'Firewall Configuration', 'Vulnerability Assessment', 'Network Security'],
+    achievements: [
+      '25% reduction in reportable threats',
+      'Identified 15 critical weaknesses',
+      'Improved firewall rules and network security'
+    ]
   }
 ];

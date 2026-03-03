@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import HeroSection from '../components/HeroSection';
+import WorkExperienceSection from '../components/WorkExperienceSection';
 import LabExperienceSection from '../components/LabExperienceSection';
 import SkillsMatrixSection from '../components/SkillsMatrixSection';
+import CertificationsSection from '../components/CertificationsSection';
 import LabMonitor from '../components/LabMonitor';
 import ProjectsSection from '../components/ProjectsSection';
 import FeaturedLabsSection from '../components/FeaturedLabsSection';
@@ -68,8 +70,10 @@ const Portfolio = () => {
       <div className="lg:ml-64">
         <main className={recruiterMode ? 'recruiter-mode' : ''}>
           <HeroSection recruiterMode={recruiterMode} />
+          <WorkExperienceSection recruiterMode={recruiterMode} />
           <LabExperienceSection recruiterMode={recruiterMode} />
           <SkillsMatrixSection recruiterMode={recruiterMode} />
+          <CertificationsSection recruiterMode={recruiterMode} />
           <LabMonitor recruiterMode={recruiterMode} />
           <ProjectsSection recruiterMode={recruiterMode} />
           <FeaturedLabsSection recruiterMode={recruiterMode} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen } from 'lucide-react';
+import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen, Briefcase, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Sidebar = () => {
@@ -9,12 +9,14 @@ const Sidebar = () => {
 
   const navItems = [
     { id: 'hero', icon: Home, label: 'Home', color: 'cyan' },
-    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'cyan' },
-    { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix', color: 'emerald' },
-    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'purple' },
-    { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'emerald' },
+    { id: 'work-experience', icon: Briefcase, label: 'Experience', color: 'cyan' },
+    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'emerald' },
+    { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix', color: 'purple' },
+    { id: 'certifications', icon: GraduationCap, label: 'Certifications', color: 'blue' },
+    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
+    { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'cyan' },
     { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
-    { id: 'academic-timeline', icon: GraduationCap, label: 'Timeline', color: 'cyan' },
+    { id: 'academic-timeline', icon: Calendar, label: 'Timeline', color: 'purple' },
     { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'emerald' },
     { id: 'contact', icon: Mail, label: 'Contact', color: 'cyan' }
   ];
