@@ -53,7 +53,7 @@ const Portfolio = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="lg:ml-20">
+      <div className="lg:ml-64">
         <main className={recruiterMode ? 'recruiter-mode' : ''}>
           <HeroSection recruiterMode={recruiterMode} />
           <LabExperienceSection recruiterMode={recruiterMode} />
