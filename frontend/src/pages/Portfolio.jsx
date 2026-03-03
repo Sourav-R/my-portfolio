@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import HeroSection from '../components/HeroSection';
+import LabExperienceSection from '../components/LabExperienceSection';
+import SkillsMatrixSection from '../components/SkillsMatrixSection';
 import LabMonitor from '../components/LabMonitor';
 import ProjectsSection from '../components/ProjectsSection';
+import FeaturedLabsSection from '../components/FeaturedLabsSection';
+import AcademicTimelineSection from '../components/AcademicTimelineSection';
 import TerminalSandbox from '../components/TerminalSandbox';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
@@ -52,8 +56,12 @@ const Portfolio = () => {
       <div className="lg:ml-20">
         <main className={recruiterMode ? 'recruiter-mode' : ''}>
           <HeroSection recruiterMode={recruiterMode} />
+          <LabExperienceSection recruiterMode={recruiterMode} />
+          <SkillsMatrixSection recruiterMode={recruiterMode} />
           <LabMonitor recruiterMode={recruiterMode} />
           <ProjectsSection recruiterMode={recruiterMode} />
+          <FeaturedLabsSection recruiterMode={recruiterMode} />
+          <AcademicTimelineSection recruiterMode={recruiterMode} />
           <TerminalSandbox recruiterMode={recruiterMode} />
           <ContactSection recruiterMode={recruiterMode} />
           <Footer />

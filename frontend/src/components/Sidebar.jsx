@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Server, FolderGit2, Terminal, Mail, Menu, X } from 'lucide-react';
+import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Sidebar = () => {
@@ -7,8 +7,12 @@ const Sidebar = () => {
 
   const navItems = [
     { id: 'hero', icon: Home, label: 'Home' },
+    { id: 'lab-experience', icon: Award, label: 'Lab Experience' },
+    { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix' },
     { id: 'lab', icon: Server, label: 'Lab Monitor' },
     { id: 'projects', icon: FolderGit2, label: 'Projects' },
+    { id: 'featured-labs', icon: BookOpen, label: 'Case Studies' },
+    { id: 'academic-timeline', icon: GraduationCap, label: 'Timeline' },
     { id: 'terminal', icon: Terminal, label: 'Terminal' },
     { id: 'contact', icon: Mail, label: 'Contact' }
   ];
