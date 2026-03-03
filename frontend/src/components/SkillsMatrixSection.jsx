@@ -2,24 +2,78 @@ import React, { useState } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { toolsProficiency } from '../labExperience';
-import { Code, Terminal, Shield, Search, Wrench, Bug } from 'lucide-react';
+import { Code, Terminal, Shield, Search, Wrench, Bug, Server } from 'lucide-react';
 
 const categoryIcons = {
-  'Network Analysis': Terminal,
-  'SIEM & Log Analysis': Search,
-  'Malware Analysis': Bug,
-  'Intrusion Detection': Shield,
-  'Forensics & IR': Search,
-  'Exploitation & Testing': Wrench
+  'SOC & Threat Detection': Shield,
+  'Penetration Testing': Bug,
+  'IDS/IPS & Network Security': Terminal,
+  'Programming & Automation': Code,
+  'Cloud & Infrastructure': Server,
+  'Security Tools & Honeypots': Wrench
 };
 
-const categoryColors = {
-  'Network Analysis': { border: 'cyan-500', bg: 'cyan-500', text: 'cyan-400' },
-  'SIEM & Log Analysis': { border: 'emerald-500', bg: 'emerald-500', text: 'emerald-400' },
-  'Malware Analysis': { border: 'purple-500', bg: 'purple-500', text: 'purple-400' },
-  'Intrusion Detection': { border: 'red-500', bg: 'red-500', text: 'red-400' },
-  'Forensics & IR': { border: 'blue-500', bg: 'blue-500', text: 'blue-400' },
-  'Exploitation & Testing': { border: 'orange-500', bg: 'orange-500', text: 'orange-400' }
+const categoryStyles = {
+  'SOC & Threat Detection': {
+    borderColor: 'border-cyan-500/20',
+    borderHover: 'hover:border-cyan-500',
+    bgColor: 'bg-cyan-500/10',
+    textColor: 'text-cyan-400',
+    iconColor: 'text-cyan-500',
+    progressBg: 'bg-cyan-500',
+    badgeBorder: 'border-cyan-500/50',
+    badgeBg: 'bg-cyan-500/5'
+  },
+  'Penetration Testing': {
+    borderColor: 'border-purple-500/20',
+    borderHover: 'hover:border-purple-500',
+    bgColor: 'bg-purple-500/10',
+    textColor: 'text-purple-400',
+    iconColor: 'text-purple-500',
+    progressBg: 'bg-purple-500',
+    badgeBorder: 'border-purple-500/50',
+    badgeBg: 'bg-purple-500/5'
+  },
+  'IDS/IPS & Network Security': {
+    borderColor: 'border-emerald-500/20',
+    borderHover: 'hover:border-emerald-500',
+    bgColor: 'bg-emerald-500/10',
+    textColor: 'text-emerald-400',
+    iconColor: 'text-emerald-500',
+    progressBg: 'bg-emerald-500',
+    badgeBorder: 'border-emerald-500/50',
+    badgeBg: 'bg-emerald-500/5'
+  },
+  'Programming & Automation': {
+    borderColor: 'border-blue-500/20',
+    borderHover: 'hover:border-blue-500',
+    bgColor: 'bg-blue-500/10',
+    textColor: 'text-blue-400',
+    iconColor: 'text-blue-500',
+    progressBg: 'bg-blue-500',
+    badgeBorder: 'border-blue-500/50',
+    badgeBg: 'bg-blue-500/5'
+  },
+  'Cloud & Infrastructure': {
+    borderColor: 'border-orange-500/20',
+    borderHover: 'hover:border-orange-500',
+    bgColor: 'bg-orange-500/10',
+    textColor: 'text-orange-400',
+    iconColor: 'text-orange-500',
+    progressBg: 'bg-orange-500',
+    badgeBorder: 'border-orange-500/50',
+    badgeBg: 'bg-orange-500/5'
+  },
+  'Security Tools & Honeypots': {
+    borderColor: 'border-red-500/20',
+    borderHover: 'hover:border-red-500',
+    bgColor: 'bg-red-500/10',
+    textColor: 'text-red-400',
+    iconColor: 'text-red-500',
+    progressBg: 'bg-red-500',
+    badgeBorder: 'border-red-500/50',
+    badgeBg: 'bg-red-500/5'
+  }
 };
 
 const SkillsMatrixSection = ({ recruiterMode }) => {
@@ -49,17 +103,17 @@ const SkillsMatrixSection = ({ recruiterMode }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {Object.entries(toolsProficiency).map(([category, tools]) => {
             const Icon = categoryIcons[category] || Code;
-            const colors = categoryColors[category];
+            const styles = categoryStyles[category];
 
             return (
               <Card
                 key={category}
-                className={`bg-[#0a0a0a]/50 backdrop-blur-lg border-${colors.border}/20 p-6 hover:border-${colors.border} transition-all duration-300`}
+                className={`bg-[#0a0a0a]/50 backdrop-blur-lg ${styles.borderColor} ${styles.borderHover} p-6 transition-all duration-300`}
               >
                 {/* Category Header */}
                 <div className="flex items-center gap-3 mb-6">
-                  <div className={`p-2 bg-${colors.bg}/10 rounded-lg`}>
-                    <Icon className={`h-5 w-5 text-${colors.text}`} />
+                  <div className={`p-2 ${styles.bgColor} rounded-lg`}>
+                    <Icon className={`h-5 w-5 ${styles.iconColor}`} />
                   </div>
                   <h3 className="text-lg font-bold text-white font-mono">{category}</h3>
                 </div>
@@ -77,11 +131,11 @@ const SkillsMatrixSection = ({ recruiterMode }) => {
                           <span className="text-gray-300 text-sm group-hover:text-white transition-colors">
                             {tool.name}
                           </span>
-                          <Badge className={`text-xs bg-${colors.bg}/10 text-${colors.text} border-${colors.border}/50`}>
+                          <Badge className={`text-xs ${styles.badgeBg} ${styles.textColor} ${styles.badgeBorder}`}>
                             {getProficiencyLabel(tool.level)}
                           </Badge>
                         </div>
-                        <span className={`text-xs font-mono text-${colors.text}`}>
+                        <span className={`text-xs font-mono ${styles.textColor}`}>
                           {tool.level}%
                         </span>
                       </div>
@@ -89,11 +143,8 @@ const SkillsMatrixSection = ({ recruiterMode }) => {
                       {/* Progress Bar */}
                       <div className="relative h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
                         <div
-                          className={`absolute top-0 left-0 h-full bg-${colors.bg} rounded-full transition-all duration-500`}
-                          style={{ 
-                            width: `${tool.level}%`,
-                            boxShadow: `0 0 10px var(--${colors.bg})40`
-                          }}
+                          className={`absolute top-0 left-0 h-full ${styles.progressBg} rounded-full transition-all duration-500`}
+                          style={{ width: `${tool.level}%` }}
                         />
                       </div>
 
