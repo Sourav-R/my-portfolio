@@ -4,11 +4,14 @@ export const profileData = {
   name: "Sourav Ramakrishna",
   role: "Jr. SOC Analyst & Home Lab Architect",
   company: "ThIRU Labs",
+  companyFull: "THIRU (Threat Incident and Response Unit)",
   location: "Melbourne, Australia",
   timezone: "Australia/Melbourne",
-  email: "sourav@example.com",
-  linkedin: "https://linkedin.com/in/souravramakrishna",
+  email: "Sourav.rk.21@gmail.com",
+  phone: "+61 493670389",
+  linkedin: "https://linkedin.com/in/sourav-ramakrishna",
   github: "https://github.com/souravramakrishna",
+  resumeUrl: "https://customer-assets.emergentagent.com/job_ringwood-secure/artifacts/gqj74rvj_Sourav_Ramakrishna_Jr.SOC_analyst.pdf",
   bio: "Based in Melbourne, I am a Jr. SOC Analyst at ThIRU (Threat Incident and Response Unit). I specialize in bridging the gap between proactive infrastructure management and reactive threat defense. When I'm not monitoring live incident logs or hardening client environments, I'm architecting my own private cloud infrastructure. My approach to security is grounded in the philosophy that you can't defend what you don't understand—which is why I spend my time breaking and building systems in my Proxmox-based home lab."
 };
 
