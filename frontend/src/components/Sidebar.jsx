@@ -16,7 +16,7 @@ const Sidebar = () => {
     { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
     { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'cyan' },
     { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
-    { id: 'academic-timeline', icon: Calendar, label: 'Timeline', color: 'purple' },
+    { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
     { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'emerald' },
     { id: 'contact', icon: Mail, label: 'Contact', color: 'cyan' }
   ];
