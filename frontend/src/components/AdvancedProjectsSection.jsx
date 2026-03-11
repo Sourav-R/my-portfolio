@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { ChevronDown, ChevronUp, Target, Zap, Shield, CheckCircle, AlertTriangle } from 'lucide-react';
+import { ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
 import { advancedProjects } from '../mock';
 
 const AdvancedProjectsSection = ({ recruiterMode }) => {
@@ -11,163 +11,127 @@ const AdvancedProjectsSection = ({ recruiterMode }) => {
   const getCategoryColor = (category) => {
     const colors = {
       'Infrastructure Security': 'cyan',
-      'Network Infrastructure': 'blue',
+      'Network Architecture': 'blue',
       'Offensive Security': 'red',
       'Cryptography': 'purple',
       'Network Security': 'emerald',
-      'Communications Security': 'orange'
+      'Email Security': 'orange'
     };
     return colors[category] || 'gray';
   };
 
-  const getDifficultyColor = (difficulty) => {
-    return difficulty === 'Expert' ? 'red' : difficulty === 'Advanced' ? 'orange' : 'yellow';
-  };
-
   return (
     <section id="advanced-projects" className="min-h-screen px-4 py-20 relative bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-12">
           <h2 className="text-4xl font-bold text-white mb-4 font-mono">
             <span className="text-cyan-500">&gt;</span> Advanced Technical Projects
           </h2>
           <p className="text-gray-400 max-w-2xl">
-            Production-grade infrastructure and security projects demonstrating expertise in network architecture, cryptography, offensive security, and enterprise-scale deployments.
+            Production-grade infrastructure and security implementations demonstrating enterprise-scale architecture, cryptography, and offensive security expertise.
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-6">
           {advancedProjects.map((project, index) => {
             const categoryColor = getCategoryColor(project.category);
-            const difficultyColor = getDifficultyColor(project.difficulty);
+            const isExpanded = expandedProject === project.id;
 
             return (
               <Card
                 key={project.id}
-                className="relative bg-[#0a0a0a]/80 backdrop-blur-lg border-cyan-500/20 p-8 hover:border-cyan-500 transition-all duration-300"
+                className="bg-[#0a0a0a]/80 backdrop-blur-lg border-cyan-500/20 hover:border-cyan-500 transition-all duration-300 overflow-hidden"
                 style={{
-                  animation: recruiterMode ? 'none' : `slideUp 0.6s ease-out ${index * 0.1}s both`
+                  animation: recruiterMode ? 'none' : `slideUp 0.5s ease-out ${index * 0.1}s both`
                 }}
               >
-                {/* Project Header */}
-                <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <h3 className="text-2xl font-bold text-white font-mono">{project.title}</h3>
-                      <Badge className={`bg-${difficultyColor}-500/10 text-${difficultyColor}-500 border-${difficultyColor}-500`}>
-                        {project.difficulty}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Badge className={`bg-${categoryColor}-500/10 text-${categoryColor}-500 border-${categoryColor}-500`}>
-                        {project.category}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs border-gray-500 text-gray-400">
-                        {project.impact}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-
-                {/* The Challenge */}
-                <div className="mb-6 pb-6 border-b border-cyan-500/10">
-                  <p className="text-xs text-red-500 uppercase tracking-wider mb-2 font-mono flex items-center gap-2">
-                    <AlertTriangle className="h-3 w-3" />
-                    The Challenge (The 'Why')
-                  </p>
-                  <p className="text-gray-300 leading-relaxed">{project.challenge}</p>
-                </div>
-
-                {/* Technical Stack */}
-                <div className="mb-6">
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 font-mono">Technical Stack & Protocols</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.stack.map((tech, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs border-cyan-500/50 text-cyan-400 bg-cyan-500/5 font-mono">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Expandable Details */}
-                {expandedProject === project.id && (
-                  <div className="space-y-6 animate-fadeIn">
-                    {/* Implementation */}
-                    <div>
-                      <p className="text-xs text-emerald-500 uppercase tracking-wider mb-3 font-mono flex items-center gap-2">
-                        <Zap className="h-3 w-3" />
-                        The Implementation (The 'How')
-                      </p>
-                      <ul className="space-y-2">
-                        {project.implementation.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-gray-400 text-sm">
-                            <span className="text-emerald-500 mt-1">•</span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Measurable Outcomes */}
-                    <div>
-                      <p className="text-xs text-blue-500 uppercase tracking-wider mb-3 font-mono flex items-center gap-2">
-                        <Target className="h-3 w-3" />
-                        Measurable Outcomes
-                      </p>
-                      <ul className="space-y-2">
-                        {project.outcomes.map((outcome, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-gray-400 text-sm">
-                            <CheckCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            {outcome}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Recruiter Talking Points */}
-                    <div className="bg-[#121212] border border-emerald-500/20 rounded-lg p-6">
-                      <p className="text-xs text-emerald-500 uppercase tracking-wider mb-3 font-mono flex items-center gap-2">
-                        <Shield className="h-3 w-3" />
-                        Recruiter Talking Points
-                      </p>
-                      <ul className="space-y-3">
-                        {project.recruiterPoints.map((point, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <span className="text-emerald-500 text-xl mt-0.5">"</span>
-                            <p className="text-emerald-400 text-sm leading-relaxed flex-1 italic">
-                              {point}
-                            </p>
-                            <span className="text-emerald-500 text-xl">"</span>
-                          </li>
-                        ))}
-                      </ul>
+                <div className="p-6">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-white mb-2 font-mono">{project.title}</h3>
+                      <p className="text-gray-400 text-sm mb-3">{project.subtitle}</p>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge className={`bg-${categoryColor}-500/10 text-${categoryColor}-400 border-${categoryColor}-500/50 text-xs`}>
+                          {project.category}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+                          {project.difficulty}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+                          {project.type}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
-                )}
 
-                {/* Expand/Collapse Button */}
-                <div className="mt-6 pt-6 border-t border-cyan-500/10">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
-                    className="text-cyan-500 hover:text-cyan-400 hover:bg-cyan-500/10"
-                  >
-                    {expandedProject === project.id ? (
-                      <>
-                        <ChevronUp className="h-4 w-4 mr-2" />
-                        Show Less
-                      </>
-                    ) : (
-                      <>
-                        <ChevronDown className="h-4 w-4 mr-2" />
-                        View Full Technical Details
-                      </>
-                    )}
-                  </Button>
+                  {/* Challenge - Always Visible */}
+                  <div className="mb-4 pb-4 border-b border-cyan-500/10">
+                    <p className="text-gray-300 text-sm leading-relaxed">{project.challenge}</p>
+                  </div>
+
+                  {/* Tech Stack - Always Visible */}
+                  <div className="mb-4">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Tech Stack</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.slice(0, 6).map((tech, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 bg-cyan-500/5 border border-cyan-500/30 rounded text-cyan-400 font-mono">
+                          {tech}
+                        </span>
+                      ))}
+                      {project.stack.length > 6 && (
+                        <span className="text-xs px-2 py-1 text-gray-500">+{project.stack.length - 6} more</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Expandable Details */}
+                  {isExpanded && (
+                    <div className="space-y-4 pt-4 border-t border-cyan-500/10 animate-fadeIn">
+                      {/* Key Highlights */}
+                      <div>
+                        <p className="text-xs text-emerald-500 uppercase tracking-wide mb-3 font-mono">Implementation Highlights</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {project.highlights.map((highlight, idx) => (
+                            <div key={idx} className="flex items-start gap-2">
+                              <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-400 text-sm">{highlight}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Impact */}
+                      <div className="bg-gradient-to-r from-cyan-500/10 to-transparent border-l-2 border-cyan-500 p-4 rounded">
+                        <p className="text-xs text-cyan-500 uppercase tracking-wide mb-2 font-mono">Impact & Results</p>
+                        <p className="text-white text-sm font-medium">{project.impact}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Expand Button */}
+                  <div className="mt-4">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setExpandedProject(isExpanded ? null : project.id)}
+                      className="text-cyan-500 hover:text-cyan-400 hover:bg-cyan-500/10 w-full"
+                    >
+                      {isExpanded ? (
+                        <>
+                          <ChevronUp className="h-4 w-4 mr-2" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown className="h-4 w-4 mr-2" />
+                          View Technical Details
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </Card>
             );
@@ -175,26 +139,26 @@ const AdvancedProjectsSection = ({ recruiterMode }) => {
         </div>
 
         {/* Summary Stats */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-cyan-500 font-mono mb-2">7</p>
-            <p className="text-gray-400 text-sm">Technical Projects</p>
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-4 text-center">
+            <p className="text-2xl font-bold text-cyan-500 font-mono mb-1">{advancedProjects.length}</p>
+            <p className="text-gray-400 text-xs">Projects</p>
           </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-red-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-red-500 font-mono mb-2">
+          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-red-500/20 p-4 text-center">
+            <p className="text-2xl font-bold text-red-500 font-mono mb-1">
               {advancedProjects.filter(p => p.difficulty === 'Expert').length}
             </p>
-            <p className="text-gray-400 text-sm">Expert Level</p>
+            <p className="text-gray-400 text-xs">Expert Level</p>
           </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-emerald-500 font-mono mb-2">
-              {advancedProjects.filter(p => p.impact === 'Enterprise').length}
+          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-4 text-center">
+            <p className="text-2xl font-bold text-emerald-500 font-mono mb-1">
+              {advancedProjects.filter(p => p.type === 'Enterprise').length}
             </p>
-            <p className="text-gray-400 text-sm">Enterprise Scale</p>
+            <p className="text-gray-400 text-xs">Enterprise</p>
           </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-purple-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-purple-500 font-mono mb-2">6</p>
-            <p className="text-gray-400 text-sm">Categories</p>
+          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-purple-500/20 p-4 text-center">
+            <p className="text-2xl font-bold text-purple-500 font-mono mb-1">6</p>
+            <p className="text-gray-400 text-xs">Categories</p>
           </Card>
         </div>
       </div>
@@ -203,7 +167,7 @@ const AdvancedProjectsSection = ({ recruiterMode }) => {
         @keyframes slideUp {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
