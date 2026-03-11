@@ -22,8 +22,9 @@ Build a high-end, developer-centric portfolio for Sourav Ramakrishna (Jr. SOC An
 - **Data:** All content from `/app/frontend/src/mock.js`
 
 ## What's Been Implemented
-- [x] Parrot OS-style boot sequence animation
+- [x] ~~Boot sequence~~ — Removed (Mar 2026), instant load now
 - [x] Interactive sidebar with scroll progress + active section
+- [x] **Narrative section flow (Mar 2026):** Hero → Journey → Experience → Skills → Certs → Tech Projects → Security Briefs → Lab Experience → Case Studies → Lab Monitor → Terminal → Contact
 - [x] Work Experience section (from resume)
 - [x] Skills Matrix with proficiency bars (static class maps)
 - [x] Lab Experience dashboard (from Excel data)
@@ -40,7 +41,6 @@ Build a high-end, developer-centric portfolio for Sourav Ramakrishna (Jr. SOC An
 ## Backlog
 - **P1:** Backend contact form API (`/api/contact`) + MongoDB storage
 - **P2:** Backend API contracts (`contracts.md`)
-- **P3:** Boot sequence skip button for returning users
 
 ## Architecture
 ```
