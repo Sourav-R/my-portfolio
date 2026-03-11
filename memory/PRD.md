@@ -23,6 +23,7 @@ Build a high-end, developer-centric portfolio for Sourav Ramakrishna (Jr. SOC An
 
 ## What's Been Implemented
 - [x] ~~Boot sequence~~ — Removed (Mar 2026), instant load now
+- [x] **Hero Section redesigned (Mar 2026):** Bold name, mini terminal with typing animation, status badges, quick stats (200+ Labs, 25+ Tools, 7 Projects, 6 Certs), CTA buttons
 - [x] Interactive sidebar with scroll progress + active section
 - [x] **Narrative section flow (Mar 2026):** Hero → Journey → Experience → Skills → Certs → Tech Projects → Security Briefs → Lab Experience → Case Studies → Lab Monitor → Terminal → Contact
 - [x] Work Experience section (from resume)
