@@ -1,184 +1,182 @@
 import React, { useState } from 'react';
-import { Card } from './ui/card';
 import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ChevronRight, Shield, Network, Sword, Lock, Globe, Mail } from 'lucide-react';
 import { advancedProjects } from '../mock';
 
-const AdvancedProjectsSection = ({ recruiterMode }) => {
-  const [expandedProject, setExpandedProject] = useState(null);
+const CATEGORY_STYLES = {
+  'Infrastructure Security': {
+    border: 'border-l-cyan-500',
+    badge: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+    icon: Shield,
+    accent: 'text-cyan-500',
+    glow: 'hover:shadow-cyan-500/5',
+  },
+  'Network Architecture': {
+    border: 'border-l-blue-500',
+    badge: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+    icon: Network,
+    accent: 'text-blue-500',
+    glow: 'hover:shadow-blue-500/5',
+  },
+  'Offensive Security': {
+    border: 'border-l-red-500',
+    badge: 'bg-red-500/10 text-red-400 border-red-500/30',
+    icon: Sword,
+    accent: 'text-red-500',
+    glow: 'hover:shadow-red-500/5',
+  },
+  'Cryptography': {
+    border: 'border-l-purple-500',
+    badge: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    icon: Lock,
+    accent: 'text-purple-500',
+    glow: 'hover:shadow-purple-500/5',
+  },
+  'Network Security': {
+    border: 'border-l-emerald-500',
+    badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    icon: Globe,
+    accent: 'text-emerald-500',
+    glow: 'hover:shadow-emerald-500/5',
+  },
+  'Email Security': {
+    border: 'border-l-orange-500',
+    badge: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
+    icon: Mail,
+    accent: 'text-orange-500',
+    glow: 'hover:shadow-orange-500/5',
+  },
+};
 
-  const getCategoryColor = (category) => {
-    const colors = {
-      'Infrastructure Security': 'cyan',
-      'Network Architecture': 'blue',
-      'Offensive Security': 'red',
-      'Cryptography': 'purple',
-      'Network Security': 'emerald',
-      'Email Security': 'orange'
-    };
-    return colors[category] || 'gray';
-  };
+const DIFFICULTY_STYLES = {
+  'Expert': 'bg-red-500/10 text-red-400 border-red-500/30',
+  'Advanced': 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+};
+
+const DEFAULT_STYLE = {
+  border: 'border-l-gray-500',
+  badge: 'bg-gray-500/10 text-gray-400 border-gray-500/30',
+  icon: Shield,
+  accent: 'text-gray-500',
+  glow: 'hover:shadow-gray-500/5',
+};
+
+const ProjectCard = ({ project, isExpanded, onToggle, index }) => {
+  const style = CATEGORY_STYLES[project.category] || DEFAULT_STYLE;
+  const IconComp = style.icon;
 
   return (
-    <section id="advanced-projects" className="min-h-screen px-4 py-20 relative bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4 font-mono">
-            <span className="text-cyan-500">&gt;</span> Advanced Technical Projects
+    <div
+      data-testid={`project-card-${project.id}`}
+      onClick={onToggle}
+      className={`group relative border-l-2 ${style.border} bg-[#0c0c0c] rounded-r-lg cursor-pointer
+        transition-all duration-300 ${style.glow} hover:shadow-lg hover:bg-[#0e0e0e]
+        ${isExpanded ? 'col-span-1 md:col-span-2 shadow-lg' : ''}`}
+      style={{ animationDelay: `${index * 60}ms` }}
+    >
+      <div className="p-5">
+        {/* Top row: icon + title + badges */}
+        <div className="flex items-start gap-3 mb-3">
+          <div className={`mt-0.5 ${style.accent} opacity-60`}>
+            <IconComp className="h-4 w-4" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-sm font-semibold text-white font-mono leading-snug mb-1 group-hover:text-gray-100 transition-colors">
+              {project.title}
+            </h3>
+            <p className="text-xs text-gray-500 leading-relaxed">{project.subtitle}</p>
+          </div>
+          <ChevronRight className={`h-4 w-4 text-gray-600 flex-shrink-0 mt-1 transition-transform duration-200 ${isExpanded ? 'rotate-90' : 'group-hover:translate-x-0.5'}`} />
+        </div>
+
+        {/* Badges row */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3 ml-7">
+          <Badge className={`${style.badge} text-[10px] px-1.5 py-0 h-5 font-normal border`}>
+            {project.category}
+          </Badge>
+          <Badge className={`${DIFFICULTY_STYLES[project.difficulty] || 'bg-gray-500/10 text-gray-400 border-gray-500/30'} text-[10px] px-1.5 py-0 h-5 font-normal border`}>
+            {project.difficulty}
+          </Badge>
+          <Badge className="bg-[#111]/80 text-gray-500 border-gray-700/50 text-[10px] px-1.5 py-0 h-5 font-normal border">
+            {project.type}
+          </Badge>
+        </div>
+
+        {/* Tech stack pills */}
+        <div className="flex flex-wrap gap-1 ml-7">
+          {project.stack.map((tech, idx) => (
+            <span key={idx} className="text-[10px] px-1.5 py-0.5 bg-[#111] border border-gray-800 rounded text-gray-500 font-mono">
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Expanded content */}
+        {isExpanded && (
+          <div className="mt-4 ml-7 space-y-4 border-t border-gray-800/50 pt-4">
+            {/* Challenge */}
+            <p className="text-xs text-gray-400 leading-relaxed">{project.challenge}</p>
+
+            {/* Highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+              {project.highlights.map((h, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <CheckCircle2 className={`h-3 w-3 ${style.accent} mt-0.5 flex-shrink-0 opacity-70`} />
+                  <span className="text-xs text-gray-400">{h}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Impact */}
+            <div className={`text-xs ${style.accent} font-mono opacity-80 bg-[#080808] rounded px-3 py-2 border border-gray-800/50`}>
+              {project.impact}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const AdvancedProjectsSection = ({ recruiterMode }) => {
+  const [expandedId, setExpandedId] = useState(null);
+
+  const categories = [...new Set(advancedProjects.map(p => p.category))];
+  const expertCount = advancedProjects.filter(p => p.difficulty === 'Expert').length;
+  const enterpriseCount = advancedProjects.filter(p => p.type === 'Enterprise').length;
+
+  return (
+    <section id="advanced-projects" className="px-4 py-20 bg-[#050505]" data-testid="advanced-projects-section">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-white mb-2 font-mono tracking-tight">
+            <span className="text-cyan-500 mr-1">&gt;</span>Advanced Technical Projects
           </h2>
-          <p className="text-gray-400 max-w-2xl">
-            Production-grade infrastructure and security implementations demonstrating enterprise-scale architecture, cryptography, and offensive security expertise.
-          </p>
+          <div className="flex items-center gap-4 text-xs text-gray-600 font-mono">
+            <span>{advancedProjects.length} projects</span>
+            <span className="w-px h-3 bg-gray-700" />
+            <span>{categories.length} categories</span>
+            <span className="w-px h-3 bg-gray-700" />
+            <span>{expertCount} expert-level</span>
+            <span className="w-px h-3 bg-gray-700" />
+            <span>{enterpriseCount} enterprise</span>
+          </div>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 gap-6">
-          {advancedProjects.map((project, index) => {
-            const categoryColor = getCategoryColor(project.category);
-            const isExpanded = expandedProject === project.id;
-
-            return (
-              <Card
-                key={project.id}
-                className="bg-[#0a0a0a]/80 backdrop-blur-lg border-cyan-500/20 hover:border-cyan-500 transition-all duration-300 overflow-hidden"
-                style={{
-                  animation: recruiterMode ? 'none' : `slideUp 0.5s ease-out ${index * 0.1}s both`
-                }}
-              >
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-2 font-mono">{project.title}</h3>
-                      <p className="text-gray-400 text-sm mb-3">{project.subtitle}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge className={`bg-${categoryColor}-500/10 text-${categoryColor}-400 border-${categoryColor}-500/50 text-xs`}>
-                          {project.category}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
-                          {project.difficulty}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
-                          {project.type}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Challenge - Always Visible */}
-                  <div className="mb-4 pb-4 border-b border-cyan-500/10">
-                    <p className="text-gray-300 text-sm leading-relaxed">{project.challenge}</p>
-                  </div>
-
-                  {/* Tech Stack - Always Visible */}
-                  <div className="mb-4">
-                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Tech Stack</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.slice(0, 6).map((tech, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 bg-cyan-500/5 border border-cyan-500/30 rounded text-cyan-400 font-mono">
-                          {tech}
-                        </span>
-                      ))}
-                      {project.stack.length > 6 && (
-                        <span className="text-xs px-2 py-1 text-gray-500">+{project.stack.length - 6} more</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Expandable Details */}
-                  {isExpanded && (
-                    <div className="space-y-4 pt-4 border-t border-cyan-500/10 animate-fadeIn">
-                      {/* Key Highlights */}
-                      <div>
-                        <p className="text-xs text-emerald-500 uppercase tracking-wide mb-3 font-mono">Implementation Highlights</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                          {project.highlights.map((highlight, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-400 text-sm">{highlight}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Impact */}
-                      <div className="bg-gradient-to-r from-cyan-500/10 to-transparent border-l-2 border-cyan-500 p-4 rounded">
-                        <p className="text-xs text-cyan-500 uppercase tracking-wide mb-2 font-mono">Impact & Results</p>
-                        <p className="text-white text-sm font-medium">{project.impact}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Expand Button */}
-                  <div className="mt-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setExpandedProject(isExpanded ? null : project.id)}
-                      className="text-cyan-500 hover:text-cyan-400 hover:bg-cyan-500/10 w-full"
-                    >
-                      {isExpanded ? (
-                        <>
-                          <ChevronUp className="h-4 w-4 mr-2" />
-                          Show Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="h-4 w-4 mr-2" />
-                          View Technical Details
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Summary Stats */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-4 text-center">
-            <p className="text-2xl font-bold text-cyan-500 font-mono mb-1">{advancedProjects.length}</p>
-            <p className="text-gray-400 text-xs">Projects</p>
-          </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-red-500/20 p-4 text-center">
-            <p className="text-2xl font-bold text-red-500 font-mono mb-1">
-              {advancedProjects.filter(p => p.difficulty === 'Expert').length}
-            </p>
-            <p className="text-gray-400 text-xs">Expert Level</p>
-          </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-4 text-center">
-            <p className="text-2xl font-bold text-emerald-500 font-mono mb-1">
-              {advancedProjects.filter(p => p.type === 'Enterprise').length}
-            </p>
-            <p className="text-gray-400 text-xs">Enterprise</p>
-          </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-purple-500/20 p-4 text-center">
-            <p className="text-2xl font-bold text-purple-500 font-mono mb-1">6</p>
-            <p className="text-gray-400 text-xs">Categories</p>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {advancedProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              isExpanded={expandedId === project.id}
+              onToggle={() => setExpandedId(expandedId === project.id ? null : project.id)}
+            />
+          ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
     </section>
   );
 };
