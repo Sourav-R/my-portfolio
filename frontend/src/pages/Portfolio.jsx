@@ -1,45 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import HeroSection from '../components/HeroSection';
+import ProfessionalJourneySection from '../components/ProfessionalJourneySection';
 import WorkExperienceSection from '../components/WorkExperienceSection';
-import LabExperienceSection from '../components/LabExperienceSection';
 import SkillsMatrixSection from '../components/SkillsMatrixSection';
 import CertificationsSection from '../components/CertificationsSection';
-import LabMonitor from '../components/LabMonitor';
-import ProjectsSection from '../components/ProjectsSection';
-import FeaturedLabsSection from '../components/FeaturedLabsSection';
 import AdvancedProjectsSection from '../components/AdvancedProjectsSection';
-import ProfessionalJourneySection from '../components/ProfessionalJourneySection';
+import ProjectsSection from '../components/ProjectsSection';
+import LabExperienceSection from '../components/LabExperienceSection';
+import FeaturedLabsSection from '../components/FeaturedLabsSection';
+import LabMonitor from '../components/LabMonitor';
 import TerminalSandbox from '../components/TerminalSandbox';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-import BootSequence from '../components/BootSequence';
 import { Button } from '../components/ui/button';
 import { Switch } from '../components/ui/switch';
 import { profileData } from '../mock';
-import { Moon, Sun } from 'lucide-react';
 
 const Portfolio = () => {
   const [recruiterMode, setRecruiterMode] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [bootComplete, setBootComplete] = useState(false);
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
-  const handleBootComplete = () => {
-    setBootComplete(true);
-  };
-
-  // Show boot sequence on first load
-  if (!bootComplete) {
-    return <BootSequence onComplete={handleBootComplete} />;
-  }
+    document.documentElement.classList.add('dark');
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200">
@@ -71,15 +54,15 @@ const Portfolio = () => {
       <div className="lg:ml-64">
         <main className={recruiterMode ? 'recruiter-mode' : ''}>
           <HeroSection recruiterMode={recruiterMode} />
+          <ProfessionalJourneySection recruiterMode={recruiterMode} />
           <WorkExperienceSection recruiterMode={recruiterMode} />
-          <LabExperienceSection recruiterMode={recruiterMode} />
           <SkillsMatrixSection recruiterMode={recruiterMode} />
           <CertificationsSection recruiterMode={recruiterMode} />
-          <LabMonitor recruiterMode={recruiterMode} />
-          <ProjectsSection recruiterMode={recruiterMode} />
           <AdvancedProjectsSection recruiterMode={recruiterMode} />
+          <ProjectsSection recruiterMode={recruiterMode} />
+          <LabExperienceSection recruiterMode={recruiterMode} />
           <FeaturedLabsSection recruiterMode={recruiterMode} />
-          <ProfessionalJourneySection recruiterMode={recruiterMode} />
+          <LabMonitor recruiterMode={recruiterMode} />
           <TerminalSandbox recruiterMode={recruiterMode} />
           <ContactSection recruiterMode={recruiterMode} />
           <Footer />

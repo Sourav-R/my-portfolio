@@ -9,16 +9,16 @@ const Sidebar = () => {
 
   const navItems = [
     { id: 'hero', icon: Home, label: 'Home', color: 'cyan' },
+    { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
     { id: 'work-experience', icon: Briefcase, label: 'Experience', color: 'cyan' },
-    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'emerald' },
     { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix', color: 'purple' },
     { id: 'certifications', icon: GraduationCap, label: 'Certifications', color: 'blue' },
-    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
-    { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'cyan' },
-    { id: 'advanced-projects', icon: Code, label: 'Tech Projects', color: 'purple' },
+    { id: 'advanced-projects', icon: Code, label: 'Tech Projects', color: 'cyan' },
+    { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'emerald' },
+    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'emerald' },
     { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
-    { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
-    { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'emerald' },
+    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
+    { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'cyan' },
     { id: 'contact', icon: Mail, label: 'Contact', color: 'cyan' }
   ];
 
