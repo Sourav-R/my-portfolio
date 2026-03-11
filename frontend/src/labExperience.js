@@ -134,6 +134,21 @@ export const professionalJourney = [
   },
   {
     year: '2024',
+    period: '2024',
+    milestone: 'Security Testing & Shift-Left Advocacy',
+    organization: 'Habitat for Wings (IE Project)',
+    type: 'work',
+    color: 'cyan',
+    description: 'Led iterative vulnerability assessments on a Cloudflare/AWS production platform, embedding security testing into the CI/CD lifecycle.',
+    skills: ['Nikto', 'WhatWeb', 'CORS Hardening', 'CSP', 'HSTS', 'EXIF Stripping', 'Shift-Left Security'],
+    achievements: [
+      'Discovered and remediated permissive CORS and missing security headers',
+      'Enforced HSTS, CSP, X-Content-Type-Options across production',
+      'Integrated automated malware scanning for user-uploaded content'
+    ]
+  },
+  {
+    year: '2024',
     period: '2024 S1',
     milestone: 'Advanced Security Specialization',
     organization: 'Monash University',

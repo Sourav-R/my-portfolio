@@ -118,7 +118,7 @@ const HeroSection = ({ recruiterMode }) => {
               <div className="w-px h-4 bg-gray-800" />
               <div><span className="text-cyan-500 text-lg font-bold">25+</span><span className="text-gray-600 ml-1.5">Tools</span></div>
               <div className="w-px h-4 bg-gray-800" />
-              <div><span className="text-purple-500 text-lg font-bold">7</span><span className="text-gray-600 ml-1.5">Projects</span></div>
+              <div><span className="text-purple-500 text-lg font-bold">23</span><span className="text-gray-600 ml-1.5">Projects</span></div>
               <div className="w-px h-4 bg-gray-800" />
               <div><span className="text-blue-500 text-lg font-bold">6</span><span className="text-gray-600 ml-1.5">Certs</span></div>
             </div>

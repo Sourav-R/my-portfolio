@@ -5,8 +5,7 @@ import ProfessionalJourneySection from '../components/ProfessionalJourneySection
 import WorkExperienceSection from '../components/WorkExperienceSection';
 import SkillsMatrixSection from '../components/SkillsMatrixSection';
 import CertificationsSection from '../components/CertificationsSection';
-import AdvancedProjectsSection from '../components/AdvancedProjectsSection';
-import ProjectsSection from '../components/ProjectsSection';
+import ProjectsHub from '../components/ProjectsHub';
 import LabExperienceSection from '../components/LabExperienceSection';
 import FeaturedLabsSection from '../components/FeaturedLabsSection';
 import LabMonitor from '../components/LabMonitor';
@@ -59,8 +58,7 @@ const Portfolio = () => {
           <WorkExperienceSection recruiterMode={recruiterMode} />
           <SkillsMatrixSection recruiterMode={recruiterMode} />
           <CertificationsSection recruiterMode={recruiterMode} />
-          <AdvancedProjectsSection recruiterMode={recruiterMode} />
-          <ProjectsSection recruiterMode={recruiterMode} />
+          <ProjectsHub recruiterMode={recruiterMode} />
           <LabExperienceSection recruiterMode={recruiterMode} />
           <FeaturedLabsSection recruiterMode={recruiterMode} />
           <LabMonitor recruiterMode={recruiterMode} />
