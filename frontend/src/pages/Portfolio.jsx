@@ -8,6 +8,7 @@ import CertificationsSection from '../components/CertificationsSection';
 import LabMonitor from '../components/LabMonitor';
 import ProjectsSection from '../components/ProjectsSection';
 import FeaturedLabsSection from '../components/FeaturedLabsSection';
+import AdvancedProjectsSection from '../components/AdvancedProjectsSection';
 import ProfessionalJourneySection from '../components/ProfessionalJourneySection';
 import TerminalSandbox from '../components/TerminalSandbox';
 import ContactSection from '../components/ContactSection';
@@ -76,6 +77,7 @@ const Portfolio = () => {
           <CertificationsSection recruiterMode={recruiterMode} />
           <LabMonitor recruiterMode={recruiterMode} />
           <ProjectsSection recruiterMode={recruiterMode} />
+          <AdvancedProjectsSection recruiterMode={recruiterMode} />
           <FeaturedLabsSection recruiterMode={recruiterMode} />
           <ProfessionalJourneySection recruiterMode={recruiterMode} />
           <TerminalSandbox recruiterMode={recruiterMode} />

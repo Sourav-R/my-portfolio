@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen, Briefcase, Calendar } from 'lucide-react';
+import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen, Briefcase, Calendar, Code } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Sidebar = () => {
@@ -15,6 +15,7 @@ const Sidebar = () => {
     { id: 'certifications', icon: GraduationCap, label: 'Certifications', color: 'blue' },
     { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
     { id: 'projects', icon: FolderGit2, label: 'Security Briefs', color: 'cyan' },
+    { id: 'advanced-projects', icon: Code, label: 'Tech Projects', color: 'purple' },
     { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
     { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
     { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'emerald' },
