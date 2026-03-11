@@ -22,6 +22,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
+    window.scrollTo(0, 0);
   }, []);
 
   return (
