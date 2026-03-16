@@ -60,20 +60,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Terminal Easter Egg */}
-        <div className="border-t border-gray-800/50 pt-6 mb-6">
-          <div className="bg-[#080808] border border-gray-800 rounded p-4 font-mono text-xs">
-            <div className="flex items-start gap-2">
-              <span className="text-emerald-500">sourav@ringwood-home:~$</span>
-              <span className="text-gray-500">cat current_interests.json</span>
-            </div>
-            <pre className="text-gray-400 mt-2 text-[11px]">{`{
-  "reading": "${currentInterests.reading}",
-  "tech": "${currentInterests.tech}",
-  "hobby": "${currentInterests.hobby}"
-}`}</pre>
-          </div>
-        </div>
 
         {/* Copyright */}
         <div className="text-center text-[10px] text-gray-600 font-mono relative">

@@ -117,17 +117,6 @@ const LabExperienceSection = ({ recruiterMode }) => {
           </div>
         </div>
 
-        {/* Courses */}
-        <div className="text-center">
-          <p className="text-gray-600 text-xs mb-3 font-mono">courses_completed</p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {labStats.coursesCompleted.map((course) => (
-              <span key={course} className="text-xs px-3 py-1.5 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 rounded font-mono">
-                {course}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
