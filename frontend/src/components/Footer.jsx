@@ -65,15 +65,12 @@ const Footer = () => {
         <div className="text-center text-[10px] text-gray-600 font-mono relative">
           <p>
             © {currentYear} {profileData.name}
-            <span 
-              className="text-gray-900 hover:text-red-500 cursor-pointer transition-colors" 
+            <span
+              className="text-gray-900 hover:text-red-500 cursor-pointer transition-colors"
               onClick={() => setShowAdminModal(true)}
               title="Classified"
             >.</span>
-          </p>
-          <p className="mt-0.5">
-            built with <span className="text-cyan-500">react</span> + <span className="text-purple-500">tailwind</span>
-          </p>
+
         </div>
       </div>
 
@@ -82,7 +79,7 @@ const Footer = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
           <div className="bg-[#0a0a0a] border border-red-500/30 rounded-lg shadow-[0_0_40px_rgba(239,68,68,0.15)] w-full max-w-md overflow-hidden relative">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-orange-500" />
-            
+
             <div className="flex justify-between items-center p-4 border-b border-gray-800">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4 text-red-500" />
@@ -92,7 +89,7 @@ const Footer = () => {
                 <X className="h-4 w-4" />
               </button>
             </div>
-            
+
             <div className="p-6">
               <form onSubmit={(e) => { e.preventDefault(); setShowAdminModal(false); }} className="space-y-4 font-mono">
                 <div>
