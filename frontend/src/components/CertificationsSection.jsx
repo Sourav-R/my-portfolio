@@ -1,133 +1,110 @@
 import React from 'react';
-import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Award, Clock, CheckCircle } from 'lucide-react';
 import { certifications } from '../labExperience';
+import ScrollReveal from './ScrollReveal';
 
 const CertificationsSection = ({ recruiterMode }) => {
-  const getStatusColor = (status) => {
-    return status === 'Completed' ? 'emerald' : status === 'In Progress' ? 'blue' : 'gray';
+  const getStatusAccent = (status) => {
+    if (status === 'Completed') return { border: 'border-emerald-500/20', text: 'text-emerald-400', bg: 'bg-emerald-500/10', dot: 'bg-emerald-500', hover: 'hover:border-emerald-500/40' };
+    if (status === 'In Progress') return { border: 'border-blue-500/20', text: 'text-blue-400', bg: 'bg-blue-500/10', dot: 'bg-blue-500', hover: 'hover:border-blue-500/40' };
+    return { border: 'border-gray-700', text: 'text-gray-400', bg: 'bg-gray-500/10', dot: 'bg-gray-500', hover: 'hover:border-gray-600' };
   };
 
   return (
-    <section id="certifications" className="min-h-screen px-4 py-20 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="certifications" className="relative px-4 py-24 bg-[#030303]">
+      <div className="absolute inset-0 bg-dots opacity-20" />
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4 font-mono">
-            <span className="text-cyan-500">&gt;</span> Certifications & Training
+        <div className="mb-16">
+          <div className="section-cmd mb-3">
+            <span className="prompt">$</span> ls -la ./certifications/
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
+            Certifications & Training
           </h2>
-          <p className="text-gray-400 max-w-2xl">
-            Professional certifications and specialized training programs demonstrating expertise in cybersecurity operations, cloud security, and network architecture.
+          <p className="text-gray-500 max-w-2xl text-sm">
+            Professional certifications and specialized training in cybersecurity operations, cloud security, and network architecture.
           </p>
         </div>
 
         {/* Certifications Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {certifications.map((cert, index) => {
-            const statusColor = getStatusColor(cert.status);
-
+            const accent = getStatusAccent(cert.status);
             return (
-              <Card
+              <div
                 key={index}
-                className={`bg-[#0a0a0a]/50 backdrop-blur-lg border-${statusColor}-500/20 p-6 hover:border-${statusColor}-500 transition-all duration-300`}
-                style={{
-                  animation: recruiterMode ? 'none' : `slideIn 0.5s ease-out ${index * 0.1}s both`
-                }}
+                className={`holo-card card-3d bg-[#080808] border ${accent.border} ${accent.hover} rounded-lg p-5 transition-all duration-300 hover:shadow-lg`}
+                style={{ animation: recruiterMode ? 'none' : `fadeInUp 0.5s ease-out ${index * 0.1}s both` }}
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-lg ${statusColor === 'emerald' ? 'bg-emerald-500/10' : statusColor === 'blue' ? 'bg-blue-500/10' : 'bg-gray-500/10'}`}>
-                    {cert.status === 'Completed' ? (
-                      <CheckCircle className={`h-6 w-6 ${statusColor === 'emerald' ? 'text-emerald-500' : 'text-blue-500'}`} />
-                    ) : (
-                      <Clock className={`h-6 w-6 ${statusColor === 'blue' ? 'text-blue-500' : 'text-gray-500'}`} />
-                    )}
+                  <div className={`p-2.5 ${accent.bg} rounded`}>
+                    {cert.status === 'Completed'
+                      ? <CheckCircle className={`h-5 w-5 ${accent.text}`} />
+                      : <Clock className={`h-5 w-5 ${accent.text}`} />
+                    }
                   </div>
-                  <Badge className={`${statusColor === 'emerald' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500' : statusColor === 'blue' ? 'bg-blue-500/10 text-blue-500 border-blue-500' : 'bg-gray-500/10 text-gray-500 border-gray-500'}`}>
+                  <Badge className={`${accent.bg} ${accent.text} border-current/30 text-[10px] font-mono`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${accent.dot} ${cert.status === 'In Progress' ? 'led-blink' : ''} mr-1.5 inline-block`} />
                     {cert.status}
                   </Badge>
                 </div>
 
                 {/* Content */}
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-2">{cert.name}</h3>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Award className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-400">{cert.organization}</span>
-                    <span className="text-sm text-gray-500">•</span>
-                    <span className="text-sm text-gray-400">{cert.year}</span>
+                <h3 className="text-base font-bold text-white mb-2 font-mono leading-snug">{cert.name}</h3>
+                <div className="flex items-center gap-2 mb-3 text-xs text-gray-500 font-mono">
+                  <Award className="h-3 w-3" />
+                  <span>{cert.organization}</span>
+                  <span className="text-gray-700">•</span>
+                  <span>{cert.year}</span>
+                </div>
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed">{cert.description}</p>
+
+                {/* Skills */}
+                {cert.skills && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {cert.skills.map((skill, idx) => (
+                      <span key={idx} className={`text-[10px] px-2 py-0.5 ${accent.bg} ${accent.text} rounded font-mono border border-current/10`}>
+                        {skill}
+                      </span>
+                    ))}
                   </div>
+                )}
 
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">{cert.description}</p>
-
-                  {/* Skills */}
-                  {cert.skills && (
-                    <div className="flex flex-wrap gap-2">
-                      {cert.skills.map((skill, idx) => (
-                        <Badge
-                          key={idx}
-                          variant="outline"
-                          className={`text-xs ${statusColor === 'emerald' ? 'border-emerald-500/50 text-emerald-400 bg-emerald-500/5' : statusColor === 'blue' ? 'border-blue-500/50 text-blue-400 bg-blue-500/5' : 'border-gray-500/50 text-gray-400 bg-gray-500/5'}`}
-                        >
-                          {skill}
-                        </Badge>
+                {/* Courses */}
+                {cert.courses && (
+                  <div className="mt-4 pt-3 border-t border-gray-800/50">
+                    <p className="text-[9px] text-gray-600 uppercase tracking-wider mb-2 font-mono">courses</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {cert.courses.map((course, idx) => (
+                        <span key={idx} className="text-[10px] px-2 py-0.5 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 rounded font-mono">
+                          {course}
+                        </span>
                       ))}
                     </div>
-                  )}
-
-                  {/* Courses (if applicable) */}
-                  {cert.courses && (
-                    <div className="mt-4 pt-4 border-t border-cyan-500/10">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Courses Completed</p>
-                      <div className="flex flex-wrap gap-2">
-                        {cert.courses.map((course, idx) => (
-                          <Badge key={idx} className="bg-cyan-500/10 text-cyan-400 border-cyan-500/50 text-xs font-mono">
-                            {course}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Card>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
 
         {/* Progress Summary */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-emerald-500 font-mono mb-2">
-              {certifications.filter(c => c.status === 'Completed').length}
-            </p>
-            <p className="text-gray-400 text-sm">Certifications Completed</p>
-          </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-blue-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-blue-500 font-mono mb-2">
-              {certifications.filter(c => c.status === 'In Progress').length}
-            </p>
-            <p className="text-gray-400 text-sm">In Progress</p>
-          </Card>
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-6 text-center">
-            <p className="text-3xl font-bold text-cyan-500 font-mono mb-2">{certifications.length}</p>
-            <p className="text-gray-400 text-sm">Total Credentials</p>
-          </Card>
+        <div className="mt-12 grid grid-cols-3 gap-4">
+          {[
+            { val: certifications.filter(c => c.status === 'Completed').length, label: 'Completed', color: 'text-emerald-500', border: 'border-emerald-500/20' },
+            { val: certifications.filter(c => c.status === 'In Progress').length, label: 'In Progress', color: 'text-blue-500', border: 'border-blue-500/20' },
+            { val: certifications.length, label: 'Total', color: 'text-cyan-500', border: 'border-cyan-500/20' },
+          ].map((s, i) => (
+            <div key={i} className={`text-center bg-[#080808] border ${s.border} rounded-lg p-5`}>
+              <p className={`text-2xl font-bold ${s.color} font-mono`}>{s.val}</p>
+              <p className="text-gray-500 text-xs mt-1">{s.label}</p>
+            </div>
+          ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </section>
   );
 };

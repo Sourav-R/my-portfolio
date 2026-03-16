@@ -16,11 +16,278 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #030303;
 }
 
 code {
     font-family:
         'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* ========== CUSTOM SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #ffffff10;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff20;
+}
+
+/* ========== GLITCH TEXT ========== */
+@keyframes glitch-1 {
+    0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+    20% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 2px); }
+    40% { clip-path: inset(40% 0 30% 0); transform: translate(2px, -1px); }
+    60% { clip-path: inset(60% 0 10% 0); transform: translate(-1px, 1px); }
+    80% { clip-path: inset(10% 0 80% 0); transform: translate(1px, -2px); }
+}
+@keyframes glitch-2 {
+    0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+    20% { clip-path: inset(50% 0 20% 0); transform: translate(2px, -2px); }
+    40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 1px); }
+    60% { clip-path: inset(30% 0 40% 0); transform: translate(1px, -1px); }
+    80% { clip-path: inset(70% 0 5% 0); transform: translate(-1px, 2px); }
+}
+
+.glitch-text {
+    position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.glitch-text::before {
+    color: #22d3ee;
+    animation: glitch-1 3s infinite linear alternate-reverse;
+    z-index: -1;
+}
+.glitch-text::after {
+    color: #10b981;
+    animation: glitch-2 3s infinite linear alternate-reverse;
+    z-index: -1;
+}
+
+/* ========== EASTER EGG EFFECTS ========== */
+@keyframes defcon-shake {
+    0%, 100% { transform: translate(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-2px, 1px); }
+    20%, 40%, 60%, 80% { transform: translate(2px, -1px); }
+}
+
+.defcon-1 {
+    animation: defcon-shake 0.5s ease-in-out infinite alternate;
+}
+.defcon-1::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(239, 68, 68, 0.1);
+    pointer-events: none;
+    animation: led-blink 1s infinite alternate;
+    z-index: 50;
+}
+
+/* Synthwave God Mode overrides */
+.god-mode {
+    --tw-bg-opacity: 1;
+    background-color: #2d0042 !important; 
+    color: #fce7f3 !important; /* pink-100 */
+}
+.god-mode .text-emerald-400 {
+    color: #f472b6 !important; /* pink-400 */
+}
+.god-mode .text-cyan-400 {
+    color: #38bdf8 !important; /* lightBlue-400 */
+}
+.god-mode .border-emerald-500\/30 {
+    border-color: rgba(244, 114, 182, 0.3) !important;
+}
+.god-mode .bg-emerald-500\/10 {
+    background-color: rgba(244, 114, 182, 0.1) !important;
+}
+.god-mode .bg-grid {
+    background-image:
+        linear-gradient(rgba(244, 114, 182, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 114, 182, 0.05) 1px, transparent 1px) !important;
+}
+
+/* ========== TYPEWRITER CURSOR ========== */
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.typewriter-cursor {
+    animation: cursor-blink 0.8s step-end infinite;
+}
+
+/* ========== HOLOGRAPHIC CARD SHIMMER ========== */
+@keyframes holo-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.holo-card {
+    position: relative;
+    overflow: hidden;
+}
+.holo-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.015) 45%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(255, 255, 255, 0.015) 55%,
+        transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: holo-shimmer 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ========== GRID / DOT BACKGROUNDS ========== */
+.bg-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* ========== FADE IN ANIMATIONS ========== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+.animate-fade-in-left {
+    animation: fadeInLeft 0.6s ease-out forwards;
+}
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* ========== 3D TILT CARD ========== */
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    perspective: 1000px;
+}
+.tilt-card-inner {
+    transform-style: preserve-3d;
+}
+.tilt-card-inner > * {
+    transform: translateZ(0);
+}
+
+/* ========== 3D SCROLL REVEAL ========== */
+.scroll-reveal {
+    opacity: 0;
+    transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.reveal-up {
+    transform: perspective(800px) translateY(60px) rotateX(6deg);
+}
+.scroll-reveal.reveal-left {
+    transform: perspective(800px) translateX(-60px) rotateY(6deg);
+}
+.scroll-reveal.reveal-right {
+    transform: perspective(800px) translateX(60px) rotateY(-6deg);
+}
+.scroll-reveal.reveal-flip {
+    transform: perspective(800px) rotateY(15deg) scale(0.95);
+}
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: perspective(800px) translateY(0) translateX(0) rotateX(0) rotateY(0) scale(1);
+}
+
+/* ========== PARALLAX DEPTH ========== */
+.parallax-bg {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* ========== 3D FLOATING TERMINAL ========== */
+@keyframes float-terminal {
+    0%, 100% { transform: perspective(1000px) translateY(0) rotateX(0.5deg); }
+    50% { transform: perspective(1000px) translateY(-8px) rotateX(-0.5deg); }
+}
+.float-terminal {
+    animation: float-terminal 6s ease-in-out infinite;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ========== 3D CARD HOVER ========== */
+.card-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.card-3d:hover {
+    transform: perspective(800px) translateY(-4px) rotateX(2deg);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+/* ========== STATUS LED ========== */
+@keyframes led-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+.led-blink {
+    animation: led-blink 2s ease-in-out infinite;
+}
+
+/* ========== SECTION COMMAND HEADER ========== */
+.section-cmd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #6b7280;
+    letter-spacing: 0.05em;
+}
+.section-cmd .prompt {
+    color: #22d3ee;
+}
+
+/* ========== PROGRESS BAR ========== */
+.bar-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+.bar-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    animation: holo-shimmer 3s ease-in-out infinite;
+    background-size: 200% 100%;
 }
 
 @layer base {

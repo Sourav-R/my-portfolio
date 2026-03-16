@@ -1,15 +1,218 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
+import React, { useState, useRef, useEffect, Suspense, lazy } from 'react';
 import { RotateCcw } from 'lucide-react';
-import { terminalCommands } from '../mock';
-import { commandCheatsheet } from '../labExperience';
+import Canvas3DErrorBoundary from './Canvas3DErrorBoundary';
+
+const ParticleNetwork = lazy(() => import('./ParticleNetwork'));
+import { terminalCommands, profileData, allProjects, projectCategories, skills, homeLabServices } from '../mock';
+import { commandCheatsheet, toolsProficiency, certifications, workExperience, professionalJourney, featuredLabs, labStats, threatCategories } from '../labExperience';
+
+// Build rich outputs from actual data
+const buildExperienceOutput = () => {
+  let out = 'Work Experience:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  workExperience.forEach((job, i) => {
+    out += `\n[${i + 1}] ${job.role} — ${job.company}\n`;
+    out += `    Period: ${job.period} | Location: ${job.location}\n`;
+    out += `    Tech: ${job.technologies.slice(0, 5).join(', ')}\n`;
+    out += `    Achievements:\n`;
+    job.achievements.forEach(a => { out += `      ✓ ${a}\n`; });
+  });
+  out += '\nType "experience <number>" for full responsibilities.';
+  return out;
+};
+
+const buildExperienceDetail = (num) => {
+  const job = workExperience[num - 1];
+  if (!job) return `No experience entry #${num}. Valid: 1-${workExperience.length}`;
+  let out = `${job.role} — ${job.company}\n`;
+  out += `${'━'.repeat(50)}\n`;
+  out += `Period: ${job.period} | Location: ${job.location}\n\n`;
+  out += `Technologies: ${job.technologies.join(', ')}\n\n`;
+  out += 'Responsibilities:\n';
+  job.responsibilities.forEach((r, i) => { out += `  ${i + 1}. ${r}\n`; });
+  out += '\nAchievements:\n';
+  job.achievements.forEach(a => { out += `  ✓ ${a}\n`; });
+  return out;
+};
+
+const buildJourneyOutput = () => {
+  let out = 'Professional Journey:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  professionalJourney.forEach((item, i) => {
+    const icon = item.type === 'work' ? '💼' : '🎓';
+    out += `\n${icon} ${item.milestone} — ${item.organization} (${item.period})\n`;
+    out += `   ${item.description}\n`;
+    out += `   Skills: ${item.skills.slice(0, 4).join(', ')}\n`;
+  });
+  return out;
+};
+
+const buildSkillsOutput = () => {
+  let out = 'Skills Matrix:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  Object.entries(toolsProficiency).forEach(([category, tools]) => {
+    out += `\n[${category}]\n`;
+    tools.forEach(tool => {
+      const bar = '█'.repeat(Math.floor(tool.level / 10)) + '░'.repeat(10 - Math.floor(tool.level / 10));
+      out += `  ${tool.name.padEnd(28)} ${bar} ${tool.level}%\n`;
+    });
+  });
+  out += '\nType a tool name (e.g. "wireshark", "nmap") for cheat sheets.';
+  return out;
+};
+
+const buildCertsOutput = () => {
+  let out = 'Certifications & Training:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  certifications.forEach((cert, i) => {
+    const status = cert.status === 'Completed' ? '✓' : '⟳';
+    out += `\n${status} ${cert.name}\n`;
+    out += `  Org: ${cert.organization} | Year: ${cert.year} | Status: ${cert.status}\n`;
+    out += `  ${cert.description}\n`;
+  });
+  return out;
+};
+
+const buildProjectsOutput = () => {
+  let out = `Projects (${allProjects.length} total):\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  const categories = {};
+  allProjects.forEach(p => {
+    if (!categories[p.tab]) categories[p.tab] = [];
+    categories[p.tab].push(p);
+  });
+  Object.entries(categories).forEach(([cat, projects]) => {
+    out += `\n[${cat}] (${projects.length})\n`;
+    projects.forEach(p => {
+      out += `  #${String(p.id).padStart(2, '0')} ${p.title} [${p.difficulty}]\n`;
+    });
+  });
+  out += '\nType "project <id>" for full details (e.g. "project 1").';
+  return out;
+};
+
+const buildProjectDetail = (id) => {
+  const p = allProjects.find(proj => proj.id === id);
+  if (!p) return `No project with ID ${id}. Valid: 1-${allProjects.length}`;
+  let out = `${p.title}\n${'━'.repeat(50)}\n`;
+  out += `Category: ${p.tab} | Difficulty: ${p.difficulty} | Type: ${p.type}\n\n`;
+  out += `${p.subtitle}\n\n`;
+  out += `Challenge:\n  ${p.challenge}\n\n`;
+  out += `Stack: ${p.stack.join(', ')}\n\n`;
+  out += 'Highlights:\n';
+  p.highlights.forEach(h => { out += `  ✓ ${h}\n`; });
+  out += `\nImpact: ${p.impact}\n`;
+  if (p.questions && p.questions.length > 0) {
+    out += '\nTechnical Deep Dive:\n';
+    p.questions.forEach((q, i) => { out += `  Q${i + 1}. ${q}\n`; });
+  }
+  return out;
+};
+
+const buildLabOutput = () => {
+  let out = `Home Lab Status:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out += `Service               Status    Uptime   CPU    Memory  Containers\n`;
+  out += `${'─'.repeat(75)}\n`;
+  homeLabServices.forEach(svc => {
+    out += `${svc.name.padEnd(22)} ${svc.status.padEnd(10)} ${svc.uptime.padEnd(8)} ${svc.cpu.padEnd(7)} ${svc.memory.padEnd(8)} ${svc.containers}\n`;
+  });
+  out += `\nTotal Containers: ${homeLabServices.reduce((s, svc) => s + svc.containers, 0)}`;
+  out += `\nAll systems operational.`;
+  return out;
+};
+
+const buildLabsExpOutput = () => {
+  let out = `Lab Experience Stats:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  out += `\n  Total Labs: ${labStats.totalLabs}+`;
+  out += `\n  Lab Hours:  ${labStats.totalHours}+`;
+  out += `\n  Active:     ${labStats.yearsActive}`;
+  out += `\n  Courses:    ${labStats.coursesCompleted.join(', ')}\n`;
+  out += `\nThreat Distribution:\n`;
+  threatCategories.forEach(cat => {
+    const bar = '█'.repeat(Math.floor(cat.percentage / 3)) + '░'.repeat(10 - Math.floor(cat.percentage / 3));
+    out += `  ${cat.name.padEnd(28)} ${bar} ${cat.count} (${cat.percentage}%)\n`;
+  });
+  out += '\nType "casestudies" for featured lab case studies.';
+  return out;
+};
+
+const buildCaseStudiesOutput = () => {
+  let out = `Featured Lab Case Studies:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  featuredLabs.forEach((lab, i) => {
+    out += `\n[${i + 1}] ${lab.title} (${lab.course} — ${lab.date})\n`;
+    out += `    Difficulty: ${lab.difficulty} | Threat: ${lab.threatType}\n`;
+    out += `    ${lab.objective}\n`;
+    out += `    Tools: ${lab.toolsUsed.join(', ')}\n`;
+    out += `    Findings: ${lab.findings}\n`;
+    out += `    Mitigation: ${lab.mitigation}\n`;
+    if (lab.commands.length > 0) {
+      out += `    Commands:\n`;
+      lab.commands.forEach(cmd => { out += `      $ ${cmd}\n`; });
+    }
+  });
+  return out;
+};
+
+const HELP_TEXT = `Available Commands:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  PROFILE
+    whoami          Display profile information
+    bio             Read full bio
+
+  CAREER
+    journey         Professional timeline
+    experience      Work experience (use "experience <#>" for details)
+    certs           Certifications & training
+
+  SKILLS & TOOLS
+    skills          Full skills matrix with proficiency bars
+    wireshark       Wireshark cheat sheet
+    nmap            Nmap cheat sheet
+    splunk          Splunk cheat sheet
+    snort           Snort cheat sheet
+    yara            YARA cheat sheet
+    metasploit      Metasploit cheat sheet
+
+  PROJECTS
+    projects        List all ${allProjects.length} projects
+    project <id>    Project details (e.g. "project 1")
+
+  LABS
+    labs            Lab experience & threat stats
+    casestudies     Featured lab case studies
+    lab             Home lab infrastructure status
+
+  MISC
+    resume          Open resume (PDF)
+    secret          ???
+
+  NAVIGATION
+    goto <section>  Jump to section (journey, experience, skills, certs,
+                    projects, labs, casestudies)
+
+  UTILITY
+    help            Show this help
+    clear           Clear terminal`;
+
+const SECTION_MAP = {
+  home: 'hero',
+  journey: 'professional-journey',
+  experience: 'work-experience',
+  skills: 'skills-matrix',
+  certs: 'certifications',
+  certifications: 'certifications',
+  projects: 'projects',
+  labs: 'lab-experience',
+  casestudies: 'featured-labs',
+  terminal: 'terminal',
+};
 
 const TerminalSandbox = ({ recruiterMode }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([
-    { type: 'system', content: 'Welcome to SOC Terminal Sandbox v2.0' },
-    { type: 'system', content: 'Type "help" for available commands.' },
+    { type: 'system', content: '╔══════════════════════════════════════════════════════════╗' },
+    { type: 'system', content: '║   The System Shell v2.0 — Interactive Portfolio Hub      ║' },
+    { type: 'system', content: '╚══════════════════════════════════════════════════════════╝' },
+    { type: 'output', content: '' },
+    { type: 'system', content: 'Type "help" for all available commands.' },
+    { type: 'system', content: 'Try: whoami, skills, projects, experience, labs, or tool cheat sheets.' },
+    { type: 'system', content: 'Navigate: "goto journey", "goto projects", etc.' },
     { type: 'prompt', content: '' }
   ]);
   const [commandHistory, setCommandHistory] = useState([]);
@@ -23,70 +226,122 @@ const TerminalSandbox = ({ recruiterMode }) => {
     }
   }, [history]);
 
+  const addOutput = (type, content) => {
+    setHistory(prev => [...prev.slice(0, -1), { type, content }, { type: 'prompt', content: '' }]);
+  };
+
   const handleCommand = (cmd) => {
-    const trimmedCmd = cmd.trim().toLowerCase();
-    
-    // Add command to history
+    const trimmed = cmd.trim();
+    const lower = trimmed.toLowerCase();
+    const parts = lower.split(/\s+/);
+    const base = parts[0];
+    const arg = parts.slice(1).join(' ');
+
     setHistory(prev => [
       ...prev.slice(0, -1),
-      { type: 'input', content: `sourav@soc-terminal:~$ ${cmd}` }
+      { type: 'input', content: `sourav@soc-terminal:~$ ${trimmed}` }
     ]);
-
-    setCommandHistory(prev => [...prev, cmd]);
+    setCommandHistory(prev => [...prev, trimmed]);
     setHistoryIndex(-1);
 
-    // Process command
-    if (trimmedCmd === '') {
+    if (lower === '') {
       setHistory(prev => [...prev, { type: 'prompt', content: '' }]);
       return;
     }
 
-    if (trimmedCmd === 'clear') {
+    if (lower === 'clear') {
       setHistory([
-        { type: 'system', content: 'Terminal cleared.' },
+        { type: 'system', content: 'Terminal cleared. Type "help" for commands.' },
         { type: 'prompt', content: '' }
       ]);
       return;
     }
 
-    // Check for cheat sheet commands
-    if (commandCheatsheet[trimmedCmd]) {
-      const cheat = commandCheatsheet[trimmedCmd];
+    // Navigation
+    if (base === 'goto' || base === 'go' || base === 'cd' || base === 'nav') {
+      const target = arg || '';
+      const sectionId = SECTION_MAP[target];
+      if (sectionId) {
+        addOutput('output', `Navigating to ${target}...`);
+        setTimeout(() => {
+          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        return;
+      } else {
+        addOutput('error', `Unknown section "${target}". Valid: ${Object.keys(SECTION_MAP).join(', ')}`);
+        return;
+      }
+    }
+
+    // Help
+    if (lower === 'help') { addOutput('output', HELP_TEXT); return; }
+
+    // Profile
+    if (lower === 'whoami') {
+      addOutput('output', `Name:     ${profileData.name}\nRole:     ${profileData.role}\nOrg:      ${profileData.companyFull}\nLocation: ${profileData.location}\nTimezone: ${profileData.timezone}\nEmail:    ${profileData.email}\nGitHub:   ${profileData.github}\nLinkedIn: ${profileData.linkedin}`);
+      return;
+    }
+    if (lower === 'bio') {
+      addOutput('output', profileData.bio);
+      return;
+    }
+
+    // Career
+    if (lower === 'journey') { addOutput('output', buildJourneyOutput()); return; }
+    if (base === 'experience' && arg) {
+      const num = parseInt(arg);
+      if (!isNaN(num)) { addOutput('output', buildExperienceDetail(num)); return; }
+    }
+    if (lower === 'experience') { addOutput('output', buildExperienceOutput()); return; }
+    if (lower === 'certs' || lower === 'certifications') { addOutput('output', buildCertsOutput()); return; }
+
+    // Skills
+    if (lower === 'skills') { addOutput('output', buildSkillsOutput()); return; }
+
+    // Projects
+    if (base === 'project' && arg) {
+      const id = parseInt(arg);
+      if (!isNaN(id)) { addOutput('output', buildProjectDetail(id)); return; }
+    }
+    if (lower === 'projects') { addOutput('output', buildProjectsOutput()); return; }
+
+    // Labs
+    if (lower === 'labs') { addOutput('output', buildLabsExpOutput()); return; }
+    if (lower === 'casestudies' || lower === 'case-studies') { addOutput('output', buildCaseStudiesOutput()); return; }
+
+    // Contact & Resume
+    if (lower === 'resume') {
+      addOutput('output', 'Opening resume in new tab...');
+      window.open(profileData.resumeUrl, '_blank');
+      return;
+    }
+
+    // Secret
+    if (lower === 'secret') {
+      addOutput('output', terminalCommands.secret.output);
+      return;
+    }
+
+    // Cheat sheets
+    if (commandCheatsheet[lower]) {
+      const cheat = commandCheatsheet[lower];
       let output = `\n${cheat.description}\n`;
-      output += `\n${'='.repeat(60)}\n\n`;
+      output += `\n${'━'.repeat(55)}\n\n`;
       output += 'COMMON COMMANDS:\n';
       cheat.commands.forEach((c, i) => {
         output += `\n  ${i + 1}. ${c.cmd}\n     → ${c.desc}\n`;
       });
-      output += `\n${'='.repeat(60)}\n\n`;
+      output += `\n${'━'.repeat(55)}\n\n`;
       output += 'USE CASES:\n';
-      cheat.useCases.forEach((useCase, i) => {
+      cheat.useCases.forEach((useCase) => {
         output += `  • ${useCase}\n`;
       });
-      
-      setHistory(prev => [
-        ...prev,
-        { type: 'output', content: output },
-        { type: 'prompt', content: '' }
-      ]);
+      addOutput('output', output);
       return;
     }
 
-    const commandResponse = terminalCommands[trimmedCmd];
-    
-    if (commandResponse) {
-      setHistory(prev => [
-        ...prev,
-        { type: 'output', content: commandResponse.output },
-        { type: 'prompt', content: '' }
-      ]);
-    } else {
-      setHistory(prev => [
-        ...prev,
-        { type: 'error', content: `Command not found: ${trimmedCmd}\nType "help" for available commands or try: wireshark, nmap, splunk, yara, snort, metasploit` },
-        { type: 'prompt', content: '' }
-      ]);
-    }
+    // Fallback
+    addOutput('error', `Command not found: ${lower}\nType "help" for available commands.`);
   };
 
   const handleKeyDown = (e) => {
@@ -95,10 +350,7 @@ const TerminalSandbox = ({ recruiterMode }) => {
       e.stopPropagation();
       handleCommand(input);
       setInput('');
-      // Keep focus on input
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
+      setTimeout(() => inputRef.current?.focus(), 0);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length > 0) {
@@ -118,8 +370,7 @@ const TerminalSandbox = ({ recruiterMode }) => {
 
   const handleReset = () => {
     setHistory([
-      { type: 'system', content: 'Terminal reset.' },
-      { type: 'system', content: 'Type "help" for available commands.' },
+      { type: 'system', content: 'Terminal reset. Type "help" for commands.' },
       { type: 'prompt', content: '' }
     ]);
     setInput('');
@@ -128,81 +379,71 @@ const TerminalSandbox = ({ recruiterMode }) => {
   };
 
   return (
-    <section id="terminal" className="min-h-screen px-4 py-20 relative">
-      <div className="max-w-5xl mx-auto">
+    <section id="terminal" className="relative px-4 py-20 bg-[#030303]">
+      <div className="absolute inset-0 bg-grid opacity-20" />
+      <Canvas3DErrorBoundary>
+        <Suspense fallback={null}>
+          <ParticleNetwork />
+        </Suspense>
+      </Canvas3DErrorBoundary>
+      <div className="max-w-5xl mx-auto relative">
         {/* Section Header */}
-        <div className="mb-12">
+        <div className="mb-10">
+          <div className="section-cmd mb-3">
+            <span className="prompt">$</span> ./sandbox --interactive
+          </div>
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-4xl font-bold text-white mb-4 font-mono">
-                <span className="text-emerald-500">&gt;</span> Secure Sandbox
+              <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
+                The System Shell
               </h2>
-              <p className="text-gray-400 max-w-2xl">
-                Interactive terminal interface. Try commands like <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">help</code>, <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">skills</code>, or <code className="text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">secret</code>.<br />
-                <span className="text-emerald-500 text-sm">NEW:</span> Type tool names for cheat sheets: <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">wireshark</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">nmap</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">splunk</code>, <code className="text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">yara</code>
+              <p className="text-gray-500 max-w-2xl text-sm">
+                Your interactive hub. Access everything — <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">skills</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">projects</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">experience</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">labs</code>, tool cheat sheets, or <code className="text-emerald-400 bg-white/5 px-1 py-0.5 rounded text-xs">goto</code> any section.
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={handleReset}
-              className="border-emerald-500/50 text-emerald-500 hover:bg-emerald-500/10"
+              className="flex items-center gap-1.5 text-xs font-mono text-gray-500 hover:text-gray-300 border border-gray-800 hover:border-gray-600 rounded px-3 py-1.5 transition-all"
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
-              Reset
-            </Button>
+              <RotateCcw className="h-3.5 w-3.5" /> reset
+            </button>
           </div>
         </div>
 
         {/* Terminal Window */}
-        <Card className="bg-[#0a0a0a] border-emerald-500/30 overflow-hidden shadow-2xl shadow-emerald-500/10">
+        <div className="bg-[#060606] border border-gray-700/50 rounded-lg overflow-hidden float-terminal">
           {/* Terminal Header */}
-          <div className="bg-[#121212] border-b border-emerald-500/20 px-4 py-2 flex items-center gap-2">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+          <div className="bg-[#080808] border-b border-gray-800 px-4 py-2 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/60" />
             </div>
-            <span className="text-xs text-gray-500 ml-2 font-mono">secure-sandbox@soc-terminal</span>
+            <span className="text-[10px] text-gray-600 ml-2 font-mono">secure-sandbox@soc-terminal — bash</span>
           </div>
 
           {/* Terminal Content */}
-          <div 
-            className="p-6 font-mono text-sm h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-500/20 scrollbar-track-transparent"
+          <div
+            className="p-5 font-mono text-sm h-[520px] overflow-y-auto"
             onClick={() => inputRef.current?.focus()}
+            style={{ scrollbarWidth: 'thin' }}
           >
             {history.map((entry, index) => {
               if (entry.type === 'system') {
-                return (
-                  <div key={index} className="text-blue-400 mb-2">
-                    {entry.content}
-                  </div>
-                );
+                return <div key={index} className="text-blue-400/70 mb-1.5 text-xs">{entry.content}</div>;
               }
               if (entry.type === 'input') {
-                return (
-                  <div key={index} className="text-gray-300 mb-2">
-                    {entry.content}
-                  </div>
-                );
+                return <div key={index} className="text-gray-300 mb-1.5 text-xs">{entry.content}</div>;
               }
               if (entry.type === 'output') {
-                return (
-                  <pre key={index} className="text-emerald-400 mb-4 whitespace-pre-wrap">
-                    {entry.content}
-                  </pre>
-                );
+                return <pre key={index} className="text-emerald-400/80 mb-3 whitespace-pre-wrap text-xs">{entry.content}</pre>;
               }
               if (entry.type === 'error') {
-                return (
-                  <pre key={index} className="text-red-400 mb-4 whitespace-pre-wrap">
-                    {entry.content}
-                  </pre>
-                );
+                return <pre key={index} className="text-red-400/70 mb-3 whitespace-pre-wrap text-xs">{entry.content}</pre>;
               }
               if (entry.type === 'prompt') {
                 return (
-                  <div key={index} className="flex items-center text-gray-300">
+                  <div key={index} className="flex items-center text-gray-300 text-xs">
                     <span className="text-emerald-500 mr-2">sourav@soc-terminal:~$</span>
                     <input
                       ref={inputRef}
@@ -210,11 +451,11 @@ const TerminalSandbox = ({ recruiterMode }) => {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      className="flex-1 bg-transparent outline-none caret-emerald-500"
+                      className="flex-1 bg-transparent outline-none caret-emerald-500 text-gray-200"
                       autoFocus
                       spellCheck={false}
                     />
-                    <span className="animate-pulse text-emerald-500">_</span>
+                    <span className="w-2 h-4 bg-emerald-500/50 typewriter-cursor inline-block" />
                   </div>
                 );
               }
@@ -222,11 +463,11 @@ const TerminalSandbox = ({ recruiterMode }) => {
             })}
             <div ref={terminalEndRef} />
           </div>
-        </Card>
+        </div>
 
-        {/* Helper Text */}
-        <div className="mt-4 text-center text-xs text-gray-500">
-          Pro tip: Use ↑/↓ arrow keys to navigate command history
+        {/* Helper */}
+        <div className="mt-3 text-center text-[10px] text-gray-600 font-mono">
+          ↑/↓ navigate history • type "help" for all commands • "goto &lt;section&gt;" to navigate
         </div>
       </div>
     </section>

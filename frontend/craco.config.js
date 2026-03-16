@@ -9,7 +9,7 @@ const isDevServer = process.env.NODE_ENV !== "production";
 // Environment variable overrides
 const config = {
   enableHealthCheck: process.env.ENABLE_HEALTH_CHECK === "true",
-  enableVisualEdits: isDevServer, // Only enable during dev server
+  enableVisualEdits: false, // Disabled due to conflict with React Three Fiber
 };
 
 // Conditionally load visual edits modules only in dev mode
@@ -71,6 +71,9 @@ const webpackConfig = {
 };
 
 // Only add babel metadata plugin during dev server
+// Note: This plugin injects x-line-number props into JSX elements,
+// which can cause issues with React Three Fiber. We handle those
+// errors gracefully via Canvas3DErrorBoundary and suppress the overlay.
 if (config.enableVisualEdits && babelMetadataPlugin) {
   webpackConfig.babel = {
     plugins: [babelMetadataPlugin],
@@ -78,6 +81,15 @@ if (config.enableVisualEdits && babelMetadataPlugin) {
 }
 
 webpackConfig.devServer = (devServerConfig) => {
+  // Disable error overlay to prevent R3F errors from blocking the page
+  devServerConfig.client = {
+    ...devServerConfig.client,
+    overlay: {
+      errors: false,
+      warnings: false,
+      runtimeErrors: false,
+    },
+  };
   // Apply visual edits dev server setup only if enabled
   if (config.enableVisualEdits && setupDevServer) {
     devServerConfig = setupDevServer(devServerConfig);

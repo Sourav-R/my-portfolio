@@ -118,18 +118,78 @@ export const featuredLabs = [
 
 export const professionalJourney = [
   {
-    year: '2024',
-    period: 'Nov 2024 – Present',
-    milestone: 'Jr. SOC Analyst',
-    organization: 'THIRU Labs',
+    year: '2022',
+    period: 'Aug 2022 – Nov 2022',
+    milestone: 'Cybersecurity Intern',
+    organization: 'Verzeo & MVARO',
     type: 'work',
-    color: 'emerald',
-    description: 'Security Operations Center analyst specializing in threat detection and incident response',
-    skills: ['SIEM Monitoring', 'T-Pot Honeypot', 'ELK Stack', 'Threat Analysis', 'SaltStack Automation'],
+    color: 'orange',
+    description: 'Vulnerability assessments, IDS/IPS implementation, and SIEM operations',
+    skills: ['IDS/IPS', 'SIEM', 'Firewall Configuration', 'Vulnerability Scanning', 'Network Security'],
     achievements: [
-      'Built production T-Pot honeypot with ELK integration for threat intelligence',
-      'Improved SOC detection tuning using MITRE ATT&CK framework',
-      'Automated infrastructure configuration with SaltStack'
+      '25% reduction in reportable threats',
+      'Identified 15 critical security weaknesses',
+      'Deployed network security protocols'
+    ]
+  },
+  {
+    year: '2022-2023',
+    period: 'Nov 2022 – Jan 2023',
+    milestone: 'Ethical Hacking Intern',
+    organization: 'Internshala',
+    type: 'work',
+    color: 'purple',
+    description: 'Vulnerability assessment and penetration testing for live business websites',
+    skills: ['Burp Suite', 'OWASP ZAP', 'Python Scripting', 'Web Security', 'Vulnerability Assessment'],
+    achievements: [
+      '30% improvement in client security posture',
+      'Discovered 6 critical vulnerabilities (SQLi, XSS)',
+      'Automated security scanning with Python'
+    ]
+  },
+  {
+    year: '2023',
+    period: 'Feb 2023',
+    milestone: 'Master of Cybersecurity',
+    organization: 'Monash University',
+    type: 'academic',
+    color: 'cyan',
+    description: 'Graduate program specializing in security operations and infrastructure',
+    skills: ['Security Operations', 'Threat Hunting', 'Infrastructure Security', 'Penetration Testing'],
+    achievements: [
+      'Started comprehensive cybersecurity graduate program',
+      '200+ hands-on security labs',
+      'Focus on SOC operations and threat analysis'
+    ]
+  },
+  {
+    year: '2023',
+    period: '2023 S2',
+    milestone: 'Security Operations Foundation',
+    organization: 'Monash University',
+    type: 'academic',
+    color: 'blue',
+    description: 'Intensive training in threat detection, network security, and incident response',
+    skills: ['Threat Detection', 'Network Security', 'IDS/IPS', 'Incident Response', 'SIEM Deployment'],
+    achievements: [
+      'FIT5057: Advanced Threat Detection (45 labs)',
+      'FIT5129: Network Security & Attack Simulation (35 labs)',
+      'Built automated threat detection systems'
+    ]
+  },
+  {
+    year: '2024',
+    period: '2024 S1',
+    milestone: 'Advanced Security Specialization',
+    organization: 'Monash University',
+    type: 'academic',
+    color: 'cyan',
+    description: 'Completed advanced courses in malware analysis, secure software, and cloud security',
+    skills: ['Malware Analysis', 'Reverse Engineering', 'Secure Coding', 'Cloud Security', 'DevSecOps'],
+    achievements: [
+      'FIT5163: Malware Analysis & Reverse Engineering (40 labs)',
+      'FIT9136: Secure Software Development (25 labs)',
+      'FIT5225: Cloud Security & Infrastructure (40 labs)'
     ]
   },
   {
@@ -149,77 +209,17 @@ export const professionalJourney = [
   },
   {
     year: '2024',
-    period: '2024 S1',
-    milestone: 'Advanced Security Specialization',
-    organization: 'Monash University',
-    type: 'academic',
-    color: 'cyan',
-    description: 'Completed advanced courses in malware analysis, secure software, and cloud security',
-    skills: ['Malware Analysis', 'Reverse Engineering', 'Secure Coding', 'Cloud Security', 'DevSecOps'],
-    achievements: [
-      'FIT5163: Malware Analysis & Reverse Engineering (40 labs)',
-      'FIT9136: Secure Software Development (25 labs)',
-      'FIT5225: Cloud Security & Infrastructure (40 labs)'
-    ]
-  },
-  {
-    year: '2023',
-    period: '2023 S2',
-    milestone: 'Security Operations Foundation',
-    organization: 'Monash University',
-    type: 'academic',
-    color: 'blue',
-    description: 'Intensive training in threat detection, network security, and incident response',
-    skills: ['Threat Detection', 'Network Security', 'IDS/IPS', 'Incident Response', 'SIEM Deployment'],
-    achievements: [
-      'FIT5057: Advanced Threat Detection (45 labs)',
-      'FIT5129: Network Security & Attack Simulation (35 labs)',
-      'Built automated threat detection systems'
-    ]
-  },
-  {
-    year: '2022-2023',
-    period: 'Nov 2022 – Jan 2023',
-    milestone: 'Ethical Hacking Intern',
-    organization: 'Internshala',
+    period: 'Nov 2024 – Present',
+    milestone: 'Jr. SOC Analyst',
+    organization: 'THIRU Labs',
     type: 'work',
-    color: 'purple',
-    description: 'Vulnerability assessment and penetration testing for live business websites',
-    skills: ['Burp Suite', 'OWASP ZAP', 'Python Scripting', 'Web Security', 'Vulnerability Assessment'],
+    color: 'emerald',
+    description: 'Security Operations Center analyst specializing in threat detection and incident response',
+    skills: ['SIEM Monitoring', 'T-Pot Honeypot', 'ELK Stack', 'Threat Analysis', 'SaltStack Automation'],
     achievements: [
-      '30% improvement in client security posture',
-      'Discovered 6 critical vulnerabilities (SQLi, XSS)',
-      'Automated security scanning with Python'
-    ]
-  },
-  {
-    year: '2022',
-    period: 'Aug 2022 – Nov 2022',
-    milestone: 'Cybersecurity Intern',
-    organization: 'Verzeo & MVARO',
-    type: 'work',
-    color: 'orange',
-    description: 'Vulnerability assessments, IDS/IPS implementation, and SIEM operations',
-    skills: ['IDS/IPS', 'SIEM', 'Firewall Configuration', 'Vulnerability Scanning', 'Network Security'],
-    achievements: [
-      '25% reduction in reportable threats',
-      'Identified 15 critical security weaknesses',
-      'Deployed network security protocols'
-    ]
-  },
-  {
-    year: '2023',
-    period: 'Feb 2023',
-    milestone: 'Master of Cybersecurity',
-    organization: 'Monash University',
-    type: 'academic',
-    color: 'cyan',
-    description: 'Graduate program specializing in security operations and infrastructure',
-    skills: ['Security Operations', 'Threat Hunting', 'Infrastructure Security', 'Penetration Testing'],
-    achievements: [
-      'Started comprehensive cybersecurity graduate program',
-      '200+ hands-on security labs',
-      'Focus on SOC operations and threat analysis'
+      'Built production T-Pot honeypot with ELK integration for threat intelligence',
+      'Improved SOC detection tuning using MITRE ATT&CK framework',
+      'Automated infrastructure configuration with SaltStack'
     ]
   }
 ];

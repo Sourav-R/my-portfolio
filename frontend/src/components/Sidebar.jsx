@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen, Briefcase, Calendar, Code } from 'lucide-react';
 import { Button } from './ui/button';
+import { profileData } from '../mock';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,8 +89,8 @@ const Sidebar = () => {
               <span className="text-black font-bold text-lg">SR</span>
             </div>
             <div>
-              <p className="text-white font-bold text-sm">Sourav R.</p>
-              <p className="text-gray-500 text-xs">SOC Analyst</p>
+              <p className="text-white font-bold text-sm">{profileData.name}</p>
+              <p className="text-gray-500 text-xs">{profileData.role}</p>
             </div>
           </div>
         </div>

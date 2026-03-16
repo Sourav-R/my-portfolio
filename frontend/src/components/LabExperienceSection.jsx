@@ -1,223 +1,134 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Activity, Shield, Code, BookOpen } from 'lucide-react';
 import { labStats, threatCategories } from '../labExperience';
 
 const LabExperienceSection = ({ recruiterMode }) => {
   const [countersVisible, setCountersVisible] = useState(false);
-  const [animatedStats, setAnimatedStats] = useState({
-    labs: 0,
-    courses: 0,
-    hours: 0
-  });
+  const [animatedStats, setAnimatedStats] = useState({ labs: 0, courses: 0, hours: 0 });
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !countersVisible) {
-          setCountersVisible(true);
-        }
+        if (entry.isIntersecting && !countersVisible) setCountersVisible(true);
       },
       { threshold: 0.2 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, [countersVisible]);
 
   useEffect(() => {
     if (countersVisible) {
-      const duration = 2000;
-      const steps = 60;
-      const interval = duration / steps;
-
+      const duration = 2000, steps = 60, interval = duration / steps;
       let step = 0;
       const timer = setInterval(() => {
         step++;
-        const progress = step / steps;
-
+        const p = step / steps;
         setAnimatedStats({
-          labs: Math.floor(labStats.totalLabs * progress),
-          courses: Math.floor(labStats.coursesCompleted.length * progress),
-          hours: Math.floor(labStats.totalHours * progress)
+          labs: Math.floor(labStats.totalLabs * p),
+          courses: Math.floor(labStats.coursesCompleted.length * p),
+          hours: Math.floor(labStats.totalHours * p),
         });
-
         if (step >= steps) {
           clearInterval(timer);
-          setAnimatedStats({
-            labs: labStats.totalLabs,
-            courses: labStats.coursesCompleted.length,
-            hours: labStats.totalHours
-          });
+          setAnimatedStats({ labs: labStats.totalLabs, courses: labStats.coursesCompleted.length, hours: labStats.totalHours });
         }
       }, interval);
-
       return () => clearInterval(timer);
     }
   }, [countersVisible]);
 
+  const statCards = [
+    { icon: BookOpen, val: animatedStats.labs, suffix: '+', label: 'Security Labs', badge: 'Academic', color: 'cyan' },
+    { icon: Code, val: animatedStats.courses, suffix: '', label: 'Advanced Courses', badge: 'Graduate', color: 'emerald' },
+    { icon: Shield, val: threatCategories.length, suffix: '', label: 'Threat Categories', badge: 'Diverse', color: 'purple' },
+    { icon: Activity, val: animatedStats.hours, suffix: '+', label: 'Lab Hours', badge: 'Intensive', color: 'blue' },
+  ];
+
+  const colorMap = {
+    cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/20', hover: 'hover:border-cyan-500/40' },
+    emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', hover: 'hover:border-emerald-500/40' },
+    purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', hover: 'hover:border-purple-500/40' },
+    blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', hover: 'hover:border-blue-500/40' },
+  };
+
   return (
-    <section
-      id="lab-experience"
-      ref={sectionRef}
-      className="min-h-screen px-4 py-20 relative bg-gradient-to-b from-[#050505] to-[#0a0a0a]"
-    >
-      <div className="max-w-7xl mx-auto">
+    <section id="lab-experience" ref={sectionRef} className="relative px-4 py-24 bg-[#030303]">
+      <div className="absolute inset-0 bg-grid opacity-20" />
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4 font-mono">
-            <span className="text-cyan-500">&gt;</span> Lab Experience
+        <div className="mb-16">
+          <div className="section-cmd mb-3">
+            <span className="prompt">$</span> wc -l ./labs/*
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
+            Lab Experience
           </h2>
-          <p className="text-gray-400 max-w-2xl">
+          <p className="text-gray-500 max-w-2xl text-sm">
             Academic hands-on experience through 200+ practical cybersecurity labs covering threat detection, incident response, malware analysis, and security operations.
           </p>
         </div>
 
-        {/* Animated Counter Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {/* Labs Completed */}
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-6 hover:border-cyan-500 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20">
-            <div className="flex items-start justify-between mb-4">
-              <div className="p-3 bg-cyan-500/10 rounded-lg">
-                <BookOpen className="h-6 w-6 text-cyan-500" />
+        {/* Counter Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {statCards.map((card, i) => {
+            const c = colorMap[card.color];
+            const Icon = card.icon;
+            return (
+              <div key={i} className={`bg-[#080808] border ${c.border} ${c.hover} rounded-lg p-5 transition-all duration-300 hover:shadow-lg`}>
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`p-2 ${c.bg} rounded`}>
+                    <Icon className={`h-5 w-5 ${c.text}`} />
+                  </div>
+                  <span className={`text-[9px] px-1.5 py-0.5 ${c.bg} ${c.text} rounded font-mono`}>{card.badge}</span>
+                </div>
+                <p className="text-3xl font-bold text-white font-mono">
+                  {card.val}<span className={c.text}>{card.suffix}</span>
+                </p>
+                <p className="text-gray-500 text-xs mt-1">{card.label}</p>
               </div>
-              <Badge className="bg-cyan-500/10 text-cyan-500 border-cyan-500">Academic</Badge>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white font-mono">
-                {animatedStats.labs}
-                <span className="text-cyan-500">+</span>
-              </p>
-              <p className="text-gray-400 text-sm">Security Labs Completed</p>
-              <div className="pt-2 border-t border-cyan-500/10">
-                <p className="text-xs text-gray-500">2023-2024</p>
-              </div>
-            </div>
-          </Card>
-
-          {/* Courses */}
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-emerald-500/20 p-6 hover:border-emerald-500 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20">
-            <div className="flex items-start justify-between mb-4">
-              <div className="p-3 bg-emerald-500/10 rounded-lg">
-                <Code className="h-6 w-6 text-emerald-500" />
-              </div>
-              <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500">Graduate</Badge>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white font-mono">{animatedStats.courses}</p>
-              <p className="text-gray-400 text-sm">Advanced Security Courses</p>
-              <div className="pt-2 border-t border-emerald-500/10">
-                <p className="text-xs text-gray-500">Monash University</p>
-              </div>
-            </div>
-          </Card>
-
-          {/* Threat Categories */}
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-purple-500/20 p-6 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-            <div className="flex items-start justify-between mb-4">
-              <div className="p-3 bg-purple-500/10 rounded-lg">
-                <Shield className="h-6 w-6 text-purple-500" />
-              </div>
-              <Badge className="bg-purple-500/10 text-purple-500 border-purple-500">Diverse</Badge>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white font-mono">{threatCategories.length}</p>
-              <p className="text-gray-400 text-sm">Threat Categories</p>
-              <div className="pt-2 border-t border-purple-500/10">
-                <p className="text-xs text-gray-500">APT, Ransomware, DDoS</p>
-              </div>
-            </div>
-          </Card>
-
-          {/* Total Hours */}
-          <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-blue-500/20 p-6 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
-            <div className="flex items-start justify-between mb-4">
-              <div className="p-3 bg-blue-500/10 rounded-lg">
-                <Activity className="h-6 w-6 text-blue-500" />
-              </div>
-              <Badge className="bg-blue-500/10 text-blue-500 border-blue-500">Intensive</Badge>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white font-mono">
-                {animatedStats.hours}
-                <span className="text-blue-500">+</span>
-              </p>
-              <p className="text-gray-400 text-sm">Hands-On Lab Hours</p>
-              <div className="pt-2 border-t border-blue-500/10">
-                <p className="text-xs text-gray-500">Practical Experience</p>
-              </div>
-            </div>
-          </Card>
+            );
+          })}
         </div>
 
-        {/* Threat Distribution Chart */}
-        <Card className="bg-[#0a0a0a]/50 backdrop-blur-lg border-cyan-500/20 p-8 mb-6">
-          <h3 className="text-xl font-bold text-white mb-6 font-mono">
-            Threat Category Distribution
-          </h3>
-          <div className="space-y-4">
-            {threatCategories.map((category, index) => (
-              <div
-                key={category.name}
-                className="space-y-2"
-                style={{
-                  animation: countersVisible ? `slideIn 0.5s ease-out ${index * 0.1}s both` : 'none'
-                }}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300 text-sm">{category.name}</span>
-                  <span className="text-gray-400 text-xs font-mono">
-                    {category.count} labs ({category.percentage}%)
-                  </span>
+        {/* Threat Distribution */}
+        <div className="bg-[#080808] border border-gray-800 rounded-lg p-6 mb-8">
+          <h3 className="text-sm font-bold text-white mb-5 font-mono">Threat Category Distribution</h3>
+          <div className="space-y-3.5">
+            {threatCategories.map((cat, i) => (
+              <div key={cat.name} style={{ animation: countersVisible ? `fadeInLeft 0.5s ease-out ${i * 0.08}s both` : 'none' }}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-gray-300 text-xs font-mono">{cat.name}</span>
+                  <span className="text-gray-500 text-[10px] font-mono">{cat.count} labs ({cat.percentage}%)</span>
                 </div>
-                <div className="relative h-3 bg-[#1a1a1a] rounded-full overflow-hidden">
+                <div className="relative h-2 bg-[#111] rounded-full overflow-hidden">
                   <div
-                    className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out"
+                    className="absolute top-0 left-0 h-full rounded-full bar-shimmer transition-all duration-1000"
                     style={{
-                      width: countersVisible ? `${category.percentage * 4}%` : '0%',
-                      backgroundColor: category.color,
-                      boxShadow: `0 0 10px ${category.color}40`
+                      width: countersVisible ? `${Math.min(cat.percentage * 4, 100)}%` : '0%',
+                      backgroundColor: cat.color,
                     }}
                   />
                 </div>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
 
-        {/* Course Badges */}
+        {/* Courses */}
         <div className="text-center">
-          <p className="text-gray-500 text-sm mb-4">Courses Completed</p>
-          <div className="flex flex-wrap gap-3 justify-center">
+          <p className="text-gray-600 text-xs mb-3 font-mono">courses_completed</p>
+          <div className="flex flex-wrap gap-2 justify-center">
             {labStats.coursesCompleted.map((course) => (
-              <Badge
-                key={course}
-                className="bg-cyan-500/10 text-cyan-400 border-cyan-500/50 px-4 py-2 text-sm font-mono"
-              >
+              <span key={course} className="text-xs px-3 py-1.5 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 rounded font-mono">
                 {course}
-              </Badge>
+              </span>
             ))}
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </section>
   );
 };
