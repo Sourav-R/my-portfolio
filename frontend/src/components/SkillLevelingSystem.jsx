@@ -10,12 +10,12 @@ const SkillOrb = lazy(() => import('./SkillOrb'));
 
 // Process labExperience toolsProficiency data into Radar Chart data
 const radarData = [
-  { subject: 'SOC Analysis', A: 90, fullMark: 100 },
-  { subject: 'Pentesting', A: 85, fullMark: 100 },
-  { subject: 'Network Sec', A: 95, fullMark: 100 },
-  { subject: 'Automation', A: 80, fullMark: 100 },
-  { subject: 'Cloud/Infra', A: 85, fullMark: 100 },
-  { subject: 'Cryptography', A: 82, fullMark: 100 },
+  { subject: 'SOC Analysis', A: 90, fullMark: 100, category: 'SOC & Threat Detection' },
+  { subject: 'Pentesting', A: 85, fullMark: 100, category: 'Penetration Testing' },
+  { subject: 'Network Sec', A: 95, fullMark: 100, category: 'IDS/IPS & Network Security' },
+  { subject: 'Automation', A: 80, fullMark: 100, category: 'Programming & Automation' },
+  { subject: 'Cloud/Infra', A: 85, fullMark: 100, category: 'Cloud & Infrastructure' },
+  { subject: 'Cryptography', A: 82, fullMark: 100, category: 'Security Tools & Honeypots' },
 ];
 
 const categoryIcons = {
@@ -56,10 +56,67 @@ const getProficiencyLabel = (level) => {
   return 'Beginner';
 };
 
+const CommandOverlay = ({ tool, accent, isOpen, onClose }) => {
+  if (!isOpen) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        className="w-full max-w-lg bg-[#080808] border-t sm:border border-gray-800 rounded-t-2xl sm:rounded-xl overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-3">
+              <div className={`w-2 h-2 rounded-full ${accent.bar} animate-pulse`} />
+              <h3 className="text-white font-mono font-bold tracking-tight">{tool.name} Command Logs</h3>
+            </div>
+            <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors p-1">
+              <Brackets className="w-5 h-5 rotate-45" />
+            </button>
+          </div>
+          
+          <div className="space-y-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
+            {tool.commands.map((cmd, idx) => (
+              <div key={idx} className="group relative">
+                <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${accent.bar} opacity-40`} />
+                <code className={`block text-[12px] ${accent.text} font-mono bg-[#050505] pl-4 py-3 rounded-r border-y border-r border-gray-800/50`}>
+                  <span className="text-gray-600 mr-2">$</span>{cmd}
+                </code>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+             <span className="text-[10px] text-gray-500 font-mono italic">SYSLOG_SEC_ACCESS_GRANTED</span>
+             <button 
+               onClick={onClose}
+               className={`px-4 py-2 rounded font-mono text-xs font-bold text-black ${accent.bg.replace('10', '100')} ${accent.text.replace('400', '900')} active:scale-95 transition-transform`}
+             >
+               TERMINATE_VIEW
+             </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const SkillLevelingSystem = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-10% 0px" });
   const [selectedTool, setSelectedTool] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(Object.keys(toolsProficiency)[0]);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   // Calculate total EXP based on average tools proficiency
   const totalExp = useMemo(() => {
@@ -159,7 +216,15 @@ const SkillLevelingSystem = () => {
                   <PolarGrid stroke="#1f2937" />
                   <PolarAngleAxis
                     dataKey="subject"
-                    tick={{ fill: '#ffffff', fontSize: 10, fontFamily: 'monospace', fontWeight: '900' }}
+                    tick={{ fill: '#ffffff', fontSize: 10, fontFamily: 'monospace', fontWeight: '900', cursor: 'pointer' }}
+                    onClick={(data) => {
+                      const category = radarData.find(d => d.subject === data.value)?.category;
+                      if (category) {
+                        setActiveCategory(category);
+                        const element = document.getElementById('skill-inventory-logs');
+                        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
                   />
                   <PolarRadiusAxis
                     angle={90}
@@ -200,27 +265,67 @@ const SkillLevelingSystem = () => {
           </motion.div>
         </div>
 
-        {/* The Grimoire (Categorized Skills & Cheat Sheets) */}
+         {/* The Grimoire (Categorized Skills & Cheat Sheets) */}
         <motion.div
+          id="skill-inventory-logs"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <div className="flex items-center justify-between border-b border-gray-800/50 pb-3 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800/50 pb-3 mb-8 gap-4">
             <h3 className="text-lg text-emerald-400 font-mono uppercase tracking-widest">
               Skill Inventory & Logs
             </h3>
-            <span className="text-gray-500 text-xs text-transform-none lowercase">click_to_expand_commands</span>
+            
+            {/* Desktop Legend / Mobile Tab Info */}
+            <div className="flex items-center gap-4">
+              <span className="hidden sm:inline text-gray-500 text-[10px] font-mono lowercase">interaction: tap_skill_for_shell_logs</span>
+              <div className="sm:hidden flex items-center gap-2 px-2 py-1 bg-gray-900 rounded border border-gray-800">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] text-gray-400 font-mono">SELECTED_SUBMODULE</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Category Tab Bar (Active on Mobile) */}
+          <div className="lg:hidden flex overflow-x-auto pb-4 mb-6 gap-2 hide-scrollbar -mx-4 px-4 snap-x">
+            {Object.keys(toolsProficiency).map((category) => {
+              const Icon = categoryIcons[category] || Code;
+              const accent = categoryAccents[category];
+              const isActive = activeCategory === category;
+              
+              return (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`flex-shrink-0 snap-start flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 ${
+                    isActive 
+                      ? `${accent.border.replace('20', '50')} ${accent.bg} ${accent.text} shadow-lg shadow-cyan-500/10 scale-105` 
+                      : 'border-gray-800 bg-gray-900/50 text-gray-500'
+                  }`}
+                >
+                  <Icon className={`h-3.5 w-3.5 ${isActive ? accent.text : 'text-gray-600'}`} />
+                  <span className="text-[11px] font-mono whitespace-nowrap uppercase tracking-tight font-bold">
+                    {category.split(' & ')[0].split(' / ')[0]}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {Object.entries(toolsProficiency).map(([category, tools], index) => {
               const Icon = categoryIcons[category] || Code;
               const accent = categoryAccents[category] || categoryAccents['Programming & Automation'];
+              const isVisible = window.innerWidth >= 1024 || activeCategory === category;
+
+              if (!isVisible) return null;
 
               return (
-                <div
+                <motion.div
                   key={category}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
                   className={`holo-card card-3d bg-[#121212] border ${accent.border} ${accent.hover} rounded-lg p-5 transition-all duration-300 hover:shadow-lg hover:${accent.glow}`}
                 >
                   {/* Category Header */}
@@ -231,17 +336,20 @@ const SkillLevelingSystem = () => {
                     <h3 className="text-sm font-bold text-white font-mono">{category}</h3>
                   </div>
 
-                  {/* Skills Map */}
                   <div className="space-y-3.5">
                     {tools.map((tool) => (
-                      <div
+                      <motion.div
                         key={tool.name}
-                        className="group cursor-pointer"
-                        onClick={() => setSelectedTool(selectedTool?.name === tool.name ? null : tool)}
+                        whileTap={{ scale: 0.98 }}
+                        className="group cursor-pointer active:brightness-125"
+                        onClick={() => {
+                          setSelectedTool(tool);
+                          setIsOverlayOpen(true);
+                        }}
                       >
                         <div className="flex justify-between items-center mb-1.5">
                           <div className="flex items-center gap-2">
-                            <span className="text-gray-300 text-xs group-hover:text-white transition-colors font-mono">
+                             <span className="text-gray-300 text-xs group-hover:text-white transition-colors font-mono">
                               {tool.name}
                             </span>
                             <span className={`text-[9px] px-1.5 py-0 ${accent.bg} ${accent.text} rounded font-mono`}>
@@ -260,26 +368,22 @@ const SkillLevelingSystem = () => {
                             style={{ width: `${tool.level}%` }}
                           />
                         </div>
-
-                        {/* Expanded Commands View */}
-                        {selectedTool?.name === tool.name && (
-                          <div className="mt-2.5 p-3 bg-[#0a0a0a] border border-gray-800 rounded space-y-1.5 animate-fade-in text-left">
-                            <p className="text-[9px] text-gray-600 uppercase tracking-wider font-mono mb-1">Command Logs</p>
-                            {tool.commands.map((cmd, idx) => (
-                              <code key={idx} className={`block text-[11px] ${accent.text} font-mono bg-[#060606] px-2 py-1 rounded`}>
-                                $ {cmd}
-                              </code>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         </motion.div>
+
+        {/* Floating Command Overlay */}
+        <CommandOverlay 
+          tool={selectedTool} 
+          accent={selectedTool ? (Object.values(categoryAccents).find(acc => acc.text.split('-')[1] === (Object.entries(toolsProficiency).find(([_, tools]) => tools.some(t => t.name === selectedTool.name))?.[0]?.split(' & ')?.[0]?.toLowerCase().includes('cloud') ? 'orange' : Object.entries(toolsProficiency).find(([cat, tools]) => tools.some(t => t.name === selectedTool.name))?.[0]?.split(' & ')?.[0]?.toLowerCase().includes('soc') ? 'cyan' : 'blue')) || categoryAccents['Programming & Automation']) : categoryAccents['Programming & Automation']}
+          isOpen={isOverlayOpen}
+          onClose={() => setIsOverlayOpen(false)}
+        />
       </div>
     </section>
   );
