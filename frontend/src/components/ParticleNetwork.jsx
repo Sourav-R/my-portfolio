@@ -8,6 +8,7 @@ const useIntersectionObserver = (options) => {
   const ref = useRef(null);
 
   useEffect(() => {
+    const node = ref.current;
     const observer = new IntersectionObserver(([entry]) => {
       // Small optimization: don't unmount immediately when scrolling past, 
       // just mount when we get close and keep it mounted unless we need strict cleanup (for context limits we do).
@@ -15,9 +16,10 @@ const useIntersectionObserver = (options) => {
       else setInView(false);
     }, options);
     
-    if (ref.current) observer.observe(ref.current);
+    if (node) observer.observe(node);
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (node) observer.unobserve(node);
+      observer.disconnect();
     };
   }, [options]);
 
