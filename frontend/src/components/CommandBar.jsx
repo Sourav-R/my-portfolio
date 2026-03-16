@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Terminal, Menu, X, Clock, Shield, Download } from 'lucide-react';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
+import { motion, AnimatePresence } from 'framer-motion';
 import { profileData, securityStatus } from '../mock';
 
 const navItems = [
@@ -133,41 +134,59 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
         </div>
 
         {/* Mobile Menu */}
-        {mobileOpen && (
-          <div className="lg:hidden bg-[#050505]/95 backdrop-blur-xl border-b border-gray-800 px-4 py-3">
-            <div className="grid grid-cols-3 gap-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollTo(item.id)}
-                  className={`px-3 py-2 text-xs font-mono rounded transition-all ${
-                    activeSection === item.id
-                      ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 font-bold shadow-[0_0_10px_rgba(6,182,212,0.15)]'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-gray-800'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-3 mt-3 pt-3 border-t border-gray-800">
-              <div className="flex items-center gap-2 text-[10px] font-mono text-gray-600">
-                <Shield className="h-3 w-3 text-emerald-500" />
-                <span className="text-emerald-400">{securityStatus.level}</span>
-                <Clock className="h-3 w-3 text-gray-500 ml-2" />
-                <span className="text-gray-400">{formatTime(currentTime)}</span>
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden bg-[#050505]/fb backdrop-blur-2xl border-b border-white/10 overflow-hidden"
+            >
+              <div className="px-6 py-8">
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`h-12 flex items-center justify-center px-4 py-2 text-xs font-mono rounded-lg transition-all active:scale-95 ${
+                        activeSection === item.id
+                          ? 'text-cyan-400 bg-cyan-500/15 border border-cyan-500/50 font-bold shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                          : 'text-gray-400 bg-white/5 border border-white/5'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="space-y-6 pt-6 border-t border-white/5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400">
+                        <Shield className="h-3.5 w-3.5" />
+                        <span>{securityStatus.level}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-gray-400">
+                        <Clock className="h-3.5 w-3.5" />
+                        <span>MEL {formatTime(currentTime)}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-xl border border-white/10">
+                      <span className="text-[11px] font-mono text-gray-400">RECRUITER_MODE</span>
+                      <Switch
+                        checked={recruiterMode}
+                        onCheckedChange={setRecruiterMode}
+                        className="data-[state=checked]:bg-emerald-500 scale-90"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-[10px] font-mono text-gray-500">REC</span>
-                <Switch
-                  checked={recruiterMode}
-                  onCheckedChange={setRecruiterMode}
-                  className="data-[state=checked]:bg-emerald-500 scale-75"
-                />
-              </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
     </>
   );

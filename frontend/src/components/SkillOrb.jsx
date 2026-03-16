@@ -95,7 +95,7 @@ const TagCloud = ({ tools }) => {
         </Text>
       ))}
       <mesh material={sphereMat}>
-        <sphereGeometry args={[2.4, 16, 16]} />
+        <sphereGeometry args={[2.4, window.innerWidth < 768 ? 12 : 24, window.innerWidth < 768 ? 12 : 24]} />
       </mesh>
     </group>
   );

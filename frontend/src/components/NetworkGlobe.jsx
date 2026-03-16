@@ -32,7 +32,8 @@ const GlobePoints = () => {
     const pts = [];
     const conns = [];
     const cols = [];
-    const numPoints = 120;
+    const isMobile = window.innerWidth < 768;
+    const numPoints = isMobile ? 60 : 120;
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
 
     for (let i = 0; i < numPoints; i++) {
@@ -85,11 +86,11 @@ const GlobePoints = () => {
       <points ref={pointsRef} material={pointsMat} />
       <lineSegments ref={linesRef} material={lineMat} />
       <mesh>
-        <torusGeometry args={[2.5, 0.005, 16, 100]} />
+        <torusGeometry args={[2.5, 0.005, 12, window.innerWidth < 768 ? 40 : 80]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.1} />
       </mesh>
       <mesh rotation={[Math.PI / 3, 0, 0]}>
-        <torusGeometry args={[2.3, 0.005, 16, 100]} />
+        <torusGeometry args={[2.3, 0.005, 12, window.innerWidth < 768 ? 40 : 80]} />
         <meshBasicMaterial color="#10b981" transparent opacity={0.06} />
       </mesh>
     </group>

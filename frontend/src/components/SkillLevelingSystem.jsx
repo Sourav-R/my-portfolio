@@ -96,37 +96,37 @@ const SkillLevelingSystem = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-50"></div>
 
-          <div className="relative flex flex-col md:flex-row items-center md:items-start md:justify-between gap-8">
+          <div className="relative flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-8">
             {/* Player Info */}
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
               <div className="relative">
-                <div className="w-24 h-24 rounded-full border-2 border-cyan-500/50 flex items-center justify-center bg-[#050505] shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                  <Activity className="w-10 h-10 text-cyan-400" />
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-cyan-500/50 flex items-center justify-center bg-[#050505] shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                  <Activity className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
                 </div>
-                <div className="absolute -bottom-2 -right-2 bg-emerald-500 text-black text-xs font-bold px-2 py-0.5 rounded border border-[#020202]">
+                <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 bg-emerald-500 text-black text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded border border-[#020202]">
                   Lvl 42
                 </div>
               </div>
 
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
                   &gt; Sourav
                 </h2>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="text-xs font-mono px-2 py-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded">Class: Threat Hunter</span>
-                  <span className="text-xs font-mono px-2 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded">Sub-Class: Network Spec</span>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-3">
+                  <span className="text-[10px] sm:text-xs font-mono px-2 py-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded">Class: Threat Hunter</span>
+                  <span className="text-[10px] sm:text-xs font-mono px-2 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded">Sub-Class: Network Spec</span>
                 </div>
-                <p className="text-gray-400 text-xs font-mono">Guild: SOC Operations | 600+ Hours Active Log</p>
+                <p className="text-gray-400 text-[10px] sm:text-xs font-mono">Guild: SOC Operations | 600+ Hours Active Log</p>
               </div>
             </div>
 
             {/* EXP Bar */}
-            <div className="w-full md:w-1/3 flex flex-col justify-center">
+            <div className="w-full sm:w-1/3 flex flex-col justify-center mt-4 sm:mt-0">
               <div className="flex justify-between items-end mb-2">
-                <span className="text-xs text-gray-400 font-mono">GLOBAL PROFICIENCY</span>
-                <span className="text-sm text-cyan-400 font-mono font-bold">{totalExp}%</span>
+                <span className="text-[10px] text-gray-400 font-mono">GLOBAL PROFICIENCY</span>
+                <span className="text-xs sm:text-sm text-cyan-400 font-mono font-bold">{totalExp}%</span>
               </div>
-              <div className="h-3 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+              <div className="h-2.5 sm:h-3 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={isInView ? { width: `${totalExp}%` } : {}}
@@ -137,7 +137,7 @@ const SkillLevelingSystem = () => {
                 </motion.div>
               </div>
               <div className="text-right mt-1">
-                <span className="text-[10px] text-gray-500 font-mono">XP: 84,200 / 100,000</span>
+                <span className="text-[9px] sm:text-[10px] text-gray-500 font-mono">XP: 84,200 / 100,000</span>
               </div>
             </div>
           </div>
@@ -159,7 +159,7 @@ const SkillLevelingSystem = () => {
                   <PolarGrid stroke="#1f2937" />
                   <PolarAngleAxis
                     dataKey="subject"
-                    tick={{ fill: '#ffffff', fontSize: 12, fontFamily: 'monospace', fontWeight: '900' }}
+                    tick={{ fill: '#ffffff', fontSize: 10, fontFamily: 'monospace', fontWeight: '900' }}
                   />
                   <PolarRadiusAxis
                     angle={90}

@@ -15,9 +15,10 @@ const MatrixRain = ({ opacity = 0.4 }) => {
     resize();
     window.addEventListener('resize', resize);
 
+    const isMobile = window.innerWidth < 768;
+    const fontSize = isMobile ? 18 : 14;
     const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]|';
     const charArr = chars.split('');
-    const fontSize = 14;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
 

@@ -197,13 +197,15 @@ const HeroSection = ({ recruiterMode, setMatrixRed }) => {
       {/* Background layers */}
       <div className={`absolute inset-0 ${isDefcon1 ? 'bg-red-950/20' : 'bg-[#030303]'}`} />
       <div className="absolute inset-0 bg-grid" />
-      <Canvas3DErrorBoundary>
-        <Suspense fallback={null}>
-          <NetworkGlobe />
-        </Suspense>
-      </Canvas3DErrorBoundary>
+      <div className="absolute inset-0 z-0 opacity-50 lg:opacity-100">
+        <Canvas3DErrorBoundary>
+          <Suspense fallback={null}>
+            <NetworkGlobe />
+          </Suspense>
+        </Canvas3DErrorBoundary>
+      </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-24 pb-16">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-24 pb-16 lg:pt-32">
         {/* Status bar */}
         <div className="flex items-center gap-3 mb-8">
           <div 
@@ -234,12 +236,12 @@ const HeroSection = ({ recruiterMode, setMatrixRed }) => {
             <p className="text-cyan-500 font-mono text-sm mb-3 tracking-wide" data-testid="hero-greeting">
               &gt; USER_ID: SOURAV_RK
             </p>
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4 tracking-tight leading-[1.05]" data-testid="hero-name">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 tracking-tight leading-[1.05]" data-testid="hero-name">
               {profileData.name}
             </h1>
-            <h2 className="text-xl text-white font-mono font-bold mb-8" data-testid="hero-role">
+            <h2 className="text-lg sm:text-xl text-white font-mono font-bold mb-8 flex flex-wrap gap-y-2 items-center" data-testid="hero-role">
               <span className="text-emerald-400">{profileData.role}</span>
-              <span className="text-gray-600 mx-2">//</span>
+              <span className="text-gray-600 mx-2 hidden sm:inline">//</span>
               <span className="text-cyan-400">{profileData.location}</span>
             </h2>
 
@@ -281,7 +283,7 @@ const HeroSection = ({ recruiterMode, setMatrixRed }) => {
           </div>
 
           {/* Right: Terminal Boot Sequence */}
-          <div>
+          <div className="order-first lg:order-last">
             <TiltCard className="" intensity={8} scale={1.02}>
             <div className="bg-[#080808] border border-gray-700/50 rounded-lg overflow-hidden">
               {/* Terminal header */}
@@ -296,7 +298,7 @@ const HeroSection = ({ recruiterMode, setMatrixRed }) => {
               </div>
 
               {/* Terminal body */}
-              <div ref={terminalRef} className="p-5 font-mono text-xs leading-relaxed h-[380px] overflow-y-auto" style={{ scrollbarWidth: 'thin' }}>
+              <div ref={terminalRef} className="p-5 font-mono text-[11px] leading-relaxed h-[220px] sm:h-[300px] lg:h-[380px] overflow-y-auto" style={{ scrollbarWidth: 'thin' }}>
                 {bootLines.map((line, i) => (
                   <div key={i} className={`${getLineClass(line.type)} ${line.visible ? 'animate-fade-in' : 'opacity-0'}`}
                     style={{ animationDuration: '0.3s' }}>

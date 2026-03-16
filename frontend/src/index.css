@@ -4,8 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --section-spacing: clamp(3rem, 10vh, 6rem);
+    --container-max: 80rem;
+}
+
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+@media (max-width: 640px) {
+    html { font-size: 14px; }
 }
 
 body {
@@ -17,6 +27,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: #030303;
+    overflow-x: hidden;
 }
 
 code {

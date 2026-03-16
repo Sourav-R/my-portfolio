@@ -106,71 +106,52 @@ const ProjectsHub = ({ recruiterMode }) => {
           ))}
         </div>
 
-        {/* Projects Grid (2 or 3 columns depending on screen) */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, idx) => {
+        {/* Projects Grid / Carousel */}
+        <div className="relative">
+          {/* Desktop Grid */}
+          <motion.div 
+            layout
+            className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project, idx) => {
+                const style = TAB_STYLES[project.tab] || DEFAULT_STYLE;
+                return (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                    key={project.id}
+                    onClick={() => setSelectedProject(project)}
+                    className={`holo-card card-3d group cursor-pointer flex flex-col bg-[#080808] border ${style.border?.replace('l-', '')} border-opacity-30 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 ${style.glow}`}
+                  >
+                    <ProjectCardContent project={project} style={style} getThumbnail={getThumbnail} />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Mobile Swipable Carousel */}
+          <div className="sm:hidden flex overflow-x-auto gap-4 pb-8 snap-x snap-mandatory hide-scrollbar -mx-4 px-4">
+            {filteredProjects.map((project) => {
               const style = TAB_STYLES[project.tab] || DEFAULT_STYLE;
               return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                <div 
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
-                  className={`holo-card card-3d group cursor-pointer flex flex-col bg-[#080808] border ${style.border?.replace('l-', '')} border-opacity-30 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 ${style.glow}`}
+                  className="w-[85vw] flex-shrink-0 snap-center"
                 >
-                  {/* Thumbnail Placeholder */}
-                  <div className="overflow-hidden relative">
-                     {getThumbnail(project, style)}
-                     <div className={`absolute top-3 right-3 ${style.badge} px-2 py-1 rounded text-[10px] font-mono border backdrop-blur-md`}>
-                       {project.type}
-                     </div>
+                  <div className={`holo-card bg-[#080808] border ${style.border?.replace('l-', '')} border-opacity-30 rounded-xl overflow-hidden`}>
+                    <ProjectCardContent project={project} style={style} getThumbnail={getThumbnail} />
                   </div>
-
-                  {/* Card Content */}
-                  <div className="p-5 flex flex-col flex-grow">
-                    <h3 className="text-base font-bold text-white font-mono leading-tight mb-2 group-hover:text-gray-200 line-clamp-2">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2 flex-grow">
-                      {project.subtitle || project.problem || "Advanced implementation requiring complex architectural decisions."}
-                    </p>
-
-                    {/* Tech Stack Badges */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.stack.slice(0, 4).map((tech, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 bg-[#111] border border-gray-800 rounded-full text-gray-400 font-mono">
-                          {tech}
-                        </span>
-                      ))}
-                      {project.stack.length > 4 && (
-                        <span className="text-[10px] px-2 py-0.5 bg-[#111] border border-gray-800/50 rounded-full text-gray-600 font-mono">
-                          +{project.stack.length - 4}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex justify-between items-center pt-3 border-t border-gray-900 mt-auto">
-                      <span className={`text-[10px] uppercase font-mono tracking-wider ${style.accent} flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity`}>
-                        <ChevronRight className="w-3 h-3" /> Execute Deep Dive
-                      </span>
-                      <Badge className={`${DIFFICULTY_STYLES[project.difficulty] || ''} text-[9px] px-1.5 py-0 h-4 border font-mono uppercase tracking-wider`}>
-                        {project.difficulty}
-                      </Badge>
-                    </div>
-                  </div>
-                </motion.div>
+                </div>
               );
             })}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Deep Dive Modal */}
@@ -341,6 +322,52 @@ const ProjectsHub = ({ recruiterMode }) => {
     </section>
   );
 };
+
+const ProjectCardContent = ({ project, style, getThumbnail }) => (
+  <>
+    {/* Thumbnail Placeholder */}
+    <div className="overflow-hidden relative">
+        {getThumbnail(project, style)}
+        <div className={`absolute top-3 right-3 ${style.badge} px-2 py-1 rounded text-[10px] font-mono border backdrop-blur-md`}>
+          {project.type}
+        </div>
+    </div>
+
+    {/* Card Content */}
+    <div className="p-5 flex flex-col flex-grow">
+      <h3 className="text-base font-bold text-white font-mono leading-tight mb-2 group-hover:text-gray-200 line-clamp-2">
+        {project.title}
+      </h3>
+      
+      <p className="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2 flex-grow">
+        {project.subtitle || project.problem || "Advanced implementation requiring complex architectural decisions."}
+      </p>
+
+      {/* Tech Stack Badges */}
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {project.stack.slice(0, 4).map((tech, i) => (
+          <span key={i} className="text-[10px] px-2 py-0.5 bg-[#111] border border-gray-800 rounded-full text-gray-400 font-mono">
+            {tech}
+          </span>
+        ))}
+        {project.stack.length > 4 && (
+          <span className="text-[10px] px-2 py-0.5 bg-[#111] border border-gray-800/50 rounded-full text-gray-600 font-mono">
+            +{project.stack.length - 4}
+          </span>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center pt-3 border-t border-gray-900 mt-auto">
+        <span className={`text-[10px] uppercase font-mono tracking-wider ${style.accent} flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity`}>
+          <ChevronRight className="w-3 h-3" /> Execute Deep Dive
+        </span>
+        <Badge className={`${DIFFICULTY_STYLES[project.difficulty] || ''} text-[9px] px-1.5 py-0 h-4 border font-mono uppercase tracking-wider`}>
+          {project.difficulty}
+        </Badge>
+      </div>
+    </div>
+  </>
+);
 
 // Needs importing Lock from lucide-react if used
 import { Lock } from 'lucide-react';
