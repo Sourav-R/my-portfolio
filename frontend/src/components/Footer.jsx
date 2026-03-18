@@ -70,7 +70,7 @@ const Footer = () => {
               onClick={() => setShowAdminModal(true)}
               title="Classified"
             >.</span>
-
+          </p>
         </div>
       </div>
 
