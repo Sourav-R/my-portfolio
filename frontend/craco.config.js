@@ -65,6 +65,15 @@ const webpackConfig = {
       if (config.enableHealthCheck && healthPluginInstance) {
         webpackConfig.plugins.push(healthPluginInstance);
       }
+
+      // Suppress source-map-loader warnings for @mediapipe (known issue in CRA/Craco)
+      webpackConfig.module.rules.push({
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+        exclude: /node_modules\/@mediapipe/,
+      });
+
       return webpackConfig;
     },
   },
