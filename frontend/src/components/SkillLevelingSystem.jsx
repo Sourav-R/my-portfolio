@@ -606,7 +606,7 @@ const SkillLevelingSystem = () => {
 
           <h1 style={{
             fontFamily: "'Courier New', monospace",
-            fontSize: 'clamp(44px, 7vw, 72px)',
+            fontSize: 'clamp(24px, 7vw, 50px)',
             fontWeight: 900,
             letterSpacing: '-0.04em',
             lineHeight: 1,
