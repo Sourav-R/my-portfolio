@@ -1,41 +1,45 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { toolsProficiency } from '../labExperience';
 import {
-  Shield, Crosshair, Database, Network, Cloud, Terminal, Brackets, Code,
-  Search, AlertTriangle, Bug, Mail, Skull, Radar, Eye, Wifi,
-  FileCode, Hash, Server, Lock, Globe, Key, Cpu, Settings, X, Activity,
+  Shield, Crosshair, Database, Network, Cloud, Terminal, Code, X, Activity,
+  Search, AlertTriangle, Skull, Mail, Bug, Globe, FileCode, Settings, Key, Lock, Eye
 } from 'lucide-react';
 
 /* ── Per-tool icon mapping ── */
+// 'type: brand' fetches the exact color logo from SimpleIcons CDN. 'type: lucide' uses the fallback native icons.
 const toolIcons = {
-  'SIEM (ELK Stack)': Database,
-  'Alert Investigation': Search,
-  'Incident Triage': AlertTriangle,
-  'Threat Analysis': Eye,
-  'Phishing Analysis': Mail,
-  'Kali Linux': Skull,
-  'Burp Suite': Bug,
-  'OWASP ZAP': Radar,
-  'Metasploit': Crosshair,
-  'Nmap': Globe,
-  'Snort': Shield,
-  'Suricata': Shield,
-  'Network Anomaly Detection': Wifi,
-  'Wireshark': Network,
-  'Log Analysis': FileCode,
-  'Python': Code,
-  'Bash Scripting': Terminal,
-  'C Programming': Hash,
-  'SaltStack': Settings,
-  'AWS': Cloud,
-  'Oracle Cloud': Cloud,
-  'Linux Administration': Server,
-  'Network Protocols': Network,
-  'T-Pot Honeypot': Bug,
-  'Cryptography (AES/RSA)': Key,
-  'SSL/TLS': Lock,
-  'IPSec/VPN': Lock,
+  'SIEM (ELK Stack)': { type: 'brand', slug: 'elasticstack', color: '#005571' },
+  'LotL Detection & EQL': { type: 'lucide', icon: Search, color: '#ff6b6b' },
+  'Logstash Pipelines': { type: 'brand', slug: 'logstash', color: '#00bfb3' },
+  'GLPI / LAMP Stack': { type: 'brand', slug: 'apache', color: '#D22128' },
+  'AWS & Microservices': { type: 'brand', slug: 'amazonaws', color: '#FF9900' },
+  'Alert Investigation': { type: 'lucide', icon: Eye, color: '#4dabf7' },
+  'Incident Triage': { type: 'lucide', icon: AlertTriangle, color: '#fcc419' },
+  'Threat Analysis': { type: 'lucide', icon: Skull, color: '#9775fa' },
+  'Phishing Analysis': { type: 'lucide', icon: Mail, color: '#69db7c' },
+  'Kali Linux': { type: 'brand', slug: 'kalilinux', color: '#557C94' },
+  'Burp Suite': { type: 'lucide', icon: Bug, color: '#FF6633' }, // No exact simpleicon for burp
+  'OWASP ZAP': { type: 'brand', slug: 'owasp', color: '#cfcfcf' },
+  'Metasploit': { type: 'lucide', icon: Crosshair, color: '#1B4783' },
+  'Nmap': { type: 'lucide', icon: Globe, color: '#27346A' },
+  'Snort': { type: 'lucide', icon: Shield, color: '#e8590c' },
+  'Suricata': { type: 'lucide', icon: Shield, color: '#F16930' },
+  'Network Anomaly Detection': { type: 'lucide', icon: Activity, color: '#20c997' },
+  'Wireshark': { type: 'brand', slug: 'wireshark', color: '#1679A7' },
+  'Log Analysis': { type: 'lucide', icon: FileCode, color: '#adb5bd' },
+  'Python': { type: 'brand', slug: 'python', color: '#3776AB' },
+  'Bash Scripting': { type: 'brand', slug: 'gnubash', color: '#4EAA25' },
+  'C Programming': { type: 'brand', slug: 'c', color: '#A8B9CC' },
+  'SaltStack': { type: 'lucide', icon: Settings, color: '#00D1D1' },
+  'AWS': { type: 'brand', slug: 'amazonaws', color: '#FF9900' },
+  'Oracle Cloud': { type: 'brand', slug: 'oracle', color: '#F80000' },
+  'Linux Administration': { type: 'brand', slug: 'linux', color: '#FCC624' },
+  'Network Protocols': { type: 'lucide', icon: Network, color: '#74c0fc' },
+  'T-Pot Honeypot': { type: 'lucide', icon: Bug, color: '#d0bfff' },
+  'Cryptography (AES/RSA)': { type: 'lucide', icon: Key, color: '#ffd43b' },
+  'SSL/TLS': { type: 'lucide', icon: Lock, color: '#63e6be' },
+  'IPSec/VPN': { type: 'lucide', icon: Lock, color: '#ff8787' },
 };
 
 const categoryMeta = {
@@ -83,11 +87,34 @@ const categoryMeta = {
   },
 };
 
-const getProficiencyLabel = (level) => {
-  if (level >= 90) return 'EXPERT';
-  if (level >= 75) return 'ADVANCED';
-  if (level >= 60) return 'PROFICIENT';
-  return 'DEVELOPING';
+/* ── Animated counter ── */
+const Counter = ({ value, color, active }) => {
+  const [display, setDisplay] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let current = 0;
+    const duration = 900;
+    const step = 16;
+    const increment = value / (duration / step);
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) { setDisplay(value); clearInterval(timer); }
+      else setDisplay(Math.floor(current));
+    }, step);
+    return () => clearInterval(timer);
+  }, [active, value]);
+  return (
+    <span style={{
+      fontFamily: "'Courier New', monospace",
+      fontSize: 13,
+      fontWeight: 900,
+      color,
+      letterSpacing: '-0.02em',
+      textShadow: `0 0 8px ${color}70`,
+    }}>
+      {display}<span style={{ fontSize: 8, opacity: 0.5, fontWeight: 400 }}>%</span>
+    </span>
+  );
 };
 
 /* ── Command Overlay ── */
@@ -118,7 +145,6 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header bar */}
           <div
             className="flex items-center justify-between px-5 py-3"
             style={{ borderBottom: `1px solid ${color}20`, background: `${color}08` }}
@@ -130,15 +156,11 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
               </span>
               <span className="text-[10px] font-mono text-gray-600">/ shell.log</span>
             </div>
-            <button
-              onClick={onClose}
-              className="text-gray-600 hover:text-gray-300 transition-colors"
-            >
+            <button onClick={onClose} className="text-gray-600 hover:text-gray-300 transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Commands */}
           <div className="p-5 space-y-2 max-h-[55vh] overflow-y-auto">
             {tool.commands.map((cmd, idx) => (
               <motion.div
@@ -154,22 +176,14 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
             ))}
           </div>
 
-          {/* Footer */}
-          <div
-            className="flex items-center justify-between px-5 py-3"
-            style={{ borderTop: '1px solid #ffffff08' }}
-          >
+          <div className="flex items-center justify-between px-5 py-3" style={{ borderTop: '1px solid #ffffff08' }}>
             <span className="text-[10px] font-mono text-gray-700 tracking-widest">
               ACCESS_GRANTED · {tool.commands?.length} ENTRIES
             </span>
             <button
               onClick={onClose}
               className="text-[10px] font-mono tracking-widest px-3 py-1.5 transition-all"
-              style={{
-                color: '#000',
-                backgroundColor: color,
-                borderRadius: '1px',
-              }}
+              style={{ color: '#000', backgroundColor: color, borderRadius: '1px' }}
             >
               CLOSE
             </button>
@@ -177,6 +191,113 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
         </motion.div>
       </motion.div>
     </AnimatePresence>
+  );
+};
+
+/* ── Icon Tool Tile ── */
+const ToolTile = ({ tool, color, cardActive, onToolClick }) => {
+  const [hovered, setHovered] = useState(false);
+  const meta = toolIcons[tool.name] || { type: 'lucide', icon: Code, color: '#888' };
+  const brandColor = meta.color;
+
+  return (
+    <motion.div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={() => onToolClick(tool, color)}
+      whileHover={{ y: -2 }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 12,
+        padding: '24px 16px 20px',
+        borderRadius: 8,
+        border: `1px solid ${hovered ? color + '45' : 'rgba(255,255,255,0.05)'}`,
+        background: hovered ? `${color}0c` : 'rgba(255,255,255,0.02)',
+        cursor: 'pointer',
+        transition: 'border-color 0.18s, background 0.18s',
+        boxShadow: hovered ? `0 0 18px ${color}12, inset 0 1px 0 rgba(255,255,255,0.05)` : 'none',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Icon box */}
+      <div style={{
+        width: 48,
+        height: 48,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+        background: hovered ? `${color}18` : 'rgba(255,255,255,0.04)',
+        border: `1px solid ${hovered ? color + '35' : 'rgba(255,255,255,0.06)'}`,
+        transition: 'all 0.18s',
+        boxShadow: hovered ? `0 0 14px ${color}20` : 'none',
+        flexShrink: 0,
+      }}>
+        {meta.type === 'brand' ? (
+          <img 
+            src={`https://cdn.simpleicons.org/${meta.slug}/${brandColor.replace('#', '')}`}
+            alt={tool.name}
+            style={{
+              width: 26,
+              height: 26,
+              filter: hovered ? `drop-shadow(0 0 8px ${brandColor}80)` : 'none',
+              transition: 'all 0.2s',
+              transform: hovered ? 'scale(1.1)' : 'scale(1)'
+            }}
+          />
+        ) : (
+          <meta.icon size={26} color={brandColor} style={{
+            filter: hovered ? `drop-shadow(0 0 8px ${brandColor}80)` : 'none',
+            transition: 'all 0.2s',
+            transform: hovered ? 'scale(1.1)' : 'scale(1)'
+          }} />
+        )}
+      </div>
+
+      {/* Tool name */}
+      <span style={{
+        fontFamily: "'Courier New', monospace",
+        fontSize: 8.5,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+        color: hovered ? '#c8c8c8' : '#686868',
+        textAlign: 'center',
+        lineHeight: 1.35,
+        transition: 'color 0.18s',
+        maxWidth: 76,
+        wordBreak: 'break-word',
+      }}>
+        {tool.name}
+      </span>
+
+      {/* Progress bar */}
+      <div style={{
+        width: '100%',
+        height: 2,
+        background: 'rgba(255,255,255,0.05)',
+        borderRadius: 1,
+        overflow: 'hidden',
+      }}>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={cardActive ? { width: `${tool.level}%` } : {}}
+          transition={{ duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            height: '100%',
+            background: `linear-gradient(90deg, ${color}55, ${color})`,
+            borderRadius: 1,
+            boxShadow: `0 0 5px ${color}80`,
+          }}
+        />
+      </div>
+
+      {/* Animated level */}
+      <Counter value={tool.level} color={color} active={cardActive} />
+    </motion.div>
   );
 };
 
@@ -237,61 +358,38 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
                 position: 'relative',
               }}
             >
-              {/* Frosted inner sheen — top half lighter */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: `linear-gradient(160deg, rgba(255,255,255,0.04) 0%, transparent 50%, rgba(0,0,0,0.15) 100%)`,
-                  pointerEvents: 'none',
-                  zIndex: 0,
-                }}
-              />
+              {/* Frosted inner sheen */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: `linear-gradient(160deg, rgba(255,255,255,0.04) 0%, transparent 50%, rgba(0,0,0,0.15) 100%)`,
+                pointerEvents: 'none', zIndex: 0,
+              }} />
 
               {/* Colored glow bloom — top right */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: -80,
-                  right: -80,
-                  width: 260,
-                  height: 260,
-                  borderRadius: '50%',
-                  background: `radial-gradient(circle, ${meta.color}18 0%, transparent 65%)`,
-                  pointerEvents: 'none',
-                  zIndex: 0,
-                }}
-              />
+              <div style={{
+                position: 'absolute', top: -80, right: -80, width: 260, height: 260,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, ${meta.color}18 0%, transparent 65%)`,
+                pointerEvents: 'none', zIndex: 0,
+              }} />
 
               {/* Colored glow bloom — bottom left */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: -60,
-                  left: -60,
-                  width: 180,
-                  height: 180,
-                  borderRadius: '50%',
-                  background: `radial-gradient(circle, ${meta.color}0c 0%, transparent 70%)`,
-                  pointerEvents: 'none',
-                  zIndex: 0,
-                }}
-              />
+              <div style={{
+                position: 'absolute', bottom: -60, left: -60, width: 180, height: 180,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, ${meta.color}0c 0%, transparent 70%)`,
+                pointerEvents: 'none', zIndex: 0,
+              }} />
 
               {/* Top bar */}
-              <div
-                style={{
-                  position: 'relative',
-                  zIndex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '10px 20px',
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
-                  background: 'rgba(255,255,255,0.02)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
+              <div style={{
+                position: 'relative', zIndex: 1,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '10px 20px',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                background: 'rgba(255,255,255,0.02)',
+                backdropFilter: 'blur(8px)',
+              }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: meta.color, opacity: 0.9 }} />
                   <span style={{ fontFamily: "'Courier New', monospace", fontSize: 10, letterSpacing: '0.18em', color: '#333', textTransform: 'uppercase' }}>
@@ -304,219 +402,90 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
               </div>
 
               {/* Main content */}
-              <div style={{ position: 'relative', zIndex: 1, padding: '36px 40px 40px' }}>
+              <div style={{ position: 'relative', zIndex: 1, padding: '40px 48px 48px' }}>
 
                 {/* Category header */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={hasEntered ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.15, duration: 0.5 }}
-                  style={{ marginBottom: 36 }}
+                  style={{ marginBottom: 24 }}
                 >
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24 }}>
                     <div style={{ flex: 1 }}>
-                      {/* Index label */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                         <div style={{ width: 20, height: 1, backgroundColor: meta.color, opacity: 0.6 }} />
                         <span style={{
-                          fontFamily: "'Courier New', monospace",
-                          fontSize: 10,
-                          letterSpacing: '0.25em',
-                          color: meta.color,
-                          textTransform: 'uppercase',
-                          opacity: 0.6,
+                          fontFamily: "'Courier New', monospace", fontSize: 10,
+                          letterSpacing: '0.25em', color: meta.color, textTransform: 'uppercase', opacity: 0.6,
                         }}>
                           0{cardIndex + 1} //
                         </span>
                       </div>
 
-                      {/* Title */}
                       <h3 style={{
-                        fontSize: 'clamp(20px, 2.5vw, 28px)',
-                        fontWeight: 800,
-                        color: '#f0f0f0',
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.1,
-                        marginBottom: 10,
+                        fontSize: 'clamp(18px, 2.2vw, 24px)',
+                        fontWeight: 800, color: '#f0f0f0', letterSpacing: '-0.02em',
+                        lineHeight: 1.1, marginBottom: 8,
                         fontFamily: "'Courier New', monospace",
-                        textTransform: 'uppercase',
-                        fontStyle: 'italic',
+                        textTransform: 'uppercase', fontStyle: 'italic',
                       }}>
                         {category}
                       </h3>
 
-                      {/* Tagline */}
                       <p style={{
-                        fontSize: 13,
-                        color: '#505050',
+                        fontSize: 12, color: '#505050',
                         fontFamily: "'Courier New', monospace",
-                        lineHeight: 1.6,
-                        maxWidth: 440,
-                        letterSpacing: '0.01em',
+                        lineHeight: 1.6, maxWidth: 440, letterSpacing: '0.01em',
                       }}>
                         {meta.tagline}
                       </p>
                     </div>
 
-                    {/* Category icon */}
                     <div style={{
-                      width: 48,
-                      height: 48,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: `1px solid ${meta.color}30`,
-                      borderRadius: '8px',
-                      flexShrink: 0,
-                      background: `rgba(255,255,255,0.04)`,
-                      backdropFilter: 'blur(8px)',
+                      width: 44, height: 44,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      border: `1px solid ${meta.color}30`, borderRadius: '8px', flexShrink: 0,
+                      background: `rgba(255,255,255,0.04)`, backdropFilter: 'blur(8px)',
                       boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px ${meta.color}15`,
                     }}>
-                      <CategoryIcon style={{ width: 22, height: 22, color: meta.color, opacity: 0.85 }} />
+                      <CategoryIcon style={{ width: 20, height: 20, color: meta.color, opacity: 0.85 }} />
                     </div>
                   </div>
 
                   {/* Divider */}
                   <div style={{
-                    marginTop: 24,
-                    height: 1,
+                    marginTop: 18, height: 1,
                     background: `linear-gradient(90deg, ${meta.color}40 0%, rgba(255,255,255,0.06) 50%, transparent 100%)`,
                   }} />
                 </motion.div>
 
-                {/* Tools list */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  {tools.map((tool, toolIdx) => {
-                    const ToolIcon = toolIcons[tool.name] || Code;
-                    const profLabel = getProficiencyLabel(tool.level);
-
-                    return (
-                      <motion.div
-                        key={tool.name}
-                        initial={{ opacity: 0, x: -12 }}
-                        animate={hasEntered ? { opacity: 1, x: 0 } : {}}
-                        transition={{
-                          type: 'spring',
-                          stiffness: 200,
-                          damping: 24,
-                          delay: 0.2 + toolIdx * 0.06,
-                        }}
-                        onClick={() => onToolClick(tool, meta.color)}
-                        className="group"
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: '32px 1fr auto',
-                          alignItems: 'center',
-                          gap: 14,
-                          padding: '11px 14px',
-                          cursor: 'pointer',
-                          borderRadius: '2px',
-                          transition: 'background 0.15s ease',
-                          border: '1px solid transparent',
-                        }}
-                        whileHover={{
-                          backgroundColor: 'rgba(255,255,255,0.04)',
-                          borderColor: `${meta.color}30`,
-                          x: 3,
-                          transition: { duration: 0.15 },
-                        }}
-                      >
-                        {/* Icon */}
-                        <div style={{
-                          width: 32,
-                          height: 32,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                        }}>
-                          <ToolIcon style={{ width: 15, height: 15, color: `${meta.color}70` }} />
-                        </div>
-
-                        {/* Name + bar */}
-                        <div style={{ minWidth: 0 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-                            <span style={{
-                              fontFamily: "'Courier New', monospace",
-                              fontSize: 16,
-                              fontWeight: 700,
-                              color: '#d0d0d0',
-                              letterSpacing: '0.04em',
-                              textTransform: 'uppercase',
-                              whiteSpace: 'nowrap',
-                              fontStyle: 'italic',
-                            }}>
-                              {tool.name}
-                            </span>
-                          </div>
-
-                          {/* Progress track */}
-                          <div style={{
-                            height: 2,
-                            background: 'rgba(255,255,255,0.06)',
-                            borderRadius: 1,
-                            overflow: 'hidden',
-                            position: 'relative',
-                          }}>
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={hasEntered ? { width: `${tool.level}%` } : {}}
-                              transition={{
-                                duration: 1.1,
-                                delay: 0.35 + toolIdx * 0.06,
-                                ease: [0.16, 1, 0.3, 1],
-                              }}
-                              style={{
-                                height: '100%',
-                                background: `linear-gradient(90deg, ${meta.color}60, ${meta.color})`,
-                                borderRadius: 1,
-                                position: 'relative',
-                              }}
-                            >
-                              {/* Glowing tip */}
-                              <div style={{
-                                position: 'absolute',
-                                right: 0,
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: 4,
-                                height: 4,
-                                borderRadius: '50%',
-                                backgroundColor: meta.color,
-                                boxShadow: `0 0 6px ${meta.color}`,
-                              }} />
-                            </motion.div>
-                          </div>
-                        </div>
-
-                        {/* Level + label */}
-                        <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                          <div style={{
-                            fontFamily: "'Courier New', monospace",
-                            fontSize: 14,
-                            fontWeight: 900,
-                            color: meta.color,
-                            lineHeight: 1,
-                            marginBottom: 4,
-                            letterSpacing: '-0.02em',
-                          }}>
-                            {tool.level}
-                            <span style={{ fontSize: 9, opacity: 0.5, fontWeight: 400 }}>%</span>
-                          </div>
-                          <div style={{
-                            fontFamily: "'Courier New', monospace",
-                            fontSize: 8,
-                            letterSpacing: '0.15em',
-                            color: '#2e2e2e',
-                            textTransform: 'uppercase',
-                          }}>
-                            {profLabel}
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                {/* ── Icon grid (screenshot-style) ── */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
+                  gap: 16,
+                }}>
+                  {tools.map((tool, toolIdx) => (
+                    <motion.div
+                      key={tool.name}
+                      initial={{ opacity: 0, scale: 0.88 }}
+                      animate={hasEntered ? { opacity: 1, scale: 1 } : {}}
+                      transition={{
+                        type: 'spring', stiffness: 260, damping: 22,
+                        delay: 0.18 + toolIdx * 0.055,
+                      }}
+                    >
+                      <ToolTile
+                        tool={tool}
+                        color={meta.color}
+                        cardActive={hasEntered}
+                        onToolClick={onToolClick}
+                      />
+                    </motion.div>
+                  ))}
                 </div>
+
               </div>
             </div>
           </motion.div>
@@ -533,7 +502,6 @@ const SkillLevelingSystem = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   const categories = Object.entries(toolsProficiency);
-  const totalTools = categories.reduce((sum, [, tools]) => sum + tools.length, 0);
 
   const handleToolClick = (tool, color) => {
     setSelectedTool(tool);
@@ -554,8 +522,7 @@ const SkillLevelingSystem = () => {
     >
       {/* Background grid */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0,
         backgroundImage: `
           linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
           linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)
@@ -567,12 +534,8 @@ const SkillLevelingSystem = () => {
 
       {/* Top glow */}
       <div style={{
-        position: 'absolute',
-        top: 0,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 600,
-        height: 300,
+        position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
+        width: 600, height: 300,
         background: 'radial-gradient(ellipse, rgba(6,182,212,0.06) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
@@ -594,11 +557,8 @@ const SkillLevelingSystem = () => {
           >
             <Activity size={14} color="#06b6d4" />
             <span style={{
-              fontFamily: 'monospace',
-              fontSize: 10,
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#555',
+              fontFamily: 'monospace', fontSize: 10,
+              letterSpacing: '0.3em', textTransform: 'uppercase', color: '#555',
             }}>
               System Capability Matrix
             </span>
@@ -606,24 +566,17 @@ const SkillLevelingSystem = () => {
 
           <h1 style={{
             fontFamily: "'Courier New', monospace",
-            fontSize: 'clamp(24px, 7vw, 50px)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-            lineHeight: 1,
-            marginBottom: 24,
-            textTransform: 'uppercase',
+            fontSize: 'clamp(44px, 7vw, 72px)',
+            fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1,
+            marginBottom: 24, textTransform: 'uppercase',
           }}>
             <span style={{ color: '#efefef' }}>Ski</span>
             <span style={{ color: '#2a2a2a' }}>lls</span>
           </h1>
 
           <p style={{
-            maxWidth: 480,
-            fontFamily: 'monospace',
-            fontSize: 13,
-            color: '#404040',
-            lineHeight: 1.7,
-            letterSpacing: '0.02em',
+            maxWidth: 480, fontFamily: 'monospace', fontSize: 13,
+            color: '#404040', lineHeight: 1.7, letterSpacing: '0.02em',
           }}>
             A comprehensive overview of specialized tools and proficiency levels
             within cybersecurity infrastructure. Select a node to extract runtime
@@ -635,8 +588,7 @@ const SkillLevelingSystem = () => {
         <div style={{ position: 'relative' }}>
           {categories.map(([category, tools], index) => {
             const meta = categoryMeta[category] || {
-              icon: Code,
-              color: '#6b7280',
+              icon: Code, color: '#6b7280',
               dimColor: 'rgba(107,114,128,0.08)',
               tagline: 'Technical proficiency area.',
               index: String(index + 1).padStart(2, '0'),
