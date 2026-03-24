@@ -6,6 +6,7 @@ import LabsArchive from './pages/LabsArchive';
 import Vault from './pages/Vault';
 import NotFoundPage from './pages/NotFoundPage';
 import { Toaster } from './components/ui/toaster';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Toaster />
+      <Analytics />
     </div>
   );
 }
