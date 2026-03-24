@@ -93,7 +93,7 @@ const ProjectsHub = ({ recruiterMode }) => {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 mb-10 border-b border-gray-800/50 pb-2" data-testid="project-tabs">
+        <div className="flex overflow-x-auto md:flex-wrap gap-2 mb-10 border-b border-gray-800/50 pb-3 hide-scrollbar whitespace-nowrap" data-testid="project-tabs">
           {projectCategories.map(cat => (
             <button
               key={cat}
@@ -153,7 +153,7 @@ const ProjectsHub = ({ recruiterMode }) => {
                 <div
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
-                  className="w-[85vw] flex-shrink-0 snap-center"
+                  className="w-[85vw] max-w-[340px] flex-shrink-0 snap-center"
                 >
                   <div className={`holo-card bg-[#080808] border ${style.border?.replace('l-', '')} border-opacity-30 rounded-xl overflow-hidden`}>
                     <ProjectCardContent project={project} style={style} getThumbnail={getThumbnail} />

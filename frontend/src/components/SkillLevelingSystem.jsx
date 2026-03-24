@@ -145,7 +145,7 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-6"
+        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 sm:p-6"
         style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
         onClick={onClose}
       >
@@ -230,8 +230,8 @@ const ToolTile = ({ tool, color, cardActive, onToolClick }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 12,
-        padding: '24px 16px 20px',
+        gap: 8,
+        padding: '20px 12px 16px',
         borderRadius: 8,
         border: `1px solid ${hovered ? color + '45' : 'rgba(255,255,255,0.05)'}`,
         background: hovered ? `${color}0c` : 'rgba(255,255,255,0.02)',
@@ -418,7 +418,7 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
               </div>
 
               {/* Main content */}
-              <div style={{ position: 'relative', zIndex: 1, padding: '40px 48px 48px' }}>
+              <div className="p-6 md:p-12 md:pt-10" style={{ position: 'relative', zIndex: 1 }}>
 
                 {/* Category header */}
                 <motion.div
@@ -427,7 +427,7 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
                   transition={{ delay: 0.15, duration: 0.5 }}
                   style={{ marginBottom: 24 }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24 }}>
+                  <div className="flex flex-col-reverse md:flex-row md:items-start justify-between gap-6 md:gap-24">
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                         <div style={{ width: 20, height: 1, backgroundColor: meta.color, opacity: 0.6 }} />
@@ -458,12 +458,8 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
                       </p>
                     </div>
 
-                    <div style={{
-                      width: 44, height: 44,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      border: `1px solid ${meta.color}30`, borderRadius: '8px', flexShrink: 0,
-                      background: `rgba(255,255,255,0.04)`, backdropFilter: 'blur(8px)',
-                      boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px ${meta.color}15`,
+                    <div className="hidden md:flex items-center justify-center shrink-0 border rounded-lg bg-white/5 backdrop-blur-md shadow-inner" style={{
+                      width: 44, height: 44, borderColor: `${meta.color}30`, boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px ${meta.color}15`,
                     }}>
                       <CategoryIcon style={{ width: 20, height: 20, color: meta.color, opacity: 0.85 }} />
                     </div>
@@ -479,8 +475,8 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
                 {/* ── Icon grid (screenshot-style) ── */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
-                  gap: 20,
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(105px, 1fr))',
+                  gap: 14,
                 }}>
                   {tools.map((tool, toolIdx) => (
                     <motion.div
