@@ -9,17 +9,9 @@ const Sidebar = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
-    { id: 'hero', icon: Home, label: './home', color: 'cyan' },
-    { id: 'professional-journey', icon: TrendingUp, label: './journey', color: 'purple' },
-    { id: 'work-experience', icon: Briefcase, label: './experience', color: 'cyan' },
-    { id: 'skills-matrix', icon: TrendingUp, label: './skills_matrix', color: 'purple' },
-    { id: 'certifications', icon: GraduationCap, label: './certifications', color: 'blue' },
-    { id: 'projects', icon: Code, label: './projects', color: 'cyan' },
-    { id: 'lab-experience', icon: Award, label: './lab_experience', color: 'emerald' },
-    { id: 'featured-labs', icon: BookOpen, label: './case_studies', color: 'blue' },
-    { id: 'lab', icon: Server, label: './lab_monitor', color: 'emerald' },
-    { id: 'terminal', icon: Terminal, label: './terminal', color: 'cyan' },
-    { id: 'contact', icon: Mail, label: './contact', color: 'cyan' }
+    { id: 'hero', icon: Home, label: 'home', color: 'cyan' },
+    { id: 'projects', icon: Code, label: 'labs', color: 'emerald' },
+    { id: 'terminal', icon: Terminal, label: 'vault', color: 'purple' }
   ];
 
   useEffect(() => {
