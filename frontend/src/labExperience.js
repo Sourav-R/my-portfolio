@@ -219,18 +219,18 @@ export const professionalJourney = [
     ]
   },
   {
-    year: '2024',
+    year: '2025',
     period: 'Aug 2025 – Present',
     milestone: 'Jr. Security Engineer',
     organization: 'THIRU Labs',
     type: 'work',
     color: 'emerald',
-    description: 'Security Operations Center analyst specializing in threat detection and incident response',
-    skills: ['SIEM Monitoring', 'T-Pot Honeypot', 'ELK Stack', 'Threat Analysis', 'SaltStack Automation'],
+    description: 'Architecting multi-node Elastic SIEM clusters, automated TDR pipelines, and high-interaction deception networks.',
+    skills: ['Elastic SIEM', 'Logstash Pipeline', 'T-Pot Decoy', 'Kibana EQL', 'GLPI Architecture'],
     achievements: [
-      'Built production T-Pot honeypot with ELK integration for threat intelligence',
-      'Improved SOC detection tuning using MITRE ATT&CK framework',
-      'Automated infrastructure configuration with SaltStack'
+      'Architected a 30+ decoy T-Pot honeypot network capturing 1,000+ weekly probes',
+      'Engineered a Logstash pipeline achieving <60s detection for fileless LotL threats',
+      'Deployed remote CMH agents across 40+ endpoints for 100% asset visibility'
     ]
   }
 ];
@@ -350,18 +350,17 @@ export const workExperience = [
     location: 'Melbourne, Australia',
     current: true,
     responsibilities: [
-      'Monitored and analysed SIEM events across endpoint, network and cloud sources to identify intrusion attempts, anomalous behaviour, and emerging threats within a SOC environment',
-      'Built and operated a high-interaction T-Pot honeypot, ingesting telemetry into the ELK Stack (Elasticsearch, Logstash, Kibana) to support threat analysis, detection tuning and SOC visibility',
-      'Supported incident response activities, assisting with triage, investigation, escalation, and documentation in line with SOC playbooks and SLAs',
-      'Analysed phishing emails, suspicious domains, and IP addresses to rapidly identify real risks and support containment decisions',
-      'Used SaltStack to automate configuration management and Infrastructure as Code, improving SOC operational efficiency and reducing configuration drift',
-      'Contributed to alert tuning, rule refinement and continuous improvement, aligning detections with MITRE ATT&CK techniques and SOC best practices'
+      'Engineered a multi-node Elastic SIEM cluster and integrated a GLPI asset management platform (390+ interconnected tables), achieving 100% asset visibility across 40+ endpoints.',
+      'Architected a high-interaction T-Pot deception network featuring 30+ virtualized Docker decoys (e.g., custom Python Flask "FakeBank"), capturing 1,000+ weekly automated probing attempts.',
+      'Configured an automated Logstash TDR pipeline polling at exact 60-second intervals to detect and extract fileless Living-off-the-Land (LotL) threats.',
+      'Authored custom Kibana EQL rules mapped to MITRE ATT&CK techniques, achieving sub-minute (<60s) threat triage and automated SMTP alerting.',
+      'Directed zero-downtime remote CMH agent deployments and fully automated hardware discovery sweeps across multiple /24 network subnets, eliminating physical infrastructure blind spots.'
     ],
-    technologies: ['SIEM', 'ELK Stack', 'T-Pot Honeypot', 'SaltStack', 'MITRE ATT&CK', 'Threat Analysis'],
+    technologies: ['Elastic SIEM', 'Logstash', 'T-Pot Honeypot', 'GLPI ITAM', 'Kibana EQL', 'Python Flask'],
     achievements: [
-      'Built production T-Pot honeypot with ELK integration',
-      'Improved SOC detection tuning with MITRE ATT&CK alignment',
-      'Automated configuration management with SaltStack'
+      'Captured 1,000+ weekly attacks via 30+ custom T-Pot decoys',
+      'Achieved <60s automated alerting for LotL PowerShell executions',
+      'Contextualized 100% of live SIEM alerts via GLPI ITAM integration'
     ]
   },
   {

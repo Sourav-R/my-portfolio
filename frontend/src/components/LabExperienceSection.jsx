@@ -66,7 +66,7 @@ const LabExperienceSection = ({ recruiterMode }) => {
             <span className="text-white">Lab</span> <span className="text-rose-500">Experience</span>
           </h2>
           <p className="text-gray-500 max-w-2xl text-sm">
-            Academic hands-on experience through 200+ practical cybersecurity labs covering threat detection, incident response, malware analysis, and security operations.
+            Academic hands-on experience through <span className="text-[#e95309] font-bold drop-shadow-[0_0_8px_rgba(233,83,9,0.4)]">200+</span> practical cybersecurity labs covering threat detection, incident response, malware analysis, and security operations.
           </p>
         </div>
 

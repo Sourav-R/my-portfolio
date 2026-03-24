@@ -3,6 +3,15 @@ import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, Calendar, MapPin, ChevronRight, Activity, ChevronDown, ChevronUp } from 'lucide-react';
 import { workExperience, education } from '../labExperience';
 
+const highlightMetrics = (text) => {
+  if (!text) return text;
+  const regex = /(100%|390\+|40\+|1,000\+|<60s|~40%|30\+|25%|30%|200\+|1,247|45,000|347|\b15\b|\b6\b|\b45\b|\b35\b|\b40\b|\b25\b|\b3\b|\b5\b)/g;
+  const parts = text.split(regex);
+  return parts.map((part, i) => 
+    regex.test(part) ? <span key={i} className="text-[#e95309] font-bold drop-shadow-[0_0_8px_rgba(233,83,9,0.4)]">{part}</span> : part
+  );
+};
+
 const ExperienceEducation = () => {
   const [expandedJob, setExpandedJob] = useState(null);
   const [expandedEdu, setExpandedEdu] = useState(null);
@@ -61,7 +70,7 @@ const ExperienceEducation = () => {
                       {job.achievements.map((ach, i) => (
                         <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
                           <ChevronRight className="w-4 h-4 text-emerald-500/70 mt-0.5 shrink-0" />
-                          <span className="leading-relaxed">{ach}</span>
+                          <span className="leading-relaxed">{highlightMetrics(ach)}</span>
                         </li>
                       ))}
                     </ul>
@@ -73,7 +82,7 @@ const ExperienceEducation = () => {
                         {job.responsibilities.map((r, idx) => (
                           <div key={idx} className="flex items-start gap-2">
                             <span className="text-emerald-500 mt-0.5 text-xs font-mono">-</span>
-                            <span className="text-xs text-gray-400 leading-relaxed">{r}</span>
+                            <span className="text-xs text-gray-400 leading-relaxed">{highlightMetrics(r)}</span>
                           </div>
                         ))}
                       </div>
