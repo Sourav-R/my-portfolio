@@ -23,9 +23,9 @@ const Footer = () => {
             <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">nav</p>
             <ul className="space-y-1.5">
               {[
-                { id: 'hero', label: './home' },
-                { id: 'projects', label: './projects' },
-                { id: 'terminal', label: './terminal' },
+                { id: 'hero', label: 'home' },
+                { id: 'projects', label: 'labs' },
+                { id: 'terminal', label: 'vault' },
               ].map(link => (
                 <li key={link.id}>
                   <button

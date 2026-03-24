@@ -9,9 +9,17 @@ const Sidebar = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
-    { id: 'hero', icon: Home, label: 'home', color: 'cyan' },
-    { id: 'projects', icon: Code, label: 'labs', color: 'emerald' },
-    { id: 'terminal', icon: Terminal, label: 'vault', color: 'purple' }
+    { id: 'hero', icon: Home, label: 'Home', color: 'cyan' },
+    { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
+    { id: 'work-experience', icon: Briefcase, label: 'Experience', color: 'cyan' },
+    { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix', color: 'purple' },
+    { id: 'certifications', icon: GraduationCap, label: 'Certifications', color: 'blue' },
+    { id: 'projects', icon: Code, label: 'Projects', color: 'cyan' },
+    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'emerald' },
+    { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
+    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
+    { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'cyan' },
+    { id: 'contact', icon: Mail, label: 'Contact', color: 'cyan' }
   ];
 
   useEffect(() => {
@@ -133,7 +141,7 @@ const Sidebar = () => {
                 </div>
 
                 {/* Label */}
-                <span className={`flex-1 text-left text-sm font-medium font-mono transition-colors duration-300 ${
+                <span className={`flex-1 text-left text-sm font-medium transition-colors duration-300 ${
                   isActive ? `text-${item.color}-500` : 'text-gray-400 group-hover:text-white'
                 }`}>
                   {item.label}
