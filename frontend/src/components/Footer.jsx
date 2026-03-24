@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Github, Linkedin, Mail, ShieldAlert, X } from 'lucide-react';
 import { profileData, currentInterests } from '../mock';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <footer className="relative bg-[#050505] border-t border-cyan-500/10 py-12 px-4">
@@ -23,13 +25,20 @@ const Footer = () => {
             <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">nav</p>
             <ul className="space-y-1.5">
               {[
-                { id: 'hero', label: './home' },
-                { id: 'lab-experience', label: './labs' },
-                { id: 'terminal', label: './vault' },
+                { id: 'hero', label: './home', path: '/' },
+                { id: 'lab-experience', label: './labs', path: '/labs' },
+                { id: 'terminal', label: './vault', path: '/vault' },
               ].map(link => (
                 <li key={link.id}>
                   <button
-                    onClick={() => document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => {
+                      if (window.location.pathname === '/' && link.path === '/') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        navigate(link.path);
+                        window.scrollTo(0, 0);
+                      }
+                    }}
                     className="text-gray-400 hover:text-cyan-400 transition-colors text-xs font-mono"
                   >
                     {link.label}
