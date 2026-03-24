@@ -1,25 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { Home, Server, FolderGit2, Terminal, Mail, Menu, X, Award, TrendingUp, GraduationCap, BookOpen, Briefcase, Calendar, Code } from 'lucide-react';
-import { Button } from './ui/button';
-import { profileData } from '../mock';
+import React, { useState, useEffect } from "react";
+import {
+  Home,
+  Server,
+  FolderGit2,
+  Terminal,
+  Mail,
+  Menu,
+  X,
+  Award,
+  TrendingUp,
+  GraduationCap,
+  BookOpen,
+  Briefcase,
+  Calendar,
+  Code,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { profileData } from "../mock";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState("hero");
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
-    { id: 'hero', icon: Home, label: 'Home', color: 'cyan' },
-    { id: 'professional-journey', icon: TrendingUp, label: 'Journey', color: 'purple' },
-    { id: 'work-experience', icon: Briefcase, label: 'Experience', color: 'cyan' },
-    { id: 'skills-matrix', icon: TrendingUp, label: 'Skills Matrix', color: 'purple' },
-    { id: 'certifications', icon: GraduationCap, label: 'Certifications', color: 'blue' },
-    { id: 'projects', icon: Code, label: 'Projects', color: 'cyan' },
-    { id: 'lab-experience', icon: Award, label: 'Lab Experience', color: 'emerald' },
-    { id: 'featured-labs', icon: BookOpen, label: 'Case Studies', color: 'blue' },
-    { id: 'lab', icon: Server, label: 'Lab Monitor', color: 'emerald' },
-    { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'cyan' },
-    { id: 'contact', icon: Mail, label: 'Contact', color: 'cyan' }
+    { id: "hero", icon: Home, label: "Home", color: "cyan" },
+    {
+      id: "professional-journey",
+      icon: TrendingUp,
+      label: "Journey",
+      color: "purple",
+    },
+    {
+      id: "work-experience",
+      icon: Briefcase,
+      label: "Experience",
+      color: "cyan",
+    },
+    {
+      id: "skills-matrix",
+      icon: TrendingUp,
+      label: "Skills Matrix",
+      color: "purple",
+    },
+    {
+      id: "certifications",
+      icon: GraduationCap,
+      label: "Certifications",
+      color: "blue",
+    },
+    { id: "projects", icon: Code, label: "Projects", color: "cyan" },
+    {
+      id: "lab-experience",
+      icon: Award,
+      label: "Lab Experience",
+      color: "emerald",
+    },
+    {
+      id: "featured-labs",
+      icon: BookOpen,
+      label: "Case Studies",
+      color: "blue",
+    },
+    { id: "lab", icon: Server, label: "Lab Monitor", color: "emerald" },
+    { id: "terminal", icon: Terminal, label: "Terminal", color: "cyan" },
+    { id: "contact", icon: Mail, label: "Contact", color: "cyan" },
   ];
 
   useEffect(() => {
@@ -32,8 +77,8 @@ const Sidebar = () => {
       setScrollProgress(progress);
 
       // Determine active section
-      const sections = navItems.map(item => item.id);
-      let currentSection = 'hero';
+      const sections = navItems.map((item) => item.id);
+      let currentSection = "hero";
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
@@ -49,17 +94,17 @@ const Sidebar = () => {
       setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
       setIsOpen(false);
     }
   };
@@ -73,13 +118,17 @@ const Sidebar = () => {
         className="fixed top-4 left-4 z-50 lg:hidden bg-[#1a1a1a] border border-cyan-500/20 hover:bg-[#1a1a1a] hover:border-cyan-500"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <X className="h-5 w-5 text-cyan-500" /> : <Menu className="h-5 w-5 text-cyan-500" />}
+        {isOpen ? (
+          <X className="h-5 w-5 text-cyan-500" />
+        ) : (
+          <Menu className="h-5 w-5 text-cyan-500" />
+        )}
       </Button>
 
       {/* Sidebar */}
       <aside
         className={`fixed left-0 top-0 h-full w-64 bg-[#0a0a0a]/95 backdrop-blur-xl border-r border-cyan-500/20 z-40 transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Logo/Header */}
@@ -99,7 +148,9 @@ const Sidebar = () => {
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-gray-500">Portfolio Progress</span>
-            <span className="text-xs text-cyan-500 font-mono">{Math.round(scrollProgress)}%</span>
+            <span className="text-xs text-cyan-500 font-mono">
+              {Math.round(scrollProgress)}%
+            </span>
           </div>
           <div className="h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
             <div
@@ -110,7 +161,10 @@ const Sidebar = () => {
         </div>
 
         {/* Navigation Items */}
-        <nav className="px-3 py-4 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+        <nav
+          className="px-3 py-4 space-y-1 overflow-y-auto"
+          style={{ maxHeight: "calc(100vh - 200px)" }}
+        >
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -122,34 +176,46 @@ const Sidebar = () => {
                 className={`group relative w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   isActive
                     ? `bg-${item.color}-500/10 border border-${item.color}-500/50`
-                    : 'hover:bg-[#1a1a1a] border border-transparent'
+                    : "hover:bg-[#1a1a1a] border border-transparent"
                 }`}
                 style={{
-                  animation: `slideIn 0.3s ease-out ${index * 0.05}s both`
+                  animation: `slideIn 0.3s ease-out ${index * 0.05}s both`,
                 }}
               >
                 {/* Active Indicator */}
                 {isActive && (
-                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-${item.color}-500 rounded-r-full`} />
+                  <div
+                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-${item.color}-500 rounded-r-full`}
+                  />
                 )}
 
                 {/* Icon */}
-                <div className={`flex-shrink-0 transition-colors duration-300 ${
-                  isActive ? `text-${item.color}-500` : 'text-gray-400 group-hover:text-white'
-                }`}>
+                <div
+                  className={`flex-shrink-0 transition-colors duration-300 ${
+                    isActive
+                      ? `text-${item.color}-500`
+                      : "text-gray-400 group-hover:text-white"
+                  }`}
+                >
                   <Icon className="h-5 w-5" />
                 </div>
 
                 {/* Label */}
-                <span className={`flex-1 text-left text-sm font-medium transition-colors duration-300 ${
-                  isActive ? `text-${item.color}-500` : 'text-gray-400 group-hover:text-white'
-                }`}>
+                <span
+                  className={`flex-1 text-left text-sm font-medium transition-colors duration-300 ${
+                    isActive
+                      ? `text-${item.color}-500`
+                      : "text-gray-400 group-hover:text-white"
+                  }`}
+                >
                   {item.label}
                 </span>
 
                 {/* Active Badge */}
                 {isActive && (
-                  <div className={`w-2 h-2 rounded-full bg-${item.color}-500 animate-pulse`} />
+                  <div
+                    className={`w-2 h-2 rounded-full bg-${item.color}-500 animate-pulse`}
+                  />
                 )}
               </button>
             );

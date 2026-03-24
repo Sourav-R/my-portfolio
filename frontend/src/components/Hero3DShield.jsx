@@ -1,16 +1,22 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
-import Canvas3DErrorBoundary from './Canvas3DErrorBoundary';
+import React, { useRef, useMemo, useState, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import Canvas3DErrorBoundary from "./Canvas3DErrorBoundary";
 
 const useIntersectionObserver = (options) => {
   const [inView, setInView] = useState(true);
   const ref = useRef(null);
   useEffect(() => {
     const node = ref.current;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), options);
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      options,
+    );
     if (node) observer.observe(node);
-    return () => { if (node) observer.unobserve(node); observer.disconnect(); };
+    return () => {
+      if (node) observer.unobserve(node);
+      observer.disconnect();
+    };
   }, [options]);
   return [ref, inView];
 };
@@ -36,14 +42,23 @@ const DataParticles = () => {
   useEffect(() => {
     if (ref.current) {
       const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
       ref.current.geometry = geo;
     }
   }, [positions]);
 
-  const mat = useMemo(() => new THREE.PointsMaterial({
-    size: 0.03, color: '#22d3ee', transparent: true, opacity: 0.6, sizeAttenuation: true, depthWrite: false
-  }), []);
+  const mat = useMemo(
+    () =>
+      new THREE.PointsMaterial({
+        size: 0.03,
+        color: "#22d3ee",
+        transparent: true,
+        opacity: 0.6,
+        sizeAttenuation: true,
+        depthWrite: false,
+      }),
+    [],
+  );
 
   useFrame(({ clock }) => {
     if (ref.current) ref.current.rotation.y = clock.elapsedTime * 0.12;
@@ -80,13 +95,23 @@ const ShieldCore = () => {
       {/* Outer octahedron wireframe — the "shield" */}
       <mesh>
         <octahedronGeometry args={[1.4, 0]} />
-        <meshBasicMaterial color="#22d3ee" wireframe transparent opacity={0.25} />
+        <meshBasicMaterial
+          color="#22d3ee"
+          wireframe
+          transparent
+          opacity={0.25}
+        />
       </mesh>
 
       {/* Inner icosahedron — "core" */}
       <mesh ref={innerRef}>
         <icosahedronGeometry args={[0.6, 1]} />
-        <meshBasicMaterial color="#06b6d4" wireframe transparent opacity={0.4} />
+        <meshBasicMaterial
+          color="#06b6d4"
+          wireframe
+          transparent
+          opacity={0.4}
+        />
       </mesh>
 
       {/* Glowing center sphere */}
@@ -114,22 +139,25 @@ const ShieldCore = () => {
 
 /* ── Main Component ── */
 const Hero3DShield = () => {
-  const observerOptions = useMemo(() => ({ threshold: 0.0, rootMargin: '200px' }), []);
+  const observerOptions = useMemo(
+    () => ({ threshold: 0.0, rootMargin: "200px" }),
+    [],
+  );
   const [ref, inView] = useIntersectionObserver(observerOptions);
 
   return (
     <Canvas3DErrorBoundary>
-      <div ref={ref} className="w-full h-full" style={{ minHeight: '100%' }}>
+      <div ref={ref} className="w-full h-full" style={{ minHeight: "100%" }}>
         {inView && (
           <Canvas
             camera={{ position: [0, 0, 6], fov: 40 }}
-            style={{ background: 'transparent' }}
+            style={{ background: "transparent" }}
             gl={{
               alpha: true,
               antialias: true,
-              powerPreference: 'high-performance',
+              powerPreference: "high-performance",
               failIfMajorPerformanceCaveat: false,
-              preserveDrawingBuffer: false
+              preserveDrawingBuffer: false,
             }}
             dpr={Math.min(window.devicePixelRatio, 2)}
           >

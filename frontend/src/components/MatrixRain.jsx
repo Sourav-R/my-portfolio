@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 const MatrixRain = ({ opacity = 0.4 }) => {
   const canvasRef = useRef(null);
@@ -6,24 +6,25 @@ const MatrixRain = ({ opacity = 0.4 }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     const isMobile = window.innerWidth < 768;
     const fontSize = isMobile ? 18 : 14;
-    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]|';
-    const charArr = chars.split('');
+    const chars =
+      "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]|";
+    const charArr = chars.split("");
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(3, 3, 3, 0.06)';
+      ctx.fillStyle = "rgba(3, 3, 3, 0.06)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
 
@@ -52,7 +53,7 @@ const MatrixRain = ({ opacity = 0.4 }) => {
 
     return () => {
       clearInterval(interval);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 

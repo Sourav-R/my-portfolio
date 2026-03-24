@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 const logs = [
   "[LOG] TLS Certs Validated for Fleet Server",
@@ -16,7 +16,7 @@ const LiveLogFooter = () => {
       <div className="w-16 h-full bg-[#050505] border-r border-gray-800 flex items-center justify-center flex-shrink-0 z-10 shadow-[5px_0_10px_rgba(0,0,0,0.5)]">
         <span className="w-2 h-2 bg-emerald-500 rounded-sm animate-pulse"></span>
       </div>
-      
+
       <div className="flex-1 overflow-hidden relative flex">
         {/* We use two identical motion divs for infinite seamless scrolling */}
         <motion.div
@@ -31,7 +31,7 @@ const LiveLogFooter = () => {
             </div>
           ))}
         </motion.div>
-        
+
         <motion.div
           initial={{ x: "0%" }}
           animate={{ x: ["0%", "-100%"] }}
@@ -40,7 +40,10 @@ const LiveLogFooter = () => {
           aria-hidden="true"
         >
           {logs.map((log, i) => (
-            <div key={`copy-${i}`} className="mx-8 font-mono text-[10px] sm:text-xs">
+            <div
+              key={`copy-${i}`}
+              className="mx-8 font-mono text-[10px] sm:text-xs"
+            >
               <span className="text-cyan-500 mr-2">[SYS_LOG]</span>
               <span className="text-gray-400">{log}</span>
             </div>

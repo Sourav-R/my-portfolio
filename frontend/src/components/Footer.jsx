@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Github, Linkedin, Mail, ShieldAlert, X } from 'lucide-react';
-import { profileData, currentInterests } from '../mock';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Github, Linkedin, Mail, ShieldAlert, X } from "lucide-react";
+import { profileData, currentInterests } from "../mock";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,25 +15,36 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-base font-bold text-white mb-1.5 font-mono">{profileData.name}</h3>
-            <p className="text-gray-500 text-xs font-mono">{profileData.role}</p>
-            <p className="text-emerald-500/70 text-xs font-mono mt-0.5">{profileData.company}</p>
+            <h3 className="text-base font-bold text-white mb-1.5 font-mono">
+              {profileData.name}
+            </h3>
+            <p className="text-gray-500 text-xs font-mono">
+              {profileData.role}
+            </p>
+            <p className="text-emerald-500/70 text-xs font-mono mt-0.5">
+              {profileData.company}
+            </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">nav</p>
+            <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">
+              nav
+            </p>
             <ul className="space-y-1.5">
               {[
-                { id: 'hero', label: './home', path: '/' },
-                { id: 'lab-experience', label: './labs', path: '/labs' },
-                { id: 'terminal', label: './vault', path: '/vault' },
-              ].map(link => (
+                { id: "hero", label: "./home", path: "/" },
+                { id: "lab-experience", label: "./labs", path: "/labs" },
+                { id: "terminal", label: "./vault", path: "/vault" },
+              ].map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => {
-                      if (window.location.pathname === '/' && link.path === '/') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      if (
+                        window.location.pathname === "/" &&
+                        link.path === "/"
+                      ) {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
                       } else {
                         navigate(link.path);
                         window.scrollTo(0, 0);
@@ -50,17 +61,36 @@ const Footer = () => {
 
           {/* Social */}
           <div>
-            <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">connect</p>
+            <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-3 font-mono">
+              connect
+            </p>
             <div className="flex gap-2">
               {[
-                { icon: Github, href: profileData.github, color: 'hover:border-purple-500/30 hover:text-purple-400' },
-                { icon: Linkedin, href: profileData.linkedin, color: 'hover:border-blue-500/30 hover:text-blue-400' },
-                { icon: Mail, href: `mailto:${profileData.email}`, color: 'hover:border-emerald-500/30 hover:text-emerald-400' },
+                {
+                  icon: Github,
+                  href: profileData.github,
+                  color: "hover:border-purple-500/30 hover:text-purple-400",
+                },
+                {
+                  icon: Linkedin,
+                  href: profileData.linkedin,
+                  color: "hover:border-blue-500/30 hover:text-blue-400",
+                },
+                {
+                  icon: Mail,
+                  href: `mailto:${profileData.email}`,
+                  color: "hover:border-emerald-500/30 hover:text-emerald-400",
+                },
               ].map((social, i) => {
                 const Icon = social.icon;
                 return (
-                  <a key={i} href={social.href} target="_blank" rel="noopener noreferrer"
-                    className={`p-2 text-gray-600 border border-gray-800 rounded transition-all duration-300 ${social.color}`}>
+                  <a
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-2 text-gray-600 border border-gray-800 rounded transition-all duration-300 ${social.color}`}
+                  >
                     <Icon className="h-4 w-4" />
                   </a>
                 );
@@ -68,7 +98,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
 
         {/* Copyright */}
         <div className="text-center text-[10px] text-gray-600 font-mono relative">
@@ -78,7 +107,9 @@ const Footer = () => {
               className="text-gray-900 hover:text-red-500 cursor-pointer transition-colors"
               onClick={() => setShowAdminModal(true)}
               title="Classified"
-            >.</span>
+            >
+              .
+            </span>
           </p>
         </div>
       </div>
@@ -92,30 +123,60 @@ const Footer = () => {
             <div className="flex justify-between items-center p-4 border-b border-gray-800">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4 text-red-500" />
-                <h3 className="text-red-500 font-mono text-xs uppercase tracking-widest font-bold">Global Sentinel Network</h3>
+                <h3 className="text-red-500 font-mono text-xs uppercase tracking-widest font-bold">
+                  Global Sentinel Network
+                </h3>
               </div>
-              <button onClick={() => setShowAdminModal(false)} className="text-gray-500 hover:text-white transition-colors">
+              <button
+                onClick={() => setShowAdminModal(false)}
+                className="text-gray-500 hover:text-white transition-colors"
+              >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             <div className="p-6">
-              <form onSubmit={(e) => { e.preventDefault(); setShowAdminModal(false); }} className="space-y-4 font-mono">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setShowAdminModal(false);
+                }}
+                className="space-y-4 font-mono"
+              >
                 <div>
-                  <label className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Operative ID</label>
-                  <input type="text" className="w-full bg-[#111] border border-gray-800 focus:border-red-500/50 outline-none text-emerald-400 px-3 py-2 text-sm rounded transition-colors" placeholder="ENTER ID" />
+                  <label className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">
+                    Operative ID
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full bg-[#111] border border-gray-800 focus:border-red-500/50 outline-none text-emerald-400 px-3 py-2 text-sm rounded transition-colors"
+                    placeholder="ENTER ID"
+                  />
                 </div>
                 <div>
-                  <label className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Clearance Code</label>
-                  <input type="password" className="w-full bg-[#111] border border-gray-800 focus:border-red-500/50 outline-none text-red-400 px-3 py-2 text-sm rounded transition-colors" placeholder="••••••••" />
+                  <label className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">
+                    Clearance Code
+                  </label>
+                  <input
+                    type="password"
+                    className="w-full bg-[#111] border border-gray-800 focus:border-red-500/50 outline-none text-red-400 px-3 py-2 text-sm rounded transition-colors"
+                    placeholder="••••••••"
+                  />
                 </div>
-                <button type="submit" className="w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/50 text-red-500 py-2.5 rounded text-xs uppercase tracking-widest transition-all mt-6">
+                <button
+                  type="submit"
+                  className="w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/50 text-red-500 py-2.5 rounded text-xs uppercase tracking-widest transition-all mt-6"
+                >
                   Initialize Uplink
                 </button>
               </form>
               <div className="mt-6 text-center">
-                <p className="text-[9px] text-gray-600">WARNING: UNAUTHORIZED ACCESS WILL BE LOGGED</p>
-                <p className="text-[9px] text-gray-600">VIOLATORS ARE SUBJECT TO NEUTRALIZATION</p>
+                <p className="text-[9px] text-gray-600">
+                  WARNING: UNAUTHORIZED ACCESS WILL BE LOGGED
+                </p>
+                <p className="text-[9px] text-gray-600">
+                  VIOLATORS ARE SUBJECT TO NEUTRALIZATION
+                </p>
               </div>
             </div>
           </div>

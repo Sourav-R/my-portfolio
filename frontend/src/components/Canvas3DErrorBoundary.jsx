@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class Canvas3DErrorBoundary extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Canvas3DErrorBoundary extends React.Component {
 
   componentDidCatch(error, info) {
     // Silently catch R3F errors — 3D is enhancement only
-    console.warn('3D component failed to render:', error.message);
+    console.warn("3D component failed to render:", error.message);
   }
 
   render() {

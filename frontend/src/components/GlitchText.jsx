@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
 
-const GlitchText = ({ text, className = '', as: Component = 'span' }) => {
+const GlitchText = ({ text, className = "", as: Component = "span" }) => {
   return (
-    <Component
-      className={`glitch-text ${className}`}
-      data-text={text}
-    >
+    <Component className={`glitch-text ${className}`} data-text={text}>
       {text}
     </Component>
   );

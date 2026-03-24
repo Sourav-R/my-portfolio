@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './BootSequence.css';
+import React, { useState, useEffect } from "react";
+import "./BootSequence.css";
 
 const BootSequence = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
@@ -7,16 +7,16 @@ const BootSequence = ({ onComplete }) => {
   const [showLogo, setShowLogo] = useState(false);
 
   const bootCommands = [
-    '> INITIALIZING SOC_CORE...',
-    '> LOADING SECURE_PRO_MODULE...',
-    '> MOUNTING /dev/thiru_labs...',
-    '> STARTING THREAT_DETECTION_ENGINE...',
-    '> ESTABLISHING SECURE_CONNECTION...',
-    '> LOADING PROXMOX_ENVIRONMENT...',
-    '> INITIALIZING HOME_LAB_ARCHITECTURE...',
-    '> SYSTEM_CHECK: [OK]',
-    '> SECURITY_STATUS: ACTIVE',
-    '> WELCOME, SOURAV RAMAKRISHNA'
+    "> INITIALIZING SOC_CORE...",
+    "> LOADING SECURE_PRO_MODULE...",
+    "> MOUNTING /dev/thiru_labs...",
+    "> STARTING THREAT_DETECTION_ENGINE...",
+    "> ESTABLISHING SECURE_CONNECTION...",
+    "> LOADING PROXMOX_ENVIRONMENT...",
+    "> INITIALIZING HOME_LAB_ARCHITECTURE...",
+    "> SYSTEM_CHECK: [OK]",
+    "> SECURITY_STATUS: ACTIVE",
+    "> WELCOME, SOURAV RAMAKRISHNA",
   ];
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const BootSequence = ({ onComplete }) => {
     let currentLine = 0;
     const terminalInterval = setInterval(() => {
       if (currentLine < bootCommands.length) {
-        setTerminalLines(prev => [...prev, bootCommands[currentLine]]);
+        setTerminalLines((prev) => [...prev, bootCommands[currentLine]]);
         currentLine++;
       } else {
         clearInterval(terminalInterval);
@@ -49,17 +49,17 @@ const BootSequence = ({ onComplete }) => {
   }, []);
 
   return (
-    <div className={`boot-sequence ${stage === 2 ? 'fade-out' : ''}`}>
+    <div className={`boot-sequence ${stage === 2 ? "fade-out" : ""}`}>
       {/* CRT Scanline Effect */}
       <div className="crt-scanlines" />
-      
+
       {/* Background Texture */}
       <div className="boot-background" />
 
       {/* Main Content */}
       <div className="boot-content">
         {/* Logo Container */}
-        <div className={`logo-container ${showLogo ? 'animate' : ''}`}>
+        <div className={`logo-container ${showLogo ? "animate" : ""}`}>
           {/* Particle Effects */}
           <div className="particles">
             {[...Array(30)].map((_, i) => (
@@ -67,9 +67,9 @@ const BootSequence = ({ onComplete }) => {
                 key={i}
                 className="particle"
                 style={{
-                  '--delay': `${i * 0.1}s`,
-                  '--x': `${Math.random() * 200 - 100}px`,
-                  '--y': `${Math.random() * 200 - 100}px`
+                  "--delay": `${i * 0.1}s`,
+                  "--x": `${Math.random() * 200 - 100}px`,
+                  "--y": `${Math.random() * 200 - 100}px`,
                 }}
               />
             ))}
@@ -93,7 +93,7 @@ const BootSequence = ({ onComplete }) => {
               strokeDasharray="8 4"
               opacity="0.6"
             />
-            
+
             {/* Outer segmented arcs */}
             <path
               className="logo-arc arc-1"
@@ -138,7 +138,7 @@ const BootSequence = ({ onComplete }) => {
               stroke="rgba(255,255,255,0.3)"
               strokeWidth="2"
             />
-            
+
             {/* Middle segmented arcs - White highlights */}
             <path
               className="logo-arc middle-arc-1"
@@ -201,7 +201,7 @@ const BootSequence = ({ onComplete }) => {
                 fill="#00d9ff"
                 opacity="0"
               />
-              
+
               {/* Parrot head */}
               <ellipse
                 className="logo-part parrot-head"
@@ -212,7 +212,7 @@ const BootSequence = ({ onComplete }) => {
                 fill="#00d9ff"
                 opacity="0"
               />
-              
+
               {/* Beak */}
               <path
                 className="logo-part parrot-beak"
@@ -220,7 +220,7 @@ const BootSequence = ({ onComplete }) => {
                 fill="#00d9ff"
                 opacity="0"
               />
-              
+
               {/* Wing */}
               <path
                 className="logo-part parrot-wing"
@@ -230,7 +230,7 @@ const BootSequence = ({ onComplete }) => {
                 strokeWidth="2.5"
                 opacity="0"
               />
-              
+
               {/* Tail */}
               <path
                 className="logo-part parrot-tail"
@@ -243,10 +243,42 @@ const BootSequence = ({ onComplete }) => {
             </g>
 
             {/* Tech detail elements */}
-            <rect className="tech-detail detail-1" x="145" y="5" width="10" height="3" fill="#00d9ff" opacity="0" />
-            <rect className="tech-detail detail-2" x="290" y="145" width="5" height="10" fill="#00d9ff" opacity="0" />
-            <rect className="tech-detail detail-3" x="145" y="292" width="10" height="3" fill="#00d9ff" opacity="0" />
-            <rect className="tech-detail detail-4" x="5" y="145" width="5" height="10" fill="#00d9ff" opacity="0" />
+            <rect
+              className="tech-detail detail-1"
+              x="145"
+              y="5"
+              width="10"
+              height="3"
+              fill="#00d9ff"
+              opacity="0"
+            />
+            <rect
+              className="tech-detail detail-2"
+              x="290"
+              y="145"
+              width="5"
+              height="10"
+              fill="#00d9ff"
+              opacity="0"
+            />
+            <rect
+              className="tech-detail detail-3"
+              x="145"
+              y="292"
+              width="10"
+              height="3"
+              fill="#00d9ff"
+              opacity="0"
+            />
+            <rect
+              className="tech-detail detail-4"
+              x="5"
+              y="145"
+              width="5"
+              height="10"
+              fill="#00d9ff"
+              opacity="0"
+            />
           </svg>
 
           {/* Scanning Light Effect */}
@@ -272,9 +304,10 @@ const BootSequence = ({ onComplete }) => {
               <span className="terminal-text">{line}</span>
             </div>
           ))}
-          {terminalLines.length > 0 && terminalLines.length < bootCommands.length && (
-            <span className="terminal-cursor">_</span>
-          )}
+          {terminalLines.length > 0 &&
+            terminalLines.length < bootCommands.length && (
+              <span className="terminal-cursor">_</span>
+            )}
         </div>
       </div>
     </div>

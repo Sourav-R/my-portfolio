@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Terminal, Menu, X, Clock, Shield, Download, Folder } from 'lucide-react';
-import { Button } from './ui/button';
-import { Switch } from './ui/switch';
-import { motion, AnimatePresence } from 'framer-motion';
-import { profileData, securityStatus } from '../mock';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Terminal,
+  Menu,
+  X,
+  Clock,
+  Shield,
+  Download,
+  Folder,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { Switch } from "./ui/switch";
+import { motion, AnimatePresence } from "framer-motion";
+import { profileData, securityStatus } from "../mock";
 
 const navItems = [
-  { path: '/', label: '~/root', icon: Folder },
-  { path: '/labs', label: '~/labs', icon: Folder },
-  { path: '/vault', label: '~/vault', icon: Folder },
+  { path: "/", label: "~/root", icon: Folder },
+  { path: "/labs", label: "~/labs", icon: Folder },
+  { path: "/vault", label: "~/vault", icon: Folder },
 ];
 
 const CommandBar = () => {
@@ -29,36 +37,41 @@ const CommandBar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavigate = (path) => {
     if (location.pathname === path) return;
-    
+
     // Trigger terminal glitch effect (simulated here, can be attached to global body class)
     setIsGlitching(true);
-    document.body.classList.add('terminal-glitch-active');
-    
+    document.body.classList.add("terminal-glitch-active");
+
     setTimeout(() => {
       setIsGlitching(false);
-      document.body.classList.remove('terminal-glitch-active');
+      document.body.classList.remove("terminal-glitch-active");
       navigate(path);
       setMobileOpen(false);
     }, 200); // 200ms glitch transition
   };
 
-  const formatTime = (date) => date.toLocaleTimeString('en-AU', {
-    timeZone: 'Australia/Melbourne', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-  });
+  const formatTime = (date) =>
+    date.toLocaleTimeString("en-AU", {
+      timeZone: "Australia/Melbourne",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#030303]/90 backdrop-blur-xl border-b border-gray-800/50'
-            : 'bg-transparent'
+            ? "bg-[#030303]/90 backdrop-blur-xl border-b border-gray-800/50"
+            : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
@@ -83,8 +96,8 @@ const CommandBar = () => {
                   onClick={() => handleNavigate(item.path)}
                   className={`px-3 py-1.5 text-xs flex items-center gap-2 font-mono rounded-md transition-all duration-200 whitespace-nowrap ${
                     location.pathname === item.path
-                      ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 font-bold shadow-[0_0_10px_rgba(6,182,212,0.15)]'
-                      : 'text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-gray-700'
+                      ? "text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 font-bold shadow-[0_0_10px_rgba(6,182,212,0.15)]"
+                      : "text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-gray-700"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -109,7 +122,7 @@ const CommandBar = () => {
             <Button
               size="sm"
               className="bg-white/5 hover:bg-white/10 text-gray-300 border border-gray-700 text-xs font-mono h-7 px-3"
-              onClick={() => window.open(profileData.resumeUrl, '_blank')}
+              onClick={() => window.open(profileData.resumeUrl, "_blank")}
             >
               <Download className="h-3 w-3 mr-1.5" />
               resume
@@ -120,7 +133,11 @@ const CommandBar = () => {
               className="lg:hidden p-1.5 text-gray-400 hover:bg-white/5 rounded"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>
@@ -130,7 +147,7 @@ const CommandBar = () => {
           {mobileOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
+              animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="lg:hidden bg-[#050505]/fb backdrop-blur-2xl border-b border-white/10 overflow-hidden"
@@ -145,8 +162,8 @@ const CommandBar = () => {
                         onClick={() => handleNavigate(item.path)}
                         className={`h-12 flex items-center justify-center gap-2 px-4 py-2 text-xs font-mono rounded-lg transition-all active:scale-95 ${
                           location.pathname === item.path
-                            ? 'text-cyan-400 bg-cyan-500/15 border border-cyan-500/50 font-bold shadow-[0_0_20px_rgba(6,182,212,0.2)]'
-                            : 'text-gray-400 bg-white/5 border border-white/5'
+                            ? "text-cyan-400 bg-cyan-500/15 border border-cyan-500/50 font-bold shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+                            : "text-gray-400 bg-white/5 border border-white/5"
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -155,7 +172,7 @@ const CommandBar = () => {
                     );
                   })}
                 </div>
-                
+
                 <div className="space-y-6 pt-6 border-t border-white/5">
                   <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-2">

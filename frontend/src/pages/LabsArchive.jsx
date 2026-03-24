@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { Database } from 'lucide-react';
-import CommandBar from '../components/CommandBar';
-import Footer from '../components/Footer';
-import ProjectsHub from '../components/ProjectsHub';
-import LabExperienceSection from '../components/LabExperienceSection';
+import React, { useEffect } from "react";
+import { Database } from "lucide-react";
+import CommandBar from "../components/CommandBar";
+import Footer from "../components/Footer";
+import ProjectsHub from "../components/ProjectsHub";
+import LabExperienceSection from "../components/LabExperienceSection";
 
 const LabsArchive = () => {
   useEffect(() => {
@@ -20,7 +20,9 @@ const LabsArchive = () => {
             <Database className="w-6 h-6" />
             ~/labs
           </h1>
-          <p className="text-gray-500 text-sm font-mono">&gt; ACADEMIC R&D AND TECHNICAL FOUNDATIONS ARCHIVE</p>
+          <p className="text-gray-500 text-sm font-mono">
+            &gt; ACADEMIC R&D AND TECHNICAL FOUNDATIONS ARCHIVE
+          </p>
         </div>
 
         {/* Old Projects Hub with full tabs and detail modals */}
@@ -29,7 +31,7 @@ const LabsArchive = () => {
         {/* Lab Experience Stats */}
         <LabExperienceSection />
       </main>
-      
+
       <Footer />
     </div>
   );
