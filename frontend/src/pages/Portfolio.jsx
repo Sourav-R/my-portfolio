@@ -1,20 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import CommandBar from '../components/CommandBar';
 import MatrixRain from '../components/MatrixRain';
 import HeroSection from '../components/HeroSection';
 import TerminalSandbox from '../components/TerminalSandbox';
 import SkillLevelingSystem from '../components/SkillLevelingSystem';
-import WorkExperienceSection from '../components/WorkExperienceSection';
-import CertificationsSection from '../components/CertificationsSection';
-import ProjectsHub from '../components/ProjectsHub';
-import LabExperienceSection from '../components/LabExperienceSection';
+import ActiveMissions from '../components/ActiveMissions';
+import ExperienceEducation from '../components/ExperienceEducation';
+import PowerStack from '../components/PowerStack';
 import Footer from '../components/Footer';
+import Canvas3DErrorBoundary from '../components/Canvas3DErrorBoundary';
+import { TerminalProvider } from '../context/TerminalContext';
+
+const ParticleNetwork = lazy(() => import('../components/ParticleNetwork'));
 
 // Konami Code sequence: ↑ ↑ ↓ ↓ ← → ← → B A
 const KONAMI_CODE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
 const Portfolio = () => {
-  const [recruiterMode, setRecruiterMode] = useState(false);
   const [godMode, setGodMode] = useState(false);
   const [matrixRed, setMatrixRed] = useState(false);
   const [keySequence, setKeySequence] = useState([]);
@@ -24,22 +26,15 @@ const Portfolio = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Konami Code listener
   const handleKeyDown = useCallback(
     (e) => {
       setKeySequence((prev) => {
         const newSequence = [...prev, e.key];
-        // Keep only the last N keys
-        if (newSequence.length > KONAMI_CODE.length) {
-          newSequence.shift();
-        }
-        
-        // Check if sequence matches Konami code
+        if (newSequence.length > KONAMI_CODE.length) newSequence.shift();
         if (newSequence.join('').toLowerCase() === KONAMI_CODE.join('').toLowerCase()) {
-          setGodMode((prevMode) => !prevMode); // Toggle god mode
-          return []; // Reset sequence after match
+          setGodMode((prevMode) => !prevMode);
+          return [];
         }
-        
         return newSequence;
       });
     },
@@ -52,25 +47,38 @@ const Portfolio = () => {
   }, [handleKeyDown]);
 
   return (
-    <div className={`min-h-screen relative text-gray-200 ${godMode ? 'god-mode' : 'bg-[#030303]'}`}>
-      {/* Matrix Rain Background */}
-      <MatrixRain opacity={0.25} color={matrixRed ? '#ef4444' : '#06b6d4'} speed={matrixRed ? 2 : 1} />
+    <TerminalProvider>
+      <div className={`min-h-screen relative text-gray-200 ${godMode ? 'god-mode' : 'bg-gradient-to-br from-[#050b14] via-[#030303] to-[#0a0510]'}`}>
+        {/* Ambient Glows for better viewing experience */}
+        <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none z-0" />
+        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none z-0" />
+        
+        {/* Global Backgrounds */}
+        <div className="fixed inset-0 bg-grid opacity-30 pointer-events-none z-0" />
+        <Canvas3DErrorBoundary>
+          <div className="fixed inset-0 pointer-events-none z-0">
+            <Suspense fallback={null}>
+              <ParticleNetwork />
+            </Suspense>
+          </div>
+        </Canvas3DErrorBoundary>
+        <div className="fixed inset-0 z-0 pointer-events-none" style={{ willChange: 'transform' }}>
+          <MatrixRain opacity={0.15} color={matrixRed ? '#ef4444' : '#06b6d4'} speed={matrixRed ? 2 : 1} />
+        </div>
 
-      {/* Command Bar Navigation */}
-      <CommandBar recruiterMode={recruiterMode} setRecruiterMode={setRecruiterMode} />
+        <CommandBar />
 
-      {/* Main Content */}
-      <main className={`relative ${recruiterMode ? 'recruiter-mode' : ''} ${matrixRed ? 'matrix-red' : ''}`} style={{ zIndex: 2 }}>
-        <HeroSection recruiterMode={recruiterMode} setMatrixRed={setMatrixRed} />
-        <TerminalSandbox recruiterMode={recruiterMode} />
-        <SkillLevelingSystem recruiterMode={recruiterMode} />
-        <WorkExperienceSection recruiterMode={recruiterMode} />
-        <CertificationsSection recruiterMode={recruiterMode} />
-        <ProjectsHub recruiterMode={recruiterMode} />
-        <LabExperienceSection recruiterMode={recruiterMode} />
-        <Footer />
-      </main>
-    </div>
+        <main className={`relative ${matrixRed ? 'matrix-red' : ''}`} style={{ zIndex: 2, paddingBottom: '32px' }}>
+          <HeroSection setMatrixRed={setMatrixRed} />
+          <TerminalSandbox />
+          <ExperienceEducation />
+          <ActiveMissions />
+          <SkillLevelingSystem />
+          <PowerStack />
+          <Footer />
+        </main>
+      </div>
+    </TerminalProvider>
   );
 };
 

@@ -19,42 +19,53 @@ export const threatCategories = [
 
 export const toolsProficiency = {
   'SOC & Threat Detection': [
-    { name: 'SIEM (ELK Stack)', level: 92, commands: ['elasticsearch', 'logstash', 'kibana'] },
-    { name: 'Alert Investigation', level: 90, commands: ['splunk search', 'log analysis'] },
-    { name: 'Incident Triage', level: 88, commands: ['incident response', 'escalation'] },
-    { name: 'Threat Analysis', level: 85, commands: ['MITRE ATT&CK', 'threat hunting'] },
-    { name: 'Phishing Analysis', level: 87, commands: ['email analysis', 'domain reputation'] }
+    { name: 'SIEM (ELK Stack)', level: 95, commands: ['elasticsearch', 'logstash', 'kibana'] },
+    { name: 'Elastic Endpoint Security', level: 92, commands: ['elastic-agent', 'fleet-server', 'elastic-defend'] },
+    { name: 'LotL Detection & EQL', level: 90, commands: ['kibana eql', 'powershell parsing'] },
+    { name: 'Log Parsing & Beats', level: 88, commands: ['winlogbeat', 'filebeat', 'sysmon'] },
+    { name: 'Threat Hunting & IR', level: 85, commands: ['incident response', 'detection engineering'] },
+    { name: 'Logstash Pipelines', level: 89, commands: ['logstash -f', 'rubydebug'] }
   ],
-  'Penetration Testing': [
-    { name: 'Kali Linux', level: 85, commands: ['kali-linux', 'pentest tools'] },
+  'Penetration Testing & VAPT': [
     { name: 'Burp Suite', level: 88, commands: ['burpsuite', 'web app testing'] },
-    { name: 'OWASP ZAP', level: 82, commands: ['zap', 'vulnerability scanning'] },
-    { name: 'Metasploit', level: 75, commands: ['msfconsole', 'exploit framework'] },
-    { name: 'Nmap', level: 90, commands: ['nmap -sP', 'nmap -sS', 'nmap -A'] }
+    { name: 'OWASP ZAP', level: 82, commands: ['zap', 'wapiti', 'vulnerability scanning'] },
+    { name: 'Cloud Infra VAPT', level: 85, commands: ['aws ec2 isolation', 'rds brute-forcing'] },
+    { name: 'Kali Linux', level: 85, commands: ['kali-linux', 'pentest tools'] },
+    { name: 'Nmap & Recon', level: 92, commands: ['nmap', 'wireshark', 'tcpdump'] },
+    { name: 'Exploitation Arrays', level: 80, commands: ['metasploit', 'beef framework', 'payload injection'] },
+    { name: 'Telecom Modeling', level: 75, commands: ['sip', 'ivr', 'oracle integration cloud'] }
   ],
   'IDS/IPS & Network Security': [
-    { name: 'Snort', level: 87, commands: ['snort -r', 'snort -c snort.conf'] },
-    { name: 'Suricata', level: 82, commands: ['suricata -c', 'suricata -i eth0'] },
-    { name: 'Network Anomaly Detection', level: 85, commands: ['wireshark', 'tcpdump'] },
     { name: 'Wireshark', level: 95, commands: ['tshark -r', 'tshark -Y'] },
-    { name: 'Log Analysis', level: 88, commands: ['grep', 'awk', 'sed'] }
+    { name: 'Suricata', level: 82, commands: ['suricata -c', 'suricata -i eth0'] },
+    { name: 'Snort', level: 87, commands: ['snort -r', 'snort -c snort.conf'] },
+    { name: 'Network Anomaly Detection', level: 85, commands: ['tcpdump', 'traffic analysis'] },
+    { name: 'Routing & Access Controls', level: 88, commands: ['tcp/ip', 'arp', 'nat/bridging', 'nac'] },
+    { name: 'Proxy & Gateways', level: 80, commands: ['api gateways', 'proxy bypasses'] }
   ],
   'Programming & Automation': [
     { name: 'Python', level: 88, commands: ['python script.py', 'automation scripts'] },
     { name: 'Bash Scripting', level: 85, commands: ['bash script.sh', 'shell scripts'] },
-    { name: 'C Programming', level: 70, commands: ['gcc', 'compile'] },
-    { name: 'SaltStack', level: 80, commands: ['salt', 'salt-call', 'infrastructure as code'] }
+    { name: 'SaltStack Automation', level: 90, commands: ['salt-master', 'zeromq', 'salt reactors'] },
+    { name: 'Infrastructure as Code', level: 88, commands: ['terraform', 'ansible'] },
+    { name: 'Containerization', level: 85, commands: ['docker', 'docker-compose'] },
+    { name: 'Event-Driven TDR', level: 82, commands: ['auto-remediation', 'pipeline automation'] },
+    { name: 'C Programming', level: 70, commands: ['gcc', 'compile'] }
   ],
-  'Cloud & Infrastructure': [
-    { name: 'AWS', level: 78, commands: ['aws cli', 'cloud security'] },
-    { name: 'Oracle Cloud', level: 72, commands: ['oci cli', 'cloud infrastructure'] },
-    { name: 'Linux Administration', level: 90, commands: ['systemctl', 'chmod', 'iptables'] },
-    { name: 'Network Protocols', level: 88, commands: ['TCP/IP', 'DNS', 'VPN'] }
+  'Cloud & IT Infrastructure': [
+    { name: 'Linux Administration', level: 92, commands: ['systemctl', 'chmod', 'iptables'] },
+    { name: 'Virtualization (Proxmox/ESXi)', level: 92, commands: ['proxmox ve', 'kvm', 'lxc'] },
+    { name: 'Windows Enterprise (AD/GPO)', level: 85, commands: ['active directory', 'group policy', 'registry'] },
+    { name: 'AWS & Microservices', level: 82, commands: ['aws rds', 'ecs', 'cloud penetration'] },
+    { name: 'GLPI / LAMP Stack', level: 88, commands: ['mysql', 'apache2ctl', 'php db:check'] },
+    { name: 'Database Admin', level: 82, commands: ['mysql 8.0', 'aws rds'] }
   ],
   'Security Tools & Honeypots': [
-    { name: 'T-Pot Honeypot', level: 85, commands: ['t-pot', 'honeypot management'] },
+    { name: 'T-Pot Honeypot Framework', level: 90, commands: ['t-pot', 'honeypot management'] },
+    { name: 'OpenCanary', level: 85, commands: ['opencanaryd', 'decoy services'] },
+    { name: 'Custom Decoy Dev', level: 82, commands: ['python flask', 'fakebook logger'] },
+    { name: 'TLS/SSL Management', level: 86, commands: ['keystores', 'p12', 'mtls'] },
     { name: 'Cryptography (AES/RSA)', level: 80, commands: ['openssl', 'encryption'] },
-    { name: 'SSL/TLS', level: 85, commands: ['openssl s_client', 'certificate management'] },
     { name: 'IPSec/VPN', level: 82, commands: ['ipsec', 'vpn configuration'] }
   ]
 };
@@ -209,8 +220,8 @@ export const professionalJourney = [
   },
   {
     year: '2024',
-    period: 'Nov 2024 – Present',
-    milestone: 'Jr. SOC Analyst',
+    period: 'Aug 2025 – Present',
+    milestone: 'Jr. Security Engineer',
     organization: 'THIRU Labs',
     type: 'work',
     color: 'emerald',
@@ -321,20 +332,12 @@ export const certifications = [
     skills: ['Penetration Testing', 'Vulnerability Assessment', 'Security Testing']
   },
   {
-    name: 'n8n University Security Audit',
-    organization: 'Academic',
-    year: '2023-2024',
-    status: 'Completed',
-    description: '200+ hands-on cybersecurity labs covering threat detection, incident response, and security operations',
-    skills: ['Threat Analysis', 'Network Security', 'Malware Analysis', 'SIEM', 'Forensics']
-  },
-  {
-    name: 'Cybersecurity Specialization',
-    organization: 'Monash University',
-    year: '2023-2025',
+    name: 'eJPT',
+    organization: 'INE Security',
+    year: '2025',
     status: 'In Progress',
-    courses: ['FIT5057', 'FIT5129', 'FIT9137', 'FIT5163', 'FIT9136', 'FIT5225'],
-    description: 'Comprehensive graduate coursework in security operations, threat hunting, and infrastructure hardening'
+    description: 'Junior Penetration Tester certification focusing on practical penetration testing methodology and real-world assessment skills',
+    skills: ['Penetration Testing', 'Network Security', 'Web Application Security', 'Host & Network Auditing']
   }
 ];
 
@@ -342,8 +345,8 @@ export const workExperience = [
   {
     id: 1,
     company: 'THIRU (Threat Incident and Response Unit)',
-    role: 'Jr. SOC Analyst',
-    period: 'Nov 2024 – Present',
+    role: 'Jr. Security Engineer',
+    period: 'Aug 2025 – Present',
     location: 'Melbourne, Australia',
     current: true,
     responsibilities: [
@@ -399,6 +402,60 @@ export const workExperience = [
       '25% reduction in reportable threats',
       'Identified 15 critical weaknesses',
       'Improved firewall rules and network security'
+    ]
+  }
+];
+
+export const education = [
+  {
+    id: 1,
+    institution: 'Monash University',
+    degree: 'Master of Cybersecurity',
+    period: '2023 – 2025',
+    location: 'Melbourne, Australia',
+    highlights: [
+      {
+        area: 'Cloud & DevOps',
+        items: [
+          'Deployed containerized Flask API on Kubernetes (OCI) with YOLOv3-tiny for real-time ML object detection',
+          'Built and optimised Docker images, orchestrated pods across controller and worker nodes with automated Locust load testing'
+        ]
+      },
+      {
+        area: 'Penetration Testing',
+        items: [
+          'Executed full attack chains on vulnerable VMs — reconnaissance, exploitation, privilege escalation to root shell',
+          'Crafted buffer overflow exploits with NOP sleds and custom shellcode to bypass ASLR, StackGuard, and NX protections'
+        ]
+      },
+      {
+        area: 'Network Security & Forensics',
+        items: [
+          'Designed forensic-ready enterprise architecture with DMZ, WAF, IDS/IPS, and SIEM integration for continuous threat monitoring',
+          'Simulated BGP hijacking and DNS cache poisoning attacks; implemented prefix filtering and DNSSEC mitigations'
+        ]
+      },
+      {
+        area: 'Applied Cryptography',
+        items: [
+          'Established internal PKI with Root CA, X.509 certificates, and TLS 1.3 enforcement with Perfect Forward Secrecy',
+          'Executed timing side-channel attacks against RSA square-and-multiply to extract secret keys'
+        ]
+      },
+      {
+        area: 'Full-Stack Security (Habitat for Wings)',
+        items: [
+          'Secured Vue.js + Spring Boot biodiversity platform on AWS across 3 iterations',
+          'Hardened CORS, CSP, HSTS headers; integrated automated malware scanning and EXIF stripping for user uploads'
+        ]
+      },
+      {
+        area: 'Offensive Tooling',
+        items: [
+          'Built multi-threaded Python port scanners with IDS evasion (port randomisation, timing delays)',
+          'Executed UNION-based SQLi, DOM XSS, and MITM attacks via custom ARP poisoning scripts'
+        ]
+      }
     ]
   }
 ];

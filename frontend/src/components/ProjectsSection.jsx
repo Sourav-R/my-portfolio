@@ -26,8 +26,8 @@ const ProjectsSection = ({ recruiterMode }) => {
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4 font-mono">
-            <span className="text-emerald-500">&gt;</span> Security Briefs
+          <h2 className="text-4xl font-bold mb-4 font-mono">
+            <span className="text-emerald-500">&gt;</span> <span className="text-white">Security</span> <span className="text-emerald-500">Briefs</span>
           </h2>
           <p className="text-gray-400 max-w-2xl">
             Recent security projects and infrastructure implementations. Each brief includes threat modeling, security audits, and production-ready deployment strategies.
@@ -56,7 +56,7 @@ const ProjectsSection = ({ recruiterMode }) => {
               <div className="relative z-10">
                 {/* Project Header */}
                 <div className="flex items-start justify-between mb-6">
-                  <h3 className="text-2xl font-bold text-white pr-4 font-mono leading-tight">{project.title}</h3>
+                  <h3 className="text-2xl font-bold text-emerald-50 pr-4 font-mono leading-tight group-hover:text-emerald-300 transition-colors">{project.title}</h3>
                   <Badge className={`${getStatusColor(project.status)} border text-xs uppercase whitespace-nowrap`}>
                     {project.status === 'production' ? 'PROD' : project.status.toUpperCase()}
                   </Badge>

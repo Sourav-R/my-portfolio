@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, Clock, Shield, Download } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Terminal, Menu, X, Clock, Shield, Download, Folder } from 'lucide-react';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { profileData, securityStatus } from '../mock';
 
 const navItems = [
-  { id: 'hero', label: 'home' },
-  { id: 'terminal', label: 'terminal' },
-  { id: 'skill-leveling', label: 'skills' },
-  { id: 'work-experience', label: 'experience' },
-  { id: 'certifications', label: 'certs' },
-  { id: 'projects', label: 'projects' },
-  { id: 'lab-experience', label: 'labs' },
+  { path: '/', label: '~/root', icon: Folder },
+  { path: '/labs', label: '~/labs', icon: Folder },
+  { path: '/vault', label: '~/vault', icon: Folder },
 ];
 
-const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
+const CommandBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isGlitching, setIsGlitching] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -29,25 +28,24 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      const sections = navItems.map(item => item.id);
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= window.innerHeight / 3 && rect.bottom >= window.innerHeight / 3) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setMobileOpen(false);
+  const handleNavigate = (path) => {
+    if (location.pathname === path) return;
+    
+    // Trigger terminal glitch effect (simulated here, can be attached to global body class)
+    setIsGlitching(true);
+    document.body.classList.add('terminal-glitch-active');
+    
+    setTimeout(() => {
+      setIsGlitching(false);
+      document.body.classList.remove('terminal-glitch-active');
+      navigate(path);
+      setMobileOpen(false);
+    }, 200); // 200ms glitch transition
   };
 
   const formatTime = (date) => date.toLocaleTimeString('en-AU', {
@@ -77,19 +75,23 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
 
           {/* Navigation Commands - Desktop */}
           <nav className="hidden lg:flex items-center gap-1 flex-1 overflow-x-auto">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all duration-200 whitespace-nowrap ${
-                  activeSection === item.id
-                    ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 font-bold shadow-[0_0_10px_rgba(6,182,212,0.15)]'
-                    : 'text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-gray-700'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => handleNavigate(item.path)}
+                  className={`px-3 py-1.5 text-xs flex items-center gap-2 font-mono rounded-md transition-all duration-200 whitespace-nowrap ${
+                    location.pathname === item.path
+                      ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 font-bold shadow-[0_0_10px_rgba(6,182,212,0.15)]'
+                      : 'text-gray-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-gray-700'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {item.label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Right side controls */}
@@ -101,16 +103,6 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
               <span className="text-gray-700">|</span>
               <Clock className="h-3 w-3 text-gray-500" />
               <span className="text-gray-400">{formatTime(currentTime)}</span>
-            </div>
-
-            {/* Recruiter Toggle */}
-            <div className="hidden sm:flex items-center gap-2 bg-white/5 rounded-md px-2.5 py-1 border border-gray-800">
-              <span className="text-[10px] font-mono text-gray-500">REC</span>
-              <Switch
-                checked={recruiterMode}
-                onCheckedChange={setRecruiterMode}
-                className="data-[state=checked]:bg-emerald-500 scale-75"
-              />
             </div>
 
             {/* Resume */}
@@ -145,19 +137,23 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
             >
               <div className="px-6 py-8">
                 <div className="grid grid-cols-2 gap-3 mb-8">
-                  {navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollTo(item.id)}
-                      className={`h-12 flex items-center justify-center px-4 py-2 text-xs font-mono rounded-lg transition-all active:scale-95 ${
-                        activeSection === item.id
-                          ? 'text-cyan-400 bg-cyan-500/15 border border-cyan-500/50 font-bold shadow-[0_0_20px_rgba(6,182,212,0.2)]'
-                          : 'text-gray-400 bg-white/5 border border-white/5'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.path}
+                        onClick={() => handleNavigate(item.path)}
+                        className={`h-12 flex items-center justify-center gap-2 px-4 py-2 text-xs font-mono rounded-lg transition-all active:scale-95 ${
+                          location.pathname === item.path
+                            ? 'text-cyan-400 bg-cyan-500/15 border border-cyan-500/50 font-bold shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                            : 'text-gray-400 bg-white/5 border border-white/5'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        {item.label}
+                      </button>
+                    );
+                  })}
                 </div>
                 
                 <div className="space-y-6 pt-6 border-t border-white/5">
@@ -171,15 +167,6 @@ const CommandBar = ({ recruiterMode, setRecruiterMode }) => {
                         <Clock className="h-3.5 w-3.5" />
                         <span>MEL {formatTime(currentTime)}</span>
                       </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-xl border border-white/10">
-                      <span className="text-[11px] font-mono text-gray-400">RECRUITER_MODE</span>
-                      <Switch
-                        checked={recruiterMode}
-                        onCheckedChange={setRecruiterMode}
-                        className="data-[state=checked]:bg-emerald-500 scale-90"
-                      />
                     </div>
                   </div>
                 </div>

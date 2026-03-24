@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from './ui/badge';
 import { Code, Github, ExternalLink, ChevronRight, CheckCircle2, Shield, Cloud, Sword, Scale, Terminal, X } from 'lucide-react';
@@ -34,6 +35,18 @@ const TAB_ACTIVE = {
 const ProjectsHub = ({ recruiterMode }) => {
   const [activeTab, setActiveTab] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.filterTab) {
+      setActiveTab(location.state.filterTab);
+      // Smooth scroll if returning to an already mounted component
+      setTimeout(() => {
+        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const filteredProjects = useMemo(() => {
     if (activeTab === 'All') return allProjects;
@@ -62,16 +75,15 @@ const ProjectsHub = ({ recruiterMode }) => {
   };
 
   return (
-    <section id="projects" className="relative px-4 py-24 bg-[#030303]" data-testid="projects-hub-section">
-      <div className="absolute inset-0 bg-grid opacity-20" />
+    <section id="projects" className="relative px-4 py-10 md:py-16 bg-transparent" data-testid="projects-hub-section">
       <div className="max-w-6xl mx-auto relative">
         {/* Header */}
         <div className="mb-12">
           <div className="section-cmd mb-3">
             <span className="prompt">$</span> find ./projects -type f
           </div>
-          <h2 className="text-3xl font-bold text-white mb-2 font-mono tracking-tight">
-            Projects <span className="text-gray-500 font-light">&amp;</span> Architecture
+          <h2 className="text-3xl font-bold mb-2 font-mono tracking-tight">
+            <span className="text-white">Projects</span> <span className="text-gray-500 font-light">&amp;</span> <span className="text-blue-500">Architecture</span>
           </h2>
           <div className="flex items-center gap-4 text-xs text-gray-500 font-mono mt-4">
             <span className="px-2 py-1 bg-[#0a0a0a] rounded border border-gray-800">{allProjects.length} Total Projects</span>
@@ -86,18 +98,17 @@ const ProjectsHub = ({ recruiterMode }) => {
             <button
               key={cat}
               onClick={() => { setActiveTab(cat); }}
-              className={`px-4 py-2 text-xs font-mono rounded-t-md transition-all duration-300 relative ${
-                activeTab === cat
+              className={`px-4 py-2 text-xs font-mono rounded-t-md transition-all duration-300 relative ${activeTab === cat
                   ? `bg-[#0a0a0a] border-t border-l border-r border-gray-800 text-white`
                   : 'text-gray-500 hover:text-gray-300 hover:bg-[#080808]'
-              }`}
+                }`}
             >
               {cat}
               <span className={`ml-2 text-[10px] px-1.5 py-0.5 rounded-full ${activeTab === cat ? 'bg-gray-800 text-white' : 'bg-[#050505]'}`}>
                 {tabCounts[cat]}
               </span>
               {activeTab === cat && (
-                <motion.div 
+                <motion.div
                   layoutId="activeTabIndicator"
                   className={`absolute bottom-0 left-0 right-0 h-0.5 ${TAB_ACTIVE[cat]?.split(' ')[0].replace('border-', 'bg-') || 'bg-white'}`}
                 />
@@ -109,7 +120,7 @@ const ProjectsHub = ({ recruiterMode }) => {
         {/* Projects Grid / Carousel */}
         <div className="relative">
           {/* Desktop Grid */}
-          <motion.div 
+          <motion.div
             layout
             className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
@@ -139,7 +150,7 @@ const ProjectsHub = ({ recruiterMode }) => {
             {filteredProjects.map((project) => {
               const style = TAB_STYLES[project.tab] || DEFAULT_STYLE;
               return (
-                <div 
+                <div
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
                   className="w-[85vw] flex-shrink-0 snap-center"
@@ -159,7 +170,7 @@ const ProjectsHub = ({ recruiterMode }) => {
         {selectedProject && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" style={{ pointerEvents: 'auto' }}>
             {/* Backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -179,7 +190,7 @@ const ProjectsHub = ({ recruiterMode }) => {
               {(() => {
                 const style = TAB_STYLES[selectedProject.tab] || DEFAULT_STYLE;
                 const IconComp = style.icon;
-                
+
                 return (
                   <>
                     {/* Modal Header/Topbar */}
@@ -188,7 +199,7 @@ const ProjectsHub = ({ recruiterMode }) => {
                         <IconComp className={`w-5 h-5 ${style.accent}`} />
                         <h2 className="text-lg font-bold text-white font-mono">{selectedProject.title}</h2>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setSelectedProject(null)}
                         className="p-1.5 text-gray-500 hover:text-white hover:bg-gray-800 rounded-md transition-colors"
                       >
@@ -198,12 +209,12 @@ const ProjectsHub = ({ recruiterMode }) => {
 
                     {/* Modal Scrollable Body */}
                     <div className="overflow-y-auto p-6 md:p-8 custom-scrollbar">
-                      
+
                       {/* Overview Grid */}
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                         {/* Main Context */}
                         <div className="lg:col-span-2 space-y-6">
-                          
+
                           {/* Situation / Problem */}
                           <div className="bg-[#0a0a0a] rounded-lg p-5 border border-gray-800/50 relative overflow-hidden">
                             <div className={`absolute left-0 top-0 bottom-0 w-1 ${style.bg ? style.bg.replace('bg-', '') : 'bg-gray-700'}`}></div>
@@ -219,8 +230,8 @@ const ProjectsHub = ({ recruiterMode }) => {
                           {/* Action / Solution */}
                           <div className="space-y-4">
                             <h4 className="text-[10px] uppercase font-mono tracking-widest text-gray-500 flex items-center gap-2">
-                               <CheckCircle2 className={`w-3 h-3 ${style.accent}`} />
-                               [A] Actions Taken & Solution
+                              <CheckCircle2 className={`w-3 h-3 ${style.accent}`} />
+                              [A] Actions Taken & Solution
                             </h4>
                             <div className="bg-[#080808] border border-gray-800 rounded-lg p-4 font-mono text-sm text-gray-300">
                               <ul className="space-y-3">
@@ -238,7 +249,7 @@ const ProjectsHub = ({ recruiterMode }) => {
 
                         {/* Sidebar Info */}
                         <div className="space-y-6">
-                          
+
                           {/* Impact */}
                           <div className={`bg-[#080808] rounded-lg p-5 border ${style.border} group`}>
                             <h4 className={`text-[10px] uppercase font-mono tracking-widest ${style.accent} mb-3`}>
@@ -301,7 +312,7 @@ const ProjectsHub = ({ recruiterMode }) => {
                               <div key={idx} className="text-gray-400">
                                 <span className={style.accent}>{`$ `}</span>
                                 {q.startsWith('$') ? (
-                                   <span className="text-cyan-400">{q.substring(1)}</span>
+                                  <span className="text-cyan-400">{q.substring(1)}</span>
                                 ) : (
                                   <span>{q}</span>
                                 )}
@@ -327,18 +338,18 @@ const ProjectCardContent = ({ project, style, getThumbnail }) => (
   <>
     {/* Thumbnail Placeholder */}
     <div className="overflow-hidden relative">
-        {getThumbnail(project, style)}
-        <div className={`absolute top-3 right-3 ${style.badge} px-2 py-1 rounded text-[10px] font-mono border backdrop-blur-md`}>
-          {project.type}
-        </div>
+      {getThumbnail(project, style)}
+      <div className={`absolute top-3 right-3 ${style.badge} px-2 py-1 rounded text-[10px] font-mono border backdrop-blur-md`}>
+        {project.type}
+      </div>
     </div>
 
     {/* Card Content */}
     <div className="p-5 flex flex-col flex-grow">
-      <h3 className="text-base font-bold text-white font-mono leading-tight mb-2 group-hover:text-gray-200 line-clamp-2">
+      <h3 className="text-base font-bold text-blue-50 font-mono leading-tight mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
         {project.title}
       </h3>
-      
+
       <p className="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2 flex-grow">
         {project.subtitle || project.problem || "Advanced implementation requiring complex architectural decisions."}
       </p>

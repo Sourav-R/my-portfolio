@@ -81,7 +81,7 @@ const ProjectCard = ({ project, isExpanded, onToggle, index }) => {
             <IconComp className="h-4 w-4" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-white font-mono leading-snug mb-1 group-hover:text-gray-100 transition-colors">
+            <h3 className="text-sm font-semibold text-cyan-50 font-mono leading-snug mb-1 group-hover:text-cyan-300 transition-colors">
               {project.title}
             </h3>
             <p className="text-xs text-gray-500 leading-relaxed">{project.subtitle}</p>
@@ -150,8 +150,8 @@ const AdvancedProjectsSection = ({ recruiterMode }) => {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <h2 className="text-2xl font-bold text-white mb-2 font-mono tracking-tight">
-            <span className="text-cyan-500 mr-1">&gt;</span>Advanced Technical Projects
+          <h2 className="text-2xl font-bold mb-2 font-mono tracking-tight">
+            <span className="text-cyan-500 mr-1">&gt;</span><span className="text-white">Advanced Technical</span> <span className="text-cyan-500">Projects</span>
           </h2>
           <div className="flex items-center gap-4 text-xs text-gray-600 font-mono">
             <span>{advancedProjects.length} projects</span>

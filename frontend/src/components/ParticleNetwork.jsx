@@ -60,8 +60,8 @@ const Particles = ({ count = 70 }) => {
     }
   }, [positions, linePositions]);
 
-  const pointsMat = useMemo(() => new THREE.PointsMaterial({ color: '#22d3ee', size: 0.03, transparent: true, opacity: 0.4, sizeAttenuation: true, depthWrite: false }), []);
-  const lineMat = useMemo(() => new THREE.LineBasicMaterial({ color: '#22d3ee', transparent: true, opacity: 0.06, depthWrite: false }), []);
+  const pointsMat = useMemo(() => new THREE.PointsMaterial({ color: '#22d3ee', size: 0.045, transparent: true, opacity: 0.8, sizeAttenuation: true, depthWrite: false }), []);
+  const lineMat = useMemo(() => new THREE.LineBasicMaterial({ color: '#22d3ee', transparent: true, opacity: 0.2, depthWrite: false }), []);
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;

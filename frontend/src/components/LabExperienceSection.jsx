@@ -55,16 +55,15 @@ const LabExperienceSection = ({ recruiterMode }) => {
   };
 
   return (
-    <section id="lab-experience" ref={sectionRef} className="relative px-4 py-24 bg-[#030303]">
-      <div className="absolute inset-0 bg-grid opacity-20" />
+    <section id="lab-experience" ref={sectionRef} className="relative px-4 py-10 md:py-16 bg-transparent">
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
         <div className="mb-16">
           <div className="section-cmd mb-3">
             <span className="prompt">$</span> wc -l ./labs/*
           </div>
-          <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
-            Lab Experience
+          <h2 className="text-3xl font-bold mb-3 font-mono tracking-tight">
+            <span className="text-white">Lab</span> <span className="text-rose-500">Experience</span>
           </h2>
           <p className="text-gray-500 max-w-2xl text-sm">
             Academic hands-on experience through 200+ practical cybersecurity labs covering threat detection, incident response, malware analysis, and security operations.
@@ -95,7 +94,7 @@ const LabExperienceSection = ({ recruiterMode }) => {
 
         {/* Threat Distribution */}
         <div className="bg-[#080808] border border-gray-800 rounded-lg p-6 mb-8">
-          <h3 className="text-sm font-bold text-white mb-5 font-mono">Threat Category Distribution</h3>
+          <h3 className="text-sm font-bold mb-5 font-mono"><span className="text-gray-200">Threat Category</span> <span className="text-rose-500">Distribution</span></h3>
           <div className="space-y-3.5">
             {threatCategories.map((cat, i) => (
               <div key={cat.name} style={{ animation: countersVisible ? `fadeInLeft 0.5s ease-out ${i * 0.08}s both` : 'none' }}>

@@ -12,16 +12,15 @@ const CertificationsSection = ({ recruiterMode }) => {
   };
 
   return (
-    <section id="certifications" className="relative px-4 py-24 bg-[#030303]">
-      <div className="absolute inset-0 bg-dots opacity-20" />
+    <section id="certifications" className="relative px-4 py-10 md:py-16 bg-transparent">
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
         <div className="mb-16">
           <div className="section-cmd mb-3">
             <span className="prompt">$</span> ls -la ./certifications/
           </div>
-          <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
-            Certifications & Training
+          <h2 className="text-3xl font-bold mb-3 font-mono tracking-tight">
+            <span className="text-white">Active</span> <span className="text-amber-500">Certifications</span>
           </h2>
           <p className="text-gray-500 max-w-2xl text-sm">
             Professional certifications and specialized training in cybersecurity operations, cloud security, and network architecture.
@@ -53,7 +52,7 @@ const CertificationsSection = ({ recruiterMode }) => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-base font-bold text-white mb-2 font-mono leading-snug">{cert.name}</h3>
+                <h3 className="text-base font-bold text-amber-50 mb-2 font-mono leading-snug group-hover:text-amber-300 transition-colors">{cert.name}</h3>
                 <div className="flex items-center gap-2 mb-3 text-xs text-gray-500 font-mono">
                   <Award className="h-3 w-3" />
                   <span>{cert.organization}</span>

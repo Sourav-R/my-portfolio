@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Suspense, lazy } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Terminal as TerminalIcon } from 'lucide-react';
 import Canvas3DErrorBoundary from './Canvas3DErrorBoundary';
 
 const ParticleNetwork = lazy(() => import('./ParticleNetwork'));
@@ -8,7 +8,7 @@ import { commandCheatsheet, toolsProficiency, certifications, workExperience, pr
 
 // Build rich outputs from actual data
 const buildExperienceOutput = () => {
-  let out = 'Work Experience:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  let out = 'Experience & Education:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
   workExperience.forEach((job, i) => {
     out += `\n[${i + 1}] ${job.role} — ${job.company}\n`;
     out += `    Period: ${job.period} | Location: ${job.location}\n`;
@@ -46,7 +46,7 @@ const buildJourneyOutput = () => {
 };
 
 const buildSkillsOutput = () => {
-  let out = 'Skills Matrix:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  let out = 'Technical Proficiency Matrix:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
   Object.entries(toolsProficiency).forEach(([category, tools]) => {
     out += `\n[${category}]\n`;
     tools.forEach(tool => {
@@ -156,25 +156,25 @@ const HELP_TEXT = `Available Commands:
     bio             Read full bio
 
   CAREER
-    journey         Professional timeline
-    experience      Work experience (use "experience <#>" for details)
-    certs           Certifications & training
+    experience      Experience & Education (use "experience <#>" for details)
+    certs           Certifications & clearances
 
-  SKILLS & TOOLS
-    skills          Full skills matrix with proficiency bars
-    wireshark       Wireshark cheat sheet
-    nmap            Nmap cheat sheet
-    splunk          Splunk cheat sheet
-    snort           Snort cheat sheet
-    yara            YARA cheat sheet
-    metasploit      Metasploit cheat sheet
-
-  PROJECTS
-    projects        List all ${allProjects.length} projects
+  TECHNICAL
+    skills          Technical Proficiency matrix
+    missions        Active Missions & Deployments
+    projects        List all ${allProjects.length} Architecture Projects
     project <id>    Project details (e.g. "project 1")
 
+  CHEAT SHEETS
+    wireshark       Wireshark commands
+    nmap            Nmap commands
+    splunk          Splunk commands
+    snort           Snort commands
+    yara            YARA commands
+    metasploit      Metasploit commands
+
   LABS
-    labs            Lab experience & threat stats
+    labs            Cyber Range Labs & stats
     casestudies     Featured lab case studies
     lab             Home lab infrastructure status
 
@@ -183,7 +183,7 @@ const HELP_TEXT = `Available Commands:
     secret          ???
 
   NAVIGATION
-    goto <section>  Jump to section (journey, experience, skills, certs,
+    goto <section>  Jump to section (experience, skills, certs, missions,
                     projects, labs, casestudies)
 
   UTILITY
@@ -192,18 +192,18 @@ const HELP_TEXT = `Available Commands:
 
 const SECTION_MAP = {
   home: 'hero',
-  journey: 'professional-journey',
-  experience: 'work-experience',
-  skills: 'skills-matrix',
+  experience: 'experience',
+  skills: 'skill-leveling',
   certs: 'certifications',
   certifications: 'certifications',
+  missions: 'active-missions',
   projects: 'projects',
   labs: 'lab-experience',
-  casestudies: 'featured-labs',
+  casestudies: 'lab-experience',
   terminal: 'terminal',
 };
 
-const TerminalSandbox = ({ recruiterMode }) => {
+const TerminalSandbox = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([
     { type: 'system', content: '╔══════════════════════════════════════════════════════════╗' },
@@ -287,7 +287,7 @@ const TerminalSandbox = ({ recruiterMode }) => {
     }
 
     // Career
-    if (lower === 'journey') { addOutput('output', buildJourneyOutput()); return; }
+    if (lower === 'missions') { addOutput('output', 'Active Missions:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[1] Production-Grade SIEM Architecture\n[2] Custom Deception Environment\n[3] Automated TDR Pipeline\n[4] Cloud Infrastructure VAPT\n\nUse "goto missions" to view full deployment details.'); return; }
     if (base === 'experience' && arg) {
       const num = parseInt(arg);
       if (!isNaN(num)) { addOutput('output', buildExperienceDetail(num)); return; }
@@ -379,31 +379,23 @@ const TerminalSandbox = ({ recruiterMode }) => {
   };
 
   return (
-    <section id="terminal" className="relative px-4 py-20 bg-[#030303]">
-      <div className="absolute inset-0 bg-grid opacity-20" />
-      <Canvas3DErrorBoundary>
-        <Suspense fallback={null}>
-          <ParticleNetwork />
-        </Suspense>
-      </Canvas3DErrorBoundary>
-      <div className="max-w-5xl mx-auto relative">
+    <section id="terminal" className="relative px-4 py-8 md:py-12 bg-transparent">
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
-        <div className="mb-10">
-          <div className="section-cmd mb-3">
-            <span className="prompt">$</span> ./sandbox --interactive
-          </div>
-          <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="mb-12 md:mb-16 flex flex-col items-start w-full">
+          <div className="flex w-full items-start justify-between gap-4 flex-wrap">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-3 font-mono tracking-tight">
-                The System Shell
+              <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs md:text-sm font-bold tracking-widest uppercase mb-3">
+                <TerminalIcon className="w-4 h-4" />
+                [ SYSTEM_SHELL // INTERACTIVE ]
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
+                Terminal <span className="text-emerald-500">Sandbox</span>
               </h2>
-              <p className="text-gray-500 max-w-2xl text-sm">
-                Your interactive hub. Access everything — <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">skills</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">projects</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">experience</code>, <code className="text-cyan-400 bg-white/5 px-1 py-0.5 rounded text-xs">labs</code>, tool cheat sheets, or <code className="text-emerald-400 bg-white/5 px-1 py-0.5 rounded text-xs">goto</code> any section.
-              </p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 text-xs font-mono text-gray-500 hover:text-gray-300 border border-gray-800 hover:border-gray-600 rounded px-3 py-1.5 transition-all"
+              className="flex items-center gap-1.5 text-xs font-mono text-gray-500 hover:text-gray-300 border border-gray-800 hover:border-gray-600 rounded px-3 py-1.5 transition-all mt-2 md:mt-0"
             >
               <RotateCcw className="h-3.5 w-3.5" /> reset
             </button>
@@ -466,7 +458,7 @@ const TerminalSandbox = ({ recruiterMode }) => {
         </div>
 
         {/* Helper */}
-        <div className="mt-3 text-center text-[10px] text-gray-600 font-mono">
+        <div className="mt-3 text-center text-[10px] text-gray-300 font-mono">
           ↑/↓ navigate history • type "help" for all commands • "goto &lt;section&gt;" to navigate
         </div>
       </div>

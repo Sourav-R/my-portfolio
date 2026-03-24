@@ -2,17 +2,17 @@
 
 export const profileData = {
   name: "Sourav Ramakrishna",
-  role: "Jr. SOC Analyst",
+  role: "Jr. Security Engineer",
   company: "ThIRU Labs",
   companyFull: "THIRU (Threat Incident and Response Unit)",
   location: "Melbourne, Australia",
   timezone: "Australia/Melbourne",
-  email: "Sourav.rk.21@gmail.com",
+  email: "[EMAIL_ADDRESS]",
   phone: "+61 493670389",
   linkedin: "https://www.linkedin.com/in/sourav-ramakrishna-b6189a204/",
   github: "https://github.com/Sourav-R",
   resumeUrl: "https://customer-assets.emergentagent.com/job_ringwood-secure/artifacts/gqj74rvj_Sourav_Ramakrishna_Jr.SOC_analyst.pdf",
-  bio: "Based in Melbourne, I am a Jr. SOC Analyst at ThIRU (Threat Incident and Response Unit). I specialize in bridging the gap between proactive infrastructure management and reactive threat defense. When I'm not monitoring live incident logs or hardening client environments, I'm architecting my own private cloud infrastructure. My approach to security is grounded in the philosophy that you can't defend what you don't understand—which is why I spend my time breaking and building systems in my Proxmox-based home lab."
+  bio: "Based in Melbourne, I am a Security Engineer at ThIRU (Threat Incident and Response Unit). I specialize in bridging the gap between proactive infrastructure management and reactive threat defense by building highly secure, automated enterprise infrastructure. From engineering Production-Grade SIEM architectures to developing Automated Threat Detection pipelines, my focus is on active defense and rapid incident response. I firmly believe you can't defend what you don't understand—which is why I spend my time deploying advanced honeypots, conducting cloud VAPT, and building systems in my Proxmox lab."
 };
 
 export const securityStatus = {
@@ -809,9 +809,9 @@ export const skills = {
     "Threat Detection & Analysis",
     "Security Information and Event Management (SIEM)",
     "Incident Response",
-    "Network Security & Firewalling",
+    "Active Defense & Honeypots",
     "Vulnerability & IDS Evasion Assessment",
-    "Applied Cryptography (PKI/TLS)",
+    "Living-off-the-Land (LotL) Detection",
     "MITRE ATT&CK Framework"
   ],
   infrastructure: [
@@ -820,26 +820,26 @@ export const skills = {
     "Docker & Container Orchestration",
     "Multi-Campus IPSec VPNs",
     "Linux System Administration",
-    "Server Management & Hardening"
+    "LAMP Stack (Apache, MySQL, GLPI)"
   ],
   tools: [
     "Cisco Catalyst (8500/9300x)",
-    "Mikrotik RouterOS",
-    "BIND9",
+    "Elastic Security & Logstash",
+    "SaltStack & ZeroMQ",
     "pfSense & OPNSense",
     "Wazuh",
     "Snort/Suricata IDS",
     "Wireshark / Scapy",
     "OpenSSL",
     "GNS3",
-    "Metasploit"
+    "Burp Suite & ZAP"
   ],
   programming: [
     "Python",
     "Bash Scripting",
     "JavaScript/TypeScript",
     "Socket Programming",
-    "PowerShell"
+    "PowerShell & EQL"
   ]
 };
 

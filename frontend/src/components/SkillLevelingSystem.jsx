@@ -9,37 +9,55 @@ import {
 /* ── Per-tool icon mapping ── */
 // 'type: brand' fetches the exact color logo from SimpleIcons CDN. 'type: lucide' uses the fallback native icons.
 const toolIcons = {
-  'SIEM (ELK Stack)': { type: 'brand', slug: 'elasticstack', color: '#005571' },
+  // SOC & Threat Detection
+  'SIEM (ELK Stack)': { type: 'brand', slug: 'elasticsearch', color: '#005571', icon: Database },
+  'Elastic Endpoint Security': { type: 'brand', slug: 'elastic', color: '#00bfb3', icon: Shield },
   'LotL Detection & EQL': { type: 'lucide', icon: Search, color: '#ff6b6b' },
-  'Logstash Pipelines': { type: 'brand', slug: 'logstash', color: '#00bfb3' },
-  'GLPI / LAMP Stack': { type: 'brand', slug: 'apache', color: '#D22128' },
-  'AWS & Microservices': { type: 'brand', slug: 'amazonaws', color: '#FF9900' },
-  'Alert Investigation': { type: 'lucide', icon: Eye, color: '#4dabf7' },
-  'Incident Triage': { type: 'lucide', icon: AlertTriangle, color: '#fcc419' },
-  'Threat Analysis': { type: 'lucide', icon: Skull, color: '#9775fa' },
-  'Phishing Analysis': { type: 'lucide', icon: Mail, color: '#69db7c' },
-  'Kali Linux': { type: 'brand', slug: 'kalilinux', color: '#557C94' },
-  'Burp Suite': { type: 'lucide', icon: Bug, color: '#FF6633' }, // No exact simpleicon for burp
-  'OWASP ZAP': { type: 'brand', slug: 'owasp', color: '#cfcfcf' },
-  'Metasploit': { type: 'lucide', icon: Crosshair, color: '#1B4783' },
-  'Nmap': { type: 'lucide', icon: Globe, color: '#27346A' },
-  'Snort': { type: 'lucide', icon: Shield, color: '#e8590c' },
+  'Log Parsing & Beats': { type: 'brand', slug: 'kibana', color: '#E8488B', icon: Activity },
+  'Threat Hunting & IR': { type: 'lucide', icon: Skull, color: '#9775fa' },
+  'Logstash Pipelines': { type: 'brand', slug: 'logstash', color: '#FCC624', icon: Database },
+
+  // Penetration Testing & VAPT
+  'Burp Suite': { type: 'lucide', icon: Bug, color: '#FF6633' }, // Burp isn't in simpleicons standard reliably
+  'OWASP ZAP': { type: 'brand', slug: 'owasp', color: '#cfcfcf', icon: Shield },
+  'Cloud Infra VAPT': { type: 'brand', slug: 'amazonaws', color: '#FF9900', icon: Cloud },
+  'Kali Linux': { type: 'brand', slug: 'kalilinux', color: '#557C94', icon: Terminal },
+  'Nmap & Recon': { type: 'lucide', icon: Globe, color: '#27346A' }, // Nmap doesn't have an official simpleicon
+  'Exploitation Arrays': { type: 'lucide', icon: Crosshair, color: '#1B4783' }, // Metasploit simpleicon is flaky
+  'Telecom Modeling': { type: 'lucide', icon: Network, color: '#fcc419' },
+
+  // IDS/IPS & Network Security
+  'Wireshark': { type: 'brand', slug: 'wireshark', color: '#1679A7', icon: Activity },
   'Suricata': { type: 'lucide', icon: Shield, color: '#F16930' },
+  'Snort': { type: 'lucide', icon: Shield, color: '#e8590c' },
   'Network Anomaly Detection': { type: 'lucide', icon: Activity, color: '#20c997' },
-  'Wireshark': { type: 'brand', slug: 'wireshark', color: '#1679A7' },
-  'Log Analysis': { type: 'lucide', icon: FileCode, color: '#adb5bd' },
-  'Python': { type: 'brand', slug: 'python', color: '#3776AB' },
-  'Bash Scripting': { type: 'brand', slug: 'gnubash', color: '#4EAA25' },
-  'C Programming': { type: 'brand', slug: 'c', color: '#A8B9CC' },
-  'SaltStack': { type: 'lucide', icon: Settings, color: '#00D1D1' },
-  'AWS': { type: 'brand', slug: 'amazonaws', color: '#FF9900' },
-  'Oracle Cloud': { type: 'brand', slug: 'oracle', color: '#F80000' },
-  'Linux Administration': { type: 'brand', slug: 'linux', color: '#FCC624' },
-  'Network Protocols': { type: 'lucide', icon: Network, color: '#74c0fc' },
-  'T-Pot Honeypot': { type: 'lucide', icon: Bug, color: '#d0bfff' },
+  'Routing & Access Controls': { type: 'lucide', icon: Network, color: '#74c0fc' },
+  'Proxy & Gateways': { type: 'brand', slug: 'nginx', color: '#009639', icon: Globe },
+
+  // Programming & Automation
+  'Python': { type: 'brand', slug: 'python', color: '#3776AB', icon: Code },
+  'Bash Scripting': { type: 'brand', slug: 'gnubash', color: '#4EAA25', icon: Terminal },
+  'SaltStack Automation': { type: 'brand', slug: 'saltproject', color: '#00D1D1', icon: Settings },
+  'Infrastructure as Code': { type: 'brand', slug: 'terraform', color: '#844FBA', icon: Code },
+  'Containerization': { type: 'brand', slug: 'docker', color: '#2496ED', icon: Database },
+  'Event-Driven TDR': { type: 'brand', slug: 'jenkins', color: '#D24939', icon: Activity },
+  'C Programming': { type: 'brand', slug: 'c', color: '#A8B9CC', icon: Code },
+
+  // Cloud & IT Infrastructure
+  'Linux Administration': { type: 'brand', slug: 'linux', color: '#FCC624', icon: Terminal },
+  'Virtualization (Proxmox/ESXi)': { type: 'brand', slug: 'proxmox', color: '#E57000', icon: Database },
+  'Windows Enterprise (AD/GPO)': { type: 'brand', slug: 'windows', color: '#0078D6', icon: Shield },
+  'AWS & Microservices': { type: 'brand', slug: 'amazonaws', color: '#FF9900', icon: Cloud },
+  'GLPI / LAMP Stack': { type: 'brand', slug: 'mysql', color: '#4479A1', icon: Database },
+  'Database Admin': { type: 'brand', slug: 'postgresql', color: '#4169E1', icon: Database },
+
+  // Security Tools & Honeypots
+  'T-Pot Honeypot Framework': { type: 'brand', slug: 'docker', color: '#2496ED', icon: Bug },
+  'OpenCanary': { type: 'brand', slug: 'python', color: '#3776AB', icon: Code },
+  'Custom Decoy Dev': { type: 'brand', slug: 'flask', color: '#ffffff', icon: Code },
+  'TLS/SSL Management': { type: 'brand', slug: 'letsencrypt', color: '#003A70', icon: Lock },
   'Cryptography (AES/RSA)': { type: 'lucide', icon: Key, color: '#ffd43b' },
-  'SSL/TLS': { type: 'lucide', icon: Lock, color: '#63e6be' },
-  'IPSec/VPN': { type: 'lucide', icon: Lock, color: '#ff8787' },
+  'IPSec/VPN': { type: 'brand', slug: 'openvpn', color: '#EA7E20', icon: Lock },
 };
 
 const categoryMeta = {
@@ -50,7 +68,7 @@ const categoryMeta = {
     tagline: 'Real-time threat monitoring, SIEM engineering, and incident response.',
     index: '01',
   },
-  'Penetration Testing': {
+  'Penetration Testing & VAPT': {
     icon: Crosshair,
     color: '#a855f7',
     dimColor: 'rgba(168,85,247,0.08)',
@@ -71,7 +89,7 @@ const categoryMeta = {
     tagline: 'Security automation, scripting, and infrastructure-as-code development.',
     index: '04',
   },
-  'Cloud & Infrastructure': {
+  'Cloud & IT Infrastructure': {
     icon: Cloud,
     color: '#f97316',
     dimColor: 'rgba(249,115,22,0.08)',
@@ -197,8 +215,10 @@ const CommandOverlay = ({ tool, color, isOpen, onClose }) => {
 /* ── Icon Tool Tile ── */
 const ToolTile = ({ tool, color, cardActive, onToolClick }) => {
   const [hovered, setHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const meta = toolIcons[tool.name] || { type: 'lucide', icon: Code, color: '#888' };
   const brandColor = meta.color;
+  const FallbackIcon = meta.icon || Code;
 
   return (
     <motion.div
@@ -224,33 +244,34 @@ const ToolTile = ({ tool, color, cardActive, onToolClick }) => {
     >
       {/* Icon box */}
       <div style={{
-        width: 48,
-        height: 48,
+        width: 56,
+        height: 56,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 8,
+        borderRadius: 10,
         background: hovered ? `${color}18` : 'rgba(255,255,255,0.04)',
         border: `1px solid ${hovered ? color + '35' : 'rgba(255,255,255,0.06)'}`,
         transition: 'all 0.18s',
         boxShadow: hovered ? `0 0 14px ${color}20` : 'none',
         flexShrink: 0,
       }}>
-        {meta.type === 'brand' ? (
-          <img 
+        {(meta.type === 'brand' && !imgError) ? (
+          <img
             src={`https://cdn.simpleicons.org/${meta.slug}/${brandColor.replace('#', '')}`}
             alt={tool.name}
+            onError={() => setImgError(true)}
             style={{
-              width: 26,
-              height: 26,
-              filter: hovered ? `drop-shadow(0 0 8px ${brandColor}80)` : 'none',
+              width: 32,
+              height: 32,
+              filter: hovered ? `drop-shadow(0 0 10px ${brandColor}80)` : 'none',
               transition: 'all 0.2s',
               transform: hovered ? 'scale(1.1)' : 'scale(1)'
             }}
           />
         ) : (
-          <meta.icon size={26} color={brandColor} style={{
-            filter: hovered ? `drop-shadow(0 0 8px ${brandColor}80)` : 'none',
+          <FallbackIcon size={32} color={brandColor} style={{
+            filter: hovered ? `drop-shadow(0 0 10px ${brandColor}80)` : 'none',
             transition: 'all 0.2s',
             transform: hovered ? 'scale(1.1)' : 'scale(1)'
           }} />
@@ -260,11 +281,11 @@ const ToolTile = ({ tool, color, cardActive, onToolClick }) => {
       {/* Tool name */}
       <span style={{
         fontFamily: "'Courier New', monospace",
-        fontSize: 8.5,
-        fontWeight: 700,
+        fontSize: 11,
+        fontWeight: 800,
         textTransform: 'uppercase',
         letterSpacing: '0.08em',
-        color: hovered ? '#c8c8c8' : '#686868',
+        color: hovered ? '#ffffff' : '#a3a3a3',
         textAlign: 'center',
         lineHeight: 1.35,
         transition: 'color 0.18s',
@@ -337,31 +358,26 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
             animate={hasEntered ? { y: 0, opacity: 1 } : {}}
             transition={{ type: 'spring', stiffness: 120, damping: 20, mass: 1 }}
           >
-            {/* Card shell — glassmorphism */}
+            {/* Card shell — solid matte theme */}
             <div
               style={{
-                background: 'rgba(12, 12, 16, 0.55)',
-                backdropFilter: 'blur(24px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+                background: '#080808', /* Solid dark instead of glassy */
                 border: `1px solid rgba(255,255,255,0.06)`,
                 borderTop: `1px solid ${meta.color}45`,
                 borderRadius: '12px',
                 boxShadow: `
-                  0 0 0 1px rgba(255,255,255,0.03),
                   0 8px 32px rgba(0,0,0,0.5),
                   0 32px 64px rgba(0,0,0,0.4),
-                  inset 0 1px 0 rgba(255,255,255,0.07),
-                  inset 0 -1px 0 rgba(0,0,0,0.3),
                   0 0 80px ${meta.color}0a
                 `,
                 overflow: 'hidden',
                 position: 'relative',
               }}
             >
-              {/* Frosted inner sheen */}
+              {/* Subtle gradient overlay to keep it from looking flat, but not glossy */}
               <div style={{
                 position: 'absolute', inset: 0,
-                background: `linear-gradient(160deg, rgba(255,255,255,0.04) 0%, transparent 50%, rgba(0,0,0,0.15) 100%)`,
+                background: `linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 100%)`,
                 pointerEvents: 'none', zIndex: 0,
               }} />
 
@@ -463,8 +479,8 @@ const SkillCard = ({ category, tools, meta, cardIndex, totalCards, onToolClick }
                 {/* ── Icon grid (screenshot-style) ── */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
-                  gap: 16,
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
+                  gap: 20,
                 }}>
                   {tools.map((tool, toolIdx) => (
                     <motion.div
@@ -514,10 +530,9 @@ const SkillLevelingSystem = () => {
       id="skill-leveling"
       style={{
         position: 'relative',
-        padding: `96px 24px 0`,
-        paddingBottom: `${categories.length * 140}px`,
-        background: '#020202',
-        minHeight: '100vh',
+        padding: `64px 24px 64px`,
+        background: 'transparent',
+        minHeight: 'auto',
       }}
     >
       {/* Background grid */}
@@ -540,7 +555,7 @@ const SkillLevelingSystem = () => {
         pointerEvents: 'none',
       }} />
 
-      <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 1152, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
         {/* Section header */}
         <motion.header
@@ -566,12 +581,12 @@ const SkillLevelingSystem = () => {
 
           <h1 style={{
             fontFamily: "'Courier New', monospace",
-            fontSize: 'clamp(44px, 7vw, 72px)',
+            fontSize: 'clamp(32px, 5vw, 64px)',
             fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1,
             marginBottom: 24, textTransform: 'uppercase',
           }}>
-            <span style={{ color: '#efefef' }}>Ski</span>
-            <span style={{ color: '#2a2a2a' }}>lls</span>
+            <span style={{ color: '#efefef' }}>Technical </span>
+            <span style={{ color: '#e95309ff' }}>Proficiency</span>
           </h1>
 
           <p style={{
