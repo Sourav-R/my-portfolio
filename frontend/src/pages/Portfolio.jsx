@@ -73,8 +73,8 @@ const Portfolio = () => {
           <TerminalSandbox />
           <ExperienceEducation />
           <ActiveMissions />
-          <SkillLevelingSystem />
           <PowerStack />
+          <SkillLevelingSystem />
           <Footer />
         </main>
       </div>
