@@ -7,7 +7,7 @@ export const profileData = {
   companyFull: "THIRU (Threat Incident and Response Unit)",
   location: "Melbourne, Australia",
   timezone: "Australia/Melbourne",
-  email: "[EMAIL_ADDRESS]",
+  email: "sourav.rk.21@gmail.com",
   phone: "+61 493670389",
   linkedin: "https://www.linkedin.com/in/sourav-ramakrishna-b6189a204/",
   github: "https://github.com/Sourav-R",

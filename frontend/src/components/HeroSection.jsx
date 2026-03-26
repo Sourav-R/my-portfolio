@@ -127,12 +127,12 @@ const HeroSection = ({ setMatrixRed }) => {
     {
       text: `  Security Engineer architecting Elastic SIEM clusters,`,
       delay: 3500,
-      type: "output-dim",
+      type: "output-white",
     },
     {
       text: `  automated TDR pipelines, and hardened cloud infrastructure.`,
       delay: 3600,
-      type: "output-dim",
+      type: "output-white",
     },
     { text: "", delay: 3900, type: "blank" },
     { text: "$ _", delay: 4100, type: "cursor" },

@@ -17,15 +17,15 @@ const educationData = [
   {
     degree: "Master of Cybersecurity",
     institution: "Monash University",
-    year: "2023",
+    year: "2023-2025",
     status: "Completed",
     details:
       "Specialized in Network Security, Cryptography, and Advanced Ethical Hacking.",
   },
   {
     degree: "Bachelor of Computer Science",
-    institution: "Monash University",
-    year: "2021",
+    institution: "Jain University",
+    year: "2019-2022",
     status: "Completed",
     details: "Major in Software Engineering and Systems Architecture.",
   },

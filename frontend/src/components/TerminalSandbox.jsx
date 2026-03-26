@@ -121,10 +121,10 @@ const buildProjectDetail = (id) => {
   let out = `${p.title}\n${"━".repeat(50)}\n`;
   out += `Category: ${p.tab} | Difficulty: ${p.difficulty} | Type: ${p.type}\n\n`;
   out += `${p.subtitle}\n\n`;
-  out += `Challenge:\n  ${p.challenge}\n\n`;
+  out += `Problem:\n  ${p.problem}\n\n`;
   out += `Stack: ${p.stack.join(", ")}\n\n`;
-  out += "Highlights:\n";
-  p.highlights.forEach((h) => {
+  out += "Solution:\n";
+  p.solution.forEach((h) => {
     out += `  ✓ ${h}\n`;
   });
   out += `\nImpact: ${p.impact}\n`;
@@ -191,9 +191,11 @@ const HELP_TEXT = `Available Commands:
   PROFILE
     whoami          Display profile information
     bio             Read full bio
+    contact         Display contact information
 
   CAREER
     experience      Experience & Education (use "experience <#>" for details)
+    journey         Professional timeline
     certs           Certifications & clearances
 
   TECHNICAL
@@ -220,24 +222,27 @@ const HELP_TEXT = `Available Commands:
     secret          ???
 
   NAVIGATION
-    goto <section>  Jump to section (experience, skills, certs, missions,
-                    projects, labs, casestudies)
+    goto <section>  Jump to section (home, experience, journey, skills,
+                    certs, missions, projects, labs, terminal, contact, vault)
 
   UTILITY
     help            Show this help
     clear           Clear terminal`;
 
 const SECTION_MAP = {
-  home: "hero",
-  experience: "experience",
-  skills: "skill-leveling",
-  certs: "certifications",
-  certifications: "certifications",
-  missions: "active-missions",
-  projects: "projects",
-  labs: "lab-experience",
-  casestudies: "lab-experience",
-  terminal: "terminal",
+  home: { id: "hero" },
+  experience: { id: "experience" },
+  journey: { id: "experience" },
+  skills: { id: "skill-leveling" },
+  certs: { id: "certifications" },
+  certifications: { id: "certifications" },
+  missions: { id: "active-missions" },
+  projects: { route: "/labs", id: "projects" },
+  labs: { route: "/labs", id: "lab-experience" },
+  casestudies: { route: "/labs", id: "lab-experience" },
+  terminal: { id: "terminal" },
+  contact: { id: "hero" },
+  vault: { route: "/vault" },
 };
 
 const TerminalSandbox = () => {
@@ -249,7 +254,7 @@ const TerminalSandbox = () => {
     },
     {
       type: "system",
-      content: "║   The System Shell v2.0 — Interactive Portfolio Hub      ║",
+      content: "║   The System Shell  — Interactive Portfolio Hub      ║",
     },
     {
       type: "system",
@@ -323,14 +328,21 @@ const TerminalSandbox = () => {
     // Navigation
     if (base === "goto" || base === "go" || base === "cd" || base === "nav") {
       const target = arg || "";
-      const sectionId = SECTION_MAP[target];
-      if (sectionId) {
-        addOutput("output", `Navigating to ${target}...`);
-        setTimeout(() => {
-          document
-            .getElementById(sectionId)
-            ?.scrollIntoView({ behavior: "smooth" });
-        }, 300);
+      const section = SECTION_MAP[target];
+      if (section) {
+        if (section.route) {
+          addOutput("output", `Navigating to ${target}...`);
+          setTimeout(() => {
+            window.location.href = section.route + (section.id ? `#${section.id}` : "");
+          }, 300);
+        } else {
+          addOutput("output", `Navigating to ${target}...`);
+          setTimeout(() => {
+            document
+              .getElementById(section.id)
+              ?.scrollIntoView({ behavior: "smooth" });
+          }, 300);
+        }
         return;
       } else {
         addOutput(
@@ -404,6 +416,10 @@ const TerminalSandbox = () => {
     }
 
     // Labs
+    if (lower === "lab") {
+      addOutput("output", buildLabOutput());
+      return;
+    }
     if (lower === "labs") {
       addOutput("output", buildLabsExpOutput());
       return;
@@ -414,6 +430,17 @@ const TerminalSandbox = () => {
     }
 
     // Contact & Resume
+    if (lower === "contact") {
+      addOutput(
+        "output",
+        `Contact Information:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEmail:    ${profileData.email}\nPhone:    ${profileData.phone}\nLinkedIn: ${profileData.linkedin}\nGitHub:   ${profileData.github}\nLocation: ${profileData.location}\n\nPreferred: Email or LinkedIn`,
+      );
+      return;
+    }
+    if (lower === "journey") {
+      addOutput("output", buildJourneyOutput());
+      return;
+    }
     if (lower === "resume") {
       addOutput("output", "Opening resume in new tab...");
       window.open(profileData.resumeUrl, "_blank");
