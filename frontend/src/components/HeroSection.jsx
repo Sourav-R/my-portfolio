@@ -497,7 +497,7 @@ const HeroSection = ({ setMatrixRed }) => {
                 </span>
               </div>
               <p className="text-[12px] font-mono text-gray-300 tracking-wide pl-3.5">
-                Open to full-time roles, internships, and contract work in
+                Open to full-time roles and contract work in
                 cybersecurity.
               </p>
             </div>
