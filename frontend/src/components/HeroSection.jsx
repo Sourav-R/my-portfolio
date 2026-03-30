@@ -408,6 +408,7 @@ const HeroSection = ({ setMatrixRed }) => {
         }}
       />
 
+
       {/* Cyan glow behind name area */}
       <div
         className="absolute pointer-events-none"

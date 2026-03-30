@@ -12,7 +12,7 @@ export const profileData = {
   linkedin: "https://www.linkedin.com/in/sourav-ramakrishna-b6189a204/",
   github: "https://github.com/Sourav-R",
   resumeUrl:
-    "https://customer-assets.emergentagent.com/job_ringwood-secure/artifacts/gqj74rvj_Sourav_Ramakrishna_Jr.SOC_analyst.pdf",
+    "/Sourav_Ramakrishna_threat-analyst.pdf",
   bio: "Based in Melbourne, I am a Security Engineer at ThIRU (Threat Incident and Response Unit). I specialize in bridging the gap between proactive infrastructure management and reactive threat defense by building highly secure, automated enterprise infrastructure. From engineering Production-Grade SIEM architectures to developing Automated Threat Detection pipelines, my focus is on active defense and rapid incident response. I firmly believe you can't defend what you don't understand—which is why I spend my time deploying advanced honeypots, conducting cloud VAPT, and building systems in my Proxmox lab.",
 };
 
