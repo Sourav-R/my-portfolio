@@ -283,7 +283,7 @@ export const allProjects = [
   },
   {
     id: 10,
-    title: "Ringwood Private Cloud (Home Lab)",
+    title: "Home lab",
     tab: "Infrastructure & Network",
     subtitle: "HA virtualization for malware analysis & monitoring",
     problem:
@@ -297,7 +297,7 @@ export const allProjects = [
     ],
     impact: "Zero lateral movement risk during active malware analysis",
     difficulty: "Advanced",
-    type: "Enterprise",
+    type: "Lab",
     thumbnail: "/api/placeholder/600/400",
     demoUrl: "#",
     repoUrl: "#",
