@@ -58,7 +58,7 @@ const missions = [
     color: "emerald",
     cols: "col-span-1 md:col-span-2 md:row-span-2",
     description:
-      'Engineered a multi-node Elastic Security cluster from bare metal and integrated a "source of truth" GLPI ITAM platform to contextualize enterprise SIEM alerts.',
+      'Built a production-ready multi-node Elastic Security SIEM from bare metal no managed cloud, no shortcuts. Integrated GLPI as a live asset intelligence layer, giving every alert full context: device owner, running services, and network position. Less noise, faster response.',
     stats: ["LAMP Stack", "TLS/SSL Secure", "Storage Optimized"],
     log: `[SYS_LOG] Provisioning hardened LAMP stack for GLPI 10
 [CONFIG] Apache VirtualHost mapping secure /public DocumentRoot
