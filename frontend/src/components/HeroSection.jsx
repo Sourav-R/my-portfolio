@@ -92,32 +92,32 @@ const HeroSection = ({ setMatrixRed }) => {
     { text: "$ neofetch --stats", delay: 1800, type: "command" },
     { text: "", delay: 2100, type: "blank" },
     {
-      text: "  ┌─────────────────────────────┐",
+      text: "  ┌──────────────────────────────────────────┐",
       delay: 2300,
       type: "output-dim",
     },
     {
-      text: "  │  Focus:  SIEM & TDR         │",
+      text: "  │  Focus: Elastic SIEM & Active Defense    │",
       delay: 2400,
       type: "output-cyan-large",
     },
     {
-      text: "  │  Tools:  25+ Enterprise     │",
+      text: "  │  Stack: Elastic · Wazuh · pfSense · Docker│",
       delay: 2500,
       type: "output-cyan-large",
     },
     {
-      text: "  │  Status: THIRU Active       │",
+      text: "  │  Ops:   1,000+ threats triaged weekly    │",
       delay: 2600,
       type: "output-cyan-large",
     },
     {
-      text: "  │  Verify: 6 Certifications   │",
+      text: "  │  Lab:   Proxmox HA · 8 VMs · VLAN Isolated│",
       delay: 2700,
       type: "output-cyan-large",
     },
     {
-      text: "  └─────────────────────────────┘",
+      text: "  └──────────────────────────────────────────┘",
       delay: 2800,
       type: "output-dim",
     },
