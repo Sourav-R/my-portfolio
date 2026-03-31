@@ -2,7 +2,7 @@
 
 export const profileData = {
   name: "Sourav Ramakrishna",
-  role: "Jr. Security Engineer",
+  role: "Security Engineer",
   company: "ThIRU Labs",
   companyFull: "THIRU (Threat Incident and Response Unit)",
   location: "Melbourne, Australia",

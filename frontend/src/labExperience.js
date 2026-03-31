@@ -631,7 +631,7 @@ export const workExperience = [
   {
     id: 1,
     company: "THIRU (Threat Incident and Response Unit)",
-    role: "Jr. Security Engineer",
+    role: "Security Engineer",
     period: "Aug 2025 – Present",
     location: "Melbourne, Australia",
     current: true,
