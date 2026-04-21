@@ -421,7 +421,7 @@ export const professionalJourney = [
   },
   {
     year: "2025",
-    period: "Aug 2025 – Present",
+    period: "Nov 2025 – Present",
     milestone: "Jr. Security Engineer",
     organization: "THIRU Labs",
     type: "work",
